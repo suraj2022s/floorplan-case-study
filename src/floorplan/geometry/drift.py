@@ -56,7 +56,8 @@ class DriftConfig:
     merge_offset: float = 0.15  # metres; wall copies closer than this may be one wall
     merge_angle_deg: float = 4.0
     merge_overlap: float = 0.5  # share of the shorter copy's length that must overlap
-    thin: int = 3  # every n-th point of a fragment is enough to estimate its correction
+    thin: int = 4  # every n-th point of a fragment is enough to estimate its correction
+    converged: float = 0.0005  # metres; stop when a pass moves nothing by more than this
     point_sigma: float = 0.01  # metres, 1-sigma of one point's distance to its wall
     correlation: float = 20.0  # voxel points that count as one independent reading
     step_sigma_shift: float = 0.01  # metres the correction may change per fragment
@@ -111,9 +112,11 @@ def estimate_drift(
     walls_used = merged_total = 0
 
     passes = len(config.assign_distance)
-    for iteration in range(passes + 1):  # the extra pass only measures the result
+    iteration = 0
+    measuring = False  # the last pass only measures the result
+    while True:
         # the measuring pass uses the first pass's reach, so before and after are comparable
-        reach = config.assign_distance[iteration if iteration < passes else 0]
+        reach = config.assign_distance[0 if measuring else iteration]
         moved = [turn_and_shift(f, theta[k], shift[k]) for k, f in enumerate(thinned)]
         union = Cloud(
             np.concatenate([m.xyz for m in moved]),
@@ -175,7 +178,7 @@ def estimate_drift(
             system[block, block] += (jacobian * weight[:, None]).T @ jacobian
             target[block] -= (jacobian * weight[:, None]).T @ residual
         history.append(float(np.sqrt(squares / max(weights, 1e-12))))
-        if iteration == passes:
+        if measuring:
             break
 
         # the correction changes slowly from one fragment to the next
@@ -193,6 +196,17 @@ def estimate_drift(
         delta = np.linalg.lstsq(system, target, rcond=None)[0].reshape(count, 3)
         for k in range(count):
             theta[k], shift[k] = _apply(theta[k], shift[k], delta[k])
+        iteration += 1
+        # how far this pass moved anything, counting a turn by what it does 5 m away
+        change = float(np.max(np.linalg.norm(delta[:, 1:], axis=1) + 5.0 * np.abs(delta[:, 0])))
+        if change < config.converged:
+            if iteration == 1:
+                # nothing to correct: the first pass already measured the final state
+                history.append(history[0])
+                break
+            measuring = True
+        elif iteration == passes:
+            measuring = True
 
     # express the corrections about the true world origin again
     corrections = np.zeros((count, 3))
@@ -214,7 +228,7 @@ def estimate_drift(
         "method": "plane-anchored: fragments turned and shifted onto shared wall planes, "
         "solved jointly with a smoothness prior; yaw and horizontal position only",
         "fragments": count,
-        "iterations": passes,
+        "iterations": iteration,
         "walls_used": walls_used,
         "wall_copies_merged": merged_total,
         "wall_residual_rms_before_m": round(history[0], 5),

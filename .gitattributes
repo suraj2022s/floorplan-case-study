@@ -1,0 +1,12 @@
+# Keep LF everywhere so file hashes and fixtures match on Windows, Linux and macOS
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.heic binary
+*.mp4 binary
+*.mov binary
+*.pdf binary
+*.npy binary
+*.npz binary

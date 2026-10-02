@@ -328,6 +328,87 @@ def _edges(polygon: Polygon, lines: list[WallLine]) -> list[RoomEdge]:
     return edges
 
 
+def fallback_room(
+    cloud: Cloud,
+    lines: list[WallLine],
+    floor: Level,
+    camera_xy: np.ndarray,
+    config: LayoutConfig | None = None,
+) -> Room | None:
+    """A room for a capture whose walls do not close: the rectangle around what was seen.
+
+    Used only when the cell complex finds no closed room, which means at least one wall was
+    never captured. The rectangle is laid along the dominant wall direction and around the
+    floor and ceiling that were observed and the path the camera took. A side that has a
+    captured wall near it takes that wall's position; a side that does not is drawn where
+    the observations stop and is marked as not seen, so it carries a wide interval.
+    """
+    config = config or LayoutConfig()
+    height = cloud.xyz[:, 2] - floor.z_at(cloud.xyz[:, :2])
+    seen = ((cloud.normal[:, 2] < -0.9) & (height > config.ceiling_min_height)) | (
+        (cloud.normal[:, 2] > 0.9) & (height < config.floor_max_height)
+    )
+    points = np.concatenate([cloud.xyz[seen, :2], camera_xy])
+    if len(points) < 50:
+        return None
+    angle = 0.0
+    if lines:
+        strongest = max(lines, key=lambda line: line.count)
+        angle = (np.arctan2(strongest.normal[1], strongest.normal[0]) + np.pi / 4) % (
+            np.pi / 2
+        ) - np.pi / 4
+    c, s = np.cos(angle), np.sin(angle)
+    to_room = np.array([[c, s], [-s, c]])  # world -> rectangle axes
+    local = points @ to_room.T
+    low, high = np.percentile(local, 1, axis=0), np.percentile(local, 99, axis=0)
+    if np.any(high - low < 0.5):
+        return None
+
+    # sides in counter-clockwise order: south, east, north, west, each with its inward normal
+    sides = [
+        (np.array([0.0, 1.0]), low[1]),
+        (np.array([-1.0, 0.0]), -high[0]),
+        (np.array([0.0, -1.0]), -high[1]),
+        (np.array([1.0, 0.0]), low[0]),
+    ]
+    chosen: list[WallLine | None] = []
+    offsets = []
+    for inward, offset in sides:
+        best = None
+        for line in lines:
+            normal = to_room @ line.normal
+            if normal @ inward > np.cos(np.radians(15.0)) and abs(line.offset - offset) < 0.6:
+                if best is None or line.count > best.count:
+                    best = line
+        chosen.append(best)
+        offsets.append(best.offset if best is not None else offset)
+    south, east, north, west = offsets
+    x0, x1, y0, y1 = west, -east, south, -north
+    if x1 - x0 < 0.5 or y1 - y0 < 0.5:
+        return None
+    corners = np.array([[x0, y0], [x1, y0], [x1, y1], [x0, y1]]) @ to_room
+    polygon = orient(Polygon(corners), sign=1.0)
+    corners = np.asarray(polygon.exterior.coords)[:-1]
+    edges = []
+    for k in range(4):
+        a, b = corners[k], corners[(k + 1) % 4]
+        direction = (b - a) / max(np.linalg.norm(b - a), 1e-9)
+        inward = np.array([-direction[1], direction[0]])
+        line = next((ln for ln in chosen if ln is not None and ln.normal @ inward > 0.9), None)
+        edges.append(RoomEdge(a.copy(), b.copy(), line, _coverage(a, b, line)))
+    seen_sides = sum(edge.line is not None for edge in edges)
+    return Room(
+        name="room_1",
+        polygon=polygon,
+        edges=edges,
+        entered=True,
+        notes=[
+            f"the walls captured do not close a room: {4 - seen_sides} of 4 sides were not "
+            "seen and are drawn where the observations stop"
+        ],
+    )
+
+
 def refine_room(room: Room) -> Room:
     """Refit each wall on its own stretch of points and rebuild the corners.
 

@@ -28,7 +28,13 @@ import shapely
 from floorplan.capture import Capture, select_keyframes
 from floorplan.geometry.cloud import Cloud, CloudConfig, fragment_clouds, merge_clouds
 from floorplan.geometry.drift import DriftConfig, correct_drift
-from floorplan.geometry.layout import LayoutConfig, Room, find_rooms, refine_room
+from floorplan.geometry.layout import (
+    LayoutConfig,
+    Room,
+    fallback_room,
+    find_rooms,
+    refine_room,
+)
 from floorplan.geometry.openings import Opening, OpeningConfig, find_openings
 from floorplan.geometry.planes import (
     RELAXED_MIN_TOP,
@@ -79,6 +85,7 @@ def config_for(tier: str, correct_drift: bool = True) -> PipelineConfig:
         edge_rel=0.05,
         normal_step=3,
         batch_frames=1 if tier == "photo" else 8,
+        pixel_stride=1 if tier == "photo" else 2,
     )
     planes = PlaneConfig(
         level_band=0.10,
@@ -103,7 +110,7 @@ def config_for(tier: str, correct_drift: bool = True) -> PipelineConfig:
         assign_distance=(0.35, 0.25, 0.18, 0.12),
         merge_offset=0.35,
         merge_angle_deg=8.0,
-        thin=1,
+        thin=1 if tier == "photo" else 4,
         point_sigma=0.03,
         max_wall_rms=0.15,
         step_sigma_shift=10.0 if tier == "photo" else 0.03,
@@ -379,7 +386,16 @@ def run(capture: Capture, config: PipelineConfig | None = None) -> Plan:
                 "walls. Recapture with the phone tilted up along each wall."
             )
     if not rooms:
-        raise RuntimeError("no room found: too few walls were captured to close a room")
+        # Not every wall was captured, so nothing closes. Report the rectangle around what
+        # was seen, with the unseen sides marked, instead of reporting nothing.
+        rescue = fallback_room(cloud, lines, floor, camera_xy, config.layout)
+        if rescue is None:
+            raise RuntimeError("no room found: the capture shows too little floor and wall")
+        rooms = [rescue]
+        warnings.append(
+            "the captured walls do not close a room; the plan is the rectangle around what "
+            "was seen and its unseen sides are inferred. Capture every wall to measure it."
+        )
     stats["wall_lines"] = len(lines)
     stage("layout", started)
 

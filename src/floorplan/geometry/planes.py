@@ -36,9 +36,15 @@ class PlaneConfig:
     inlier_band: float = 0.03  # metres either side of a wall face
     min_points: int = 250  # about 0.16 m2 of wall at 2.5 cm voxels
     min_extent: float = 0.35  # metres of the wall's length that must be supported
-    max_rms: float = 0.015  # metres; a line fitted worse than this is not one clean wall
+    # metres; a line fitted worse than this is not one clean wall. Real walls scanned with a
+    # phone came out at 1.2 to 1.4 cm, against 0.4 cm on synthetic walls.
+    max_rms: float = 0.025
     copy_offset: float = 0.08  # lines closer than this, facing the same way, are one wall
     copy_angle_deg: float = 3.0
+    axis_tolerance_deg: float = 6.0  # how far off the two main wall directions is still on-axis
+    angled_min_length: float = 1.2  # metres of support an off-axis line needs to be a wall
+    angled_min_points: int = 1500
+    shadow_reach: float = 0.45  # metres within which a weak parallel line is clutter
     max_weight: float = 40.0  # cap so a spot stared at for long does not dominate a fit
 
 
@@ -363,7 +369,63 @@ def find_wall_lines(
     # A wall whose points are spread over more than the inlier band (residual drift, a
     # tiled lower half, a slightly bowed wall) comes out as two or three lines a few
     # centimetres apart. They are one wall: merge them.
-    return merge_wall_copies(lines, config.copy_offset, config.copy_angle_deg)[0]
+    lines = merge_wall_copies(lines, config.copy_offset, config.copy_angle_deg)[0]
+    return prune_clutter(lines, config)
+
+
+def prune_clutter(lines: list[WallLine], config: PlaneConfig) -> list[WallLine]:
+    """Drop vertical surfaces that are things standing near a wall, not walls.
+
+    Found on the first real scan (a bedroom from a public dataset): curtains, a window
+    reveal and a door frame at one end of the room each produced their own line, 10 to 30 cm
+    from the wall and at slightly different angles, and the outline zig-zagged between
+    them. Two tests remove them:
+
+    * direction. Rooms are built with walls in two perpendicular directions. A line more
+      than a few degrees off both of them is kept only if it is long and well supported,
+      which a genuinely angled wall is and a curtain fold is not.
+    * shadow. A weak line lying close to a much stronger line that faces the same way, and
+      overlapping it along its length, is something in front of that wall or a shallow
+      recess in it. The strong line is the wall. (Ranking by how much of the room's side
+      a line spans, instead of by point count, was tried on the same scan and was worse.)
+    """
+    if len(lines) < 3:
+        return lines
+    strongest = max(lines, key=lambda line: line.count)
+    base = np.arctan2(strongest.normal[1], strongest.normal[0])
+
+    def off_axis(line: WallLine) -> float:
+        angle = np.arctan2(line.normal[1], line.normal[0]) - base
+        return abs(np.degrees((angle + np.pi / 4) % (np.pi / 2) - np.pi / 4))
+
+    kept = [
+        line
+        for line in lines
+        if off_axis(line) <= config.axis_tolerance_deg
+        or (
+            line.supported_length >= config.angled_min_length
+            and line.count >= config.angled_min_points
+        )
+    ]
+
+    kept.sort(key=lambda line: -line.count)
+    cos_limit = np.cos(np.radians(config.axis_tolerance_deg))
+    survivors: list[WallLine] = []
+    for line in kept:
+        shadowed = False
+        for strong in survivors:
+            if strong.normal @ line.normal < cos_limit or line.count > 0.3 * strong.count:
+                continue
+            if abs(float(np.mean(strong.distance(line.points_xy)))) > config.shadow_reach:
+                continue
+            mine = np.unique(np.floor(line.points_xy @ strong.direction / SUPPORT_BIN))
+            theirs = np.unique(np.floor(strong.points_xy @ strong.direction / SUPPORT_BIN))
+            if len(np.intersect1d(mine, theirs)) >= 0.5 * len(mine):
+                shadowed = True
+                break
+        if not shadowed:
+            survivors.append(line)
+    return survivors
 
 
 def merge_wall_copies(

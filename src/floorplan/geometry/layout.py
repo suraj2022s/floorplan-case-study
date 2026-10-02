@@ -45,6 +45,8 @@ class LayoutConfig:
     wall_share: float = 0.15  # share of a border that must be wall to separate two rooms
     min_shared: float = 0.05  # metres; shorter borders between cells are ignored
     min_room_area: float = 1.0  # m2
+    max_jog: float = 0.12  # metres; a shorter step between two parallel walls is noise
+    keep_unentered: bool = False  # report rooms that were only seen through a doorway
     furniture_area: float = 2.5  # m2; smaller regions nobody walked into are furniture
     margin: float = 0.6  # metres added around the wall points for the working area
     ceiling_min_height: float = 1.9
@@ -296,6 +298,7 @@ def find_rooms(
         if region.area < config.min_room_area:
             continue
         polygon = orient(Polygon(region.exterior).simplify(1e-6), sign=1.0)
+        polygon = _remove_jogs(polygon, config.max_jog)
         rooms.append(
             Room(
                 name="",
@@ -306,6 +309,17 @@ def find_rooms(
             )
         )
 
+    # A space glimpsed through a doorway but never walked into has walls that were mostly
+    # not seen; any dimensions for it would be guesses. It is left out, and said so.
+    if not config.keep_unentered and any(room.entered for room in rooms):
+        skipped = [room for room in rooms if not room.entered]
+        rooms = [room for room in rooms if room.entered]
+        if skipped:
+            rooms[0].notes.append(
+                f"{len(skipped)} space(s) seen through an opening were not walked into and "
+                "are not measured"
+            )
+
     # name rooms in the order the phone first walked into them, so reruns agree
     def first_visit(room: Room) -> tuple[int, float]:
         hits = np.flatnonzero(shapely.contains(room.polygon, shapely.points(camera_xy)))
@@ -315,6 +329,63 @@ def find_rooms(
     for number, room in enumerate(rooms, start=1):
         room.name = f"room_{number}"
     return rooms
+
+
+def _remove_jogs(polygon: Polygon, max_jog: float) -> Polygon:
+    """Straighten a wall that is drawn as two parallel pieces joined by a tiny step.
+
+    Clutter near a wall, or one wall found as two lines a few centimetres apart, leaves a
+    step of a few centimetres in the outline. A step shorter than `max_jog` between two
+    near-parallel edges is removed: the longer edge's line is kept and the next corner is
+    recomputed on it. A real pilaster or chimney breast projects further and is kept.
+    """
+
+    def crossing(p, d, q, e):
+        """Intersection of the line through p along d with the line through q along e."""
+        denominator = d[0] * e[1] - d[1] * e[0]
+        if abs(denominator) < 1e-6:
+            return None
+        s = ((q[0] - p[0]) * e[1] - (q[1] - p[1]) * e[0]) / denominator
+        return p + s * d
+
+    points = [np.array(c) for c in list(polygon.exterior.coords)[:-1]]
+    for _ in range(40):
+        count = len(points)
+        if count <= 4:
+            break
+        changed = False
+        for k in range(count):
+            a, b, c, d = (points[(k + i) % count] for i in range(-1, 3))
+            jog = np.linalg.norm(c - b)
+            before, after = b - a, d - c
+            if jog >= max_jog or np.linalg.norm(before) < 1e-9 or np.linalg.norm(after) < 1e-9:
+                continue
+            u, v = before / np.linalg.norm(before), after / np.linalg.norm(after)
+            if abs(u[0] * v[1] - u[1] * v[0]) > np.sin(np.radians(8.0)) or u @ v < 0:
+                continue
+            if np.linalg.norm(before) >= np.linalg.norm(after):
+                # keep the earlier wall's line; move the far end of the later one onto it
+                e = points[(k + 3) % count] - d
+                corner = crossing(a, u, d, e) if np.linalg.norm(e) > 1e-9 else None
+                if corner is None:
+                    continue
+                points[(k + 2) % count] = corner
+            else:
+                e = a - points[(k - 2) % count]
+                corner = crossing(d, v, a, e) if np.linalg.norm(e) > 1e-9 else None
+                if corner is None:
+                    continue
+                points[(k - 1) % count] = corner
+            drop = {k % count, (k + 1) % count}
+            points = [p for i, p in enumerate(points) if i not in drop]
+            changed = True
+            break
+        if not changed:
+            break
+    cleaned = orient(Polygon(points), sign=1.0)
+    if not cleaned.is_valid or abs(cleaned.area - polygon.area) > 0.05 * polygon.area:
+        return polygon
+    return cleaned
 
 
 def _edges(polygon: Polygon, lines: list[WallLine]) -> list[RoomEdge]:

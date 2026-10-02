@@ -23,6 +23,7 @@ import numpy as np
 
 from floorplan.frontend.room import RoomFit, fit_room, room_capture
 from floorplan.frontend.views import LevelView, View, level_view
+from floorplan.io.intake import IMAGE_SUFFIXES, room_folders
 from floorplan.pipeline import (
     OpeningResult,
     PipelineConfig,
@@ -35,27 +36,7 @@ from floorplan.pipeline import (
 from floorplan.stitch import stitch
 from floorplan.uncertainty.budget import BUDGETS, Measurement, load_calibration, quadrature
 
-IMAGE_SUFFIXES = (".heic", ".heif", ".jpg", ".jpeg", ".png")
 PHOTO_SCALE_SIGMA = 0.06  # relative 1-sigma of the depth model's metric scale indoors (measured)
-
-
-def room_folders(capture: Path) -> dict[str, list[Path]]:
-    """Room name -> image files, in the order they were taken (file name order)."""
-    capture = Path(capture)
-
-    def images(folder: Path) -> list[Path]:
-        return sorted(p for p in folder.iterdir() if p.suffix.lower() in IMAGE_SUFFIXES)
-
-    rooms = {
-        folder.name: images(folder)
-        for folder in sorted(capture.iterdir())
-        if folder.is_dir() and images(folder)
-    }
-    if not rooms and images(capture):
-        rooms = {capture.name: images(capture)}
-    if not rooms:
-        raise FileNotFoundError(f"no photos found in {capture}")
-    return rooms
 
 
 def _rename(plan: Plan, old: str, new: str) -> None:
@@ -202,4 +183,4 @@ def photo_plan(
     return plan
 
 
-__all__ = ["OpeningResult", "photo_plan", "room_folders", "room_plan"]
+__all__ = ["IMAGE_SUFFIXES", "OpeningResult", "photo_plan", "room_folders", "room_plan"]

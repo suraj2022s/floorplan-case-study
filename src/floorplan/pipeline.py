@@ -396,6 +396,12 @@ def run(capture: Capture, config: PipelineConfig | None = None) -> Plan:
     if not rooms:
         # Not every wall was captured, so nothing closes. Report the rectangle around what
         # was seen, with the unseen sides marked, instead of reporting nothing.
+        if not lines and ceiling is None:
+            # a level surface and nothing else: a table top or a floor close-up, not a room
+            raise RuntimeError(
+                "no wall and no ceiling were captured, so there is no room to measure. "
+                "Walk the room with the phone upright so that the walls are in view."
+            )
         rescue = fallback_room(cloud, lines, floor, camera_xy, config.layout)
         if rescue is None:
             raise RuntimeError("no room found: the capture shows too little floor and wall")

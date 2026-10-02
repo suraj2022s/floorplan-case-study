@@ -22,8 +22,8 @@ import numpy as np
 from floorplan.capture import Capture
 from floorplan.frontend.track import track_capture, track_views
 from floorplan.frontend.views import LevelView, level_view
+from floorplan.io.intake import VIDEO_SUFFIXES, videos_in
 
-VIDEO_SUFFIXES = (".mov", ".mp4", ".m4v")
 VIDEO_SCALE_SIGMA = (
     0.05  # relative 1-sigma of the scale of a whole clip: the model's bias (measured: +5%)
 )
@@ -31,13 +31,14 @@ TRACKING_WALL_MIN_TOP = 1.0  # metres: lower surfaces still help follow the came
 
 
 def find_video(capture: Path) -> Path:
+    """The walkthrough clip of a capture: the file itself, or the largest clip in the folder."""
     capture = Path(capture)
     if capture.is_file():
         return capture
-    videos = sorted(p for p in capture.iterdir() if p.suffix.lower() in VIDEO_SUFFIXES)
+    videos = videos_in(capture)
     if not videos:
-        raise FileNotFoundError(f"no video clip (.mov, .mp4) found in {capture}")
-    return videos[0]
+        raise FileNotFoundError(f"no video clip ({', '.join(VIDEO_SUFFIXES)}) found in {capture}")
+    return max(videos, key=lambda p: p.stat().st_size)
 
 
 def sample_frames(path: Path, rate: float = 2.0, max_frames: int = 300) -> tuple[list, list]:

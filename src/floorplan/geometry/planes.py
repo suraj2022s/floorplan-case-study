@@ -27,6 +27,7 @@ class PlaneConfig:
     level_bin: float = 0.02  # metres, height histogram bin
     level_band: float = 0.06  # points within this of a height peak are fitted
     level_min_share: float = 0.2  # a floor/ceiling peak must hold this share of the largest
+    level_min_points: int = 300  # about 0.2 m2; smaller level patches are not floor or ceiling
     wall_max_nz: float = 0.3  # |vertical component| of a wall normal
     wall_min_height: float = 0.10  # ignore wall points this close to the floor (skirting)
     angle_tolerance_deg: float = 20.0  # normal-to-direction angle for a point to vote
@@ -170,6 +171,16 @@ def fit_level(xyz: np.ndarray, weight: np.ndarray, iterations: int = 5) -> Level
     return Level(np.array([a, b, c - a * centre[0] - b * centre[1]]), rms, len(xyz))
 
 
+def _smooth3(histogram: np.ndarray) -> np.ndarray:
+    """Sum of each bin and its two neighbours, the same length as the input.
+
+    (`np.convolve(..., "same")` returns the kernel's length when the histogram is shorter
+    than the kernel, which shifted the peak and once indexed past the last bin.)
+    """
+    padded = np.concatenate([[0], histogram, [0]]).astype(float)
+    return padded[:-2] + padded[1:-1] + padded[2:]
+
+
 def _height_peak(z: np.ndarray, config: PlaneConfig, pick: str) -> float | None:
     """Height of a peak in the histogram of `z`: the "lowest" or "highest" peak holding at
     least `level_min_share` of the largest, or the "strongest" peak."""
@@ -178,7 +189,7 @@ def _height_peak(z: np.ndarray, config: PlaneConfig, pick: str) -> float | None:
     lo, hi = z.min(), z.max()
     bins = max(1, int(np.ceil((hi - lo) / config.level_bin)))
     histogram, edges = np.histogram(z, bins=bins, range=(lo, lo + bins * config.level_bin))
-    smooth = np.convolve(histogram, np.ones(3), mode="same")
+    smooth = _smooth3(histogram)
     strong = np.flatnonzero(smooth >= config.level_min_share * smooth.max())
     index = {"lowest": strong[0], "highest": strong[-1], "strongest": int(np.argmax(smooth))}[pick]
     # walk uphill to the local maximum next to the chosen bin
@@ -209,9 +220,17 @@ def find_level(
     if height is None:
         return None
     near = mask & (np.abs(cloud.xyz[:, 2] - height) < config.level_band)
-    if near.sum() < 50:
-        return None
-    return fit_level(cloud.xyz[near], np.minimum(cloud.weight[near], config.max_weight))
+    if near.sum() < config.level_min_points:
+        return None  # a patch this small is a door head or a shelf, not a floor or ceiling
+    level = fit_level(cloud.xyz[near], np.minimum(cloud.weight[near], config.max_weight))
+    if not facing_up and pick == "highest":
+        # Walls stop at the ceiling. If plenty of wall rises above this plane it is the
+        # underside of something else (a door or window head, a beam).
+        side = np.abs(nz) < config.wall_max_nz
+        above = side & (cloud.xyz[:, 2] > level.z_at(cloud.xyz[:, :2]) + 0.15)
+        if above.sum() > 0.05 * max(side.sum(), 1):
+            return None
+    return level
 
 
 def _facing_directions(theta: np.ndarray, config: PlaneConfig) -> list[float]:
@@ -301,7 +320,7 @@ def find_wall_lines(
             lo = values.min()
             bins = int(np.ceil((values.max() - lo) / config.offset_bin)) + 1
             histogram = np.bincount(((values - lo) / config.offset_bin).astype(int), minlength=bins)
-            smooth = np.convolve(histogram, np.ones(3), mode="same")
+            smooth = _smooth3(histogram)
             peak = int(np.argmax(smooth))
             if smooth[peak] < config.min_points / 3:
                 break

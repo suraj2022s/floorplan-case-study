@@ -28,7 +28,7 @@ Short, dated notes on what was done and why. Times are IST.
   capture with no drift. Replaced with plane-anchored correction; see
   `docs/decisions/0002-drift-correction.md`.
 - **23:10** Four-room flat came out with tilted and duplicated walls. Cause: when merging
-  depth points into voxels I had binned points by the compass direction of their normal, in
+  depth points into voxels, points were binned by the compass direction of their normal, in
   30-degree sectors. A wall facing exactly along a sector boundary was split into two
   populations by the sign of its normal noise, each averaging to a normal about 7 degrees
   off. Wall directions were then wrong by 7 degrees, which smears a 4 m wall over 47 cm in
@@ -66,13 +66,13 @@ Short, dated notes on what was done and why. Times are IST.
   "looks right against the RGB frames", nothing more.
 - **03:05** Measured the depth model against LiDAR on 40 frames of that scan: it reads 5.2%
   long on average with 6.1% frame-to-frame spread. This is the dominant error at the photo
-  and video tiers and it replaces my guessed 3-5%.
+  and video tiers and it replaces the guessed 3-5%.
 - **03:08** The video tracker fails on real footage. On the RGB frames of the real scan the
   recovered path was off by 0.9 m on average over a 12.8 m walk; 33 of 120 frames showed no
   usable wall (close-ups of furniture); the plan was unusable. Clean synthetic rooms had
   hidden this. Decision: use a learned multi-view model (MapAnything) for poses.
 - **03:10** Searched for existing projects. Two public repositories are submissions for
-  this same case study; I read their READMEs only, to recognise what they were, and have
-  not used their code. Useful open-source finds: MapAnything (poses and metric depth from a
+  this same case study; their READMEs were read only to recognise what they were, and none
+  of their code is used. Useful open-source finds: MapAnything (poses and metric depth from a
   set of images) and a crack-segmentation model. Plane-DUSt3R, RoomFormer and several SLAM
   systems were considered and set aside for licence, GPU memory or integration time.

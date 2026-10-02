@@ -24,7 +24,9 @@ from floorplan.frontend.track import track_capture, track_views
 from floorplan.frontend.views import LevelView, level_view
 
 VIDEO_SUFFIXES = (".mov", ".mp4", ".m4v")
-VIDEO_SCALE_SIGMA = 0.04  # relative 1-sigma of the depth model's scale, averaged over a clip
+VIDEO_SCALE_SIGMA = (
+    0.05  # relative 1-sigma of the scale of a whole clip: the model's bias (measured: +5%)
+)
 TRACKING_WALL_MIN_TOP = 1.0  # metres: lower surfaces still help follow the camera
 
 

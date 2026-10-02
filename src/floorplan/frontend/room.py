@@ -37,7 +37,7 @@ from floorplan.frontend.views import LevelView, image_loader
 
 STANDOFF = 0.35  # metres from the wall behind the person to the camera
 STANDOFF_SIGMA = 0.15
-SCALE_SIGMA = 0.04  # how far one view's scale may sit from the model's average
+SCALE_SIGMA = 0.06  # how far one view's scale may sit from the model's average (measured: 6%)
 WALL_SIGMA = 0.03  # metres, plus 2% of the wall's distance
 MISFIT = 0.25  # metres rms; above this the protocol order is not believed
 OUTLIER = 0.30  # metres; a wall this far from the fitted room belongs to another room

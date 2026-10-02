@@ -38,7 +38,7 @@ from scipy.spatial import cKDTree
 from floorplan.capture import Capture, Frame
 from floorplan.frontend.views import LevelView, image_loader
 
-SCALE_SIGMA = 0.03  # how far one frame's depth scale may sit from the model's average
+SCALE_SIGMA = 0.06  # how far one frame's scale may sit from the model's average (measured: 6%)
 STEP_SIGMA = 1.0  # metres; a loose "the camera does not teleport" between sampled frames
 SHIFT_SIGMA = 0.04  # metres, a frame-to-frame shift along a well-constrained direction
 WALL_SIGMA = 0.03  # metres, plus 2% of the wall's distance

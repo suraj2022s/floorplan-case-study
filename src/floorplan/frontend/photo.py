@@ -36,7 +36,7 @@ from floorplan.stitch import stitch
 from floorplan.uncertainty.budget import BUDGETS, Measurement, load_calibration, quadrature
 
 IMAGE_SUFFIXES = (".heic", ".heif", ".jpg", ".jpeg", ".png")
-PHOTO_SCALE_SIGMA = 0.05  # relative 1-sigma of the depth model's metric scale indoors
+PHOTO_SCALE_SIGMA = 0.06  # relative 1-sigma of the depth model's metric scale indoors (measured)
 
 
 def room_folders(capture: Path) -> dict[str, list[Path]]:

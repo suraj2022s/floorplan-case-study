@@ -247,8 +247,9 @@ def _wall_with_holes(
 
     def quad(a0: float, a1: float, z0: float, z1: float) -> np.ndarray:
         if along_x:
-            return np.array([[a0, across, z0], [a1, across, z0], [a1, across, z1],
-                             [a0, across, z1]])
+            return np.array(
+                [[a0, across, z0], [a1, across, z0], [a1, across, z1], [a0, across, z1]]
+            )
         return np.array([[across, a0, z0], [across, a1, z0], [across, a1, z1], [across, a0, z1]])
 
     quads = []
@@ -288,8 +289,17 @@ def box_room() -> SceneSpec:
         rooms=[RoomSpec("room", 0.0, 0.0, 4.20, 3.35, ceiling=2.74)],
         openings=[
             OpeningSpec("room-D1", "door", "room", "S", start=0.60, width=0.90, height=2.05),
-            OpeningSpec("room-WIN1", "window", "room", "N", start=1.50, width=1.20, height=1.20,
-                        sill=0.90, depth=0.20),
+            OpeningSpec(
+                "room-WIN1",
+                "window",
+                "room",
+                "N",
+                start=1.50,
+                width=1.20,
+                height=1.20,
+                sill=0.90,
+                depth=0.20,
+            ),
         ],
     )
 
@@ -314,18 +324,61 @@ def flat() -> SceneSpec:
     return SceneSpec(
         rooms=[corridor, bedroom, living, kitchen],
         openings=[
-            OpeningSpec("corridor-D1", "door", "corridor", "S", start=0.15, width=0.90,
-                        height=2.05),
-            OpeningSpec("bedroom-D1", "door", "corridor", "W", start=3.10, width=0.80,
-                        height=2.05, other_room="bedroom"),
-            OpeningSpec("living-D1", "door", "corridor", "E", start=1.00, width=0.90,
-                        height=2.05, other_room="living"),
-            OpeningSpec("kitchen-D1", "door", "corridor", "E", start=4.30, width=0.75,
-                        height=2.05, other_room="kitchen"),
-            OpeningSpec("bedroom-WIN1", "window", "bedroom", "N", start=-2.90, width=1.50,
-                        height=1.20, sill=0.90, depth=0.23),
-            OpeningSpec("living-WIN1", "window", "living", "S", start=2.60, width=1.80,
-                        height=1.35, sill=0.80, depth=0.23),
+            OpeningSpec(
+                "corridor-D1", "door", "corridor", "S", start=0.15, width=0.90, height=2.05
+            ),
+            OpeningSpec(
+                "bedroom-D1",
+                "door",
+                "corridor",
+                "W",
+                start=3.10,
+                width=0.80,
+                height=2.05,
+                other_room="bedroom",
+            ),
+            OpeningSpec(
+                "living-D1",
+                "door",
+                "corridor",
+                "E",
+                start=1.00,
+                width=0.90,
+                height=2.05,
+                other_room="living",
+            ),
+            OpeningSpec(
+                "kitchen-D1",
+                "door",
+                "corridor",
+                "E",
+                start=4.30,
+                width=0.75,
+                height=2.05,
+                other_room="kitchen",
+            ),
+            OpeningSpec(
+                "bedroom-WIN1",
+                "window",
+                "bedroom",
+                "N",
+                start=-2.90,
+                width=1.50,
+                height=1.20,
+                sill=0.90,
+                depth=0.23,
+            ),
+            OpeningSpec(
+                "living-WIN1",
+                "window",
+                "living",
+                "S",
+                start=2.60,
+                width=1.80,
+                height=1.35,
+                sill=0.80,
+                depth=0.23,
+            ),
         ],
     )
 
@@ -335,10 +388,18 @@ def furnished_room() -> SceneSpec:
     return SceneSpec(
         rooms=[RoomSpec("bedroom", 0.0, 0.0, 3.80, 3.20, ceiling=2.65)],
         openings=[
-            OpeningSpec("bedroom-D1", "door", "bedroom", "W", start=0.30, width=0.85,
-                        height=2.03),
-            OpeningSpec("bedroom-WIN1", "window", "bedroom", "E", start=0.90, width=1.40,
-                        height=1.25, sill=0.85, depth=0.23),
+            OpeningSpec("bedroom-D1", "door", "bedroom", "W", start=0.30, width=0.85, height=2.03),
+            OpeningSpec(
+                "bedroom-WIN1",
+                "window",
+                "bedroom",
+                "E",
+                start=0.90,
+                width=1.40,
+                height=1.25,
+                sill=0.85,
+                depth=0.23,
+            ),
         ],
         boxes=[
             BoxSpec("bed", 1.30, 1.30, 0.0, 3.30, 3.20, 0.50),

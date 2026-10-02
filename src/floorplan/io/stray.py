@@ -152,8 +152,9 @@ def read_stray(path: Path | str) -> Capture:
         elif fallback_K is not None:
             fx, fy, cx, cy = fallback_K[0, 0], fallback_K[1, 1], fallback_K[0, 2], fallback_K[1, 2]
         else:
-            raise ValueError("no intrinsics: odometry.csv has no fx/fy/cx/cy and there is no "
-                             "camera_matrix.csv")
+            raise ValueError(
+                "no intrinsics: odometry.csv has no fx/fy/cx/cy and there is no camera_matrix.csv"
+            )
         sx = depth_size[0] / rgb_width
         sy = depth_size[1] / rgb_height
         K = np.array([[fx * sx, 0.0, cx * sx], [0.0, fy * sy, cy * sy], [0.0, 0.0, 1.0]])

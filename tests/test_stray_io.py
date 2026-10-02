@@ -68,8 +68,11 @@ def test_old_format_without_per_frame_intrinsics(tmp_path):
     (tmp_path / "odometry.csv").write_text(
         "timestamp, frame, x, y, z, qx, qy, qz, qw\n0.0, 000000, 0, 0, 0, 1, 0, 0, 0\n"
     )
-    np.savetxt(tmp_path / "camera_matrix.csv",
-               [[1500.0, 0, 950.0], [0, 1500.0, 715.0], [0, 0, 1]], delimiter=",")
+    np.savetxt(
+        tmp_path / "camera_matrix.csv",
+        [[1500.0, 0, 950.0], [0, 1500.0, 715.0], [0, 0, 1]],
+        delimiter=",",
+    )
     capture = read_stray(tmp_path)
     assert np.isclose(capture.frames[0].K[0, 0], 1500.0 * 256 / 1920)
     assert capture.confidence(0) is None

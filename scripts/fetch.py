@@ -102,8 +102,11 @@ def download(
             last_report = time.time()
             got = sum(done)
             rate = got / max(time.time() - started, 1e-6)
-            print(f"{destination.name}: {got / 1e6:6.1f} / {size / 1e6:.1f} MB "
-                  f"({rate / 1e3:.0f} kB/s)", flush=True)
+            print(
+                f"{destination.name}: {got / 1e6:6.1f} / {size / 1e6:.1f} MB "
+                f"({rate / 1e3:.0f} kB/s)",
+                flush=True,
+            )
     if errors:
         raise RuntimeError(f"{destination.name}: " + "; ".join(errors))
 
@@ -118,15 +121,19 @@ def download(
         temporary.unlink()
         for part in parts:
             part.unlink(missing_ok=True)
-        raise RuntimeError(f"{destination.name}: checksum mismatch, expected {sha256}, "
-                           f"got {actual}. The download was discarded.")
+        raise RuntimeError(
+            f"{destination.name}: checksum mismatch, expected {sha256}, "
+            f"got {actual}. The download was discarded."
+        )
     temporary.replace(destination)
     for part in parts:
         part.unlink(missing_ok=True)
     if not quiet:
         elapsed = time.time() - started
-        print(f"{destination.name}: done, {size / 1e6:.1f} MB in {elapsed:.0f} s, "
-              f"sha256 {actual[:16]}… {'verified' if sha256 else '(not checked)'}")
+        print(
+            f"{destination.name}: done, {size / 1e6:.1f} MB in {elapsed:.0f} s, "
+            f"sha256 {actual[:16]}… {'verified' if sha256 else '(not checked)'}"
+        )
     return destination
 
 

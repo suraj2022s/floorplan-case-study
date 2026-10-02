@@ -21,7 +21,7 @@
       "gate": "Ceiling height, repeat captures",
       "tier": "lidar",
       "status": "FAIL",
-      "value": "spread 1.06 cm over 3 room pair(s)",
+      "value": "spread 1.05 cm over 3 room pair(s)",
       "threshold": "spread across captures <= 1 cm",
       "detail": "unrepeatable; mean error -3.26 cm"
     },
@@ -37,7 +37,7 @@
       "gate": "Wall lengths",
       "tier": "lidar",
       "status": "not evaluated",
-      "value": "median 12.7 cm, worst 13.9 cm (4.1%); 8 wall(s) not found",
+      "value": "median 8.5 cm, worst 13.2 cm (4.1%); 8 wall(s) not found",
       "threshold": "set by the Round 1 gate table (not yet in spec/)",
       "detail": ""
     },
@@ -53,9 +53,9 @@
       "gate": "Interval calibration",
       "tier": "lidar",
       "status": "FAIL",
-      "value": "0/11 = 0% of 90% intervals contain the truth",
+      "value": "2/11 = 18% of 90% intervals contain the truth",
       "threshold": ">= 72% (90% less two standard errors at n=11)",
-      "detail": "ceiling_height 0/3; floor_area 0/3; opening_width 0/1; wall_length 0/4"
+      "detail": "ceiling_height 0/3; floor_area 0/3; opening_width 0/1; wall_length 2/4"
     }
   ],
   "ablation": [],
@@ -84,16 +84,10 @@
         {
           "id": "bedroom-WIN1",
           "outcome": "matched",
-          "predicted": "room_1-WIN1",
+          "predicted": "room_1-P1",
           "truth_kind": "window",
-          "predicted_kind": "window",
-          "width_error": -0.4474,
-          "within_tolerance": false
-        },
-        {
-          "id": "room_1-P1",
-          "outcome": "phantom",
           "predicted_kind": "passage",
+          "width_error": -0.4953,
           "within_tolerance": false
         }
       ],
@@ -104,11 +98,11 @@
           "kind": "wall_length",
           "id": "bedroom-W1",
           "truth": 3.1877,
-          "value": 3.056228370066609,
-          "lo": 3.0292191120666088,
-          "hi": 3.083237628066609,
+          "value": 3.0559316124547027,
+          "lo": 3.0289223544547026,
+          "hi": 3.0829408704547028,
           "basis": "observed",
-          "error": -0.1315,
+          "error": -0.1318,
           "covered": false
         },
         {
@@ -117,12 +111,12 @@
           "kind": "wall_length",
           "id": "bedroom-W2",
           "truth": 3.7213,
-          "value": 3.5818508134761844,
-          "lo": 3.5507786524761844,
-          "hi": 3.6129229744761844,
+          "value": 3.7093428663309083,
+          "lo": 3.6772508673309083,
+          "hi": 3.741434865330908,
           "basis": "observed",
-          "error": -0.1394,
-          "covered": false
+          "error": -0.012,
+          "covered": true
         },
         {
           "capture": "bedroom-a",
@@ -130,12 +124,12 @@
           "kind": "wall_length",
           "id": "bedroom-W3",
           "truth": 3.1804,
-          "value": 3.131378426508045,
-          "lo": 3.0834953875080453,
-          "hi": 3.179261465508045,
-          "basis": "observed",
-          "error": -0.049,
-          "covered": false
+          "value": 3.1327915470579537,
+          "lo": 1.8990672000579538,
+          "hi": 4.366515894057954,
+          "basis": "inferred",
+          "error": -0.0476,
+          "covered": true
         },
         {
           "capture": "bedroom-a",
@@ -156,11 +150,11 @@
           "kind": "ceiling_height",
           "id": "bedroom",
           "truth": 2.6399,
-          "value": 2.607,
-          "lo": 2.5834,
-          "hi": 2.6306,
+          "value": 2.6069,
+          "lo": 2.5833,
+          "hi": 2.6305,
           "basis": "observed",
-          "error": -0.0329,
+          "error": -0.033,
           "covered": false
         },
         {
@@ -169,11 +163,11 @@
           "kind": "floor_area",
           "id": "bedroom",
           "truth": 11.859,
-          "value": 11.0898,
-          "lo": 10.9028,
-          "hi": 11.2768,
-          "basis": "observed",
-          "error": -0.7692,
+          "value": 11.1551,
+          "lo": 10.9473,
+          "hi": 11.3629,
+          "basis": "inferred",
+          "error": -0.7039,
           "covered": false
         },
         {
@@ -182,26 +176,26 @@
           "kind": "opening_width",
           "id": "bedroom-WIN1",
           "truth": 1.326,
-          "value": 0.8786,
-          "lo": 0.8282,
-          "hi": 0.929,
+          "value": 0.8307,
+          "lo": 0.8114,
+          "hi": 0.85,
           "basis": "observed",
-          "error": -0.4474,
+          "error": -0.4953,
           "covered": false
         }
       ],
       "timings_s": {
         "keyframes": 0.003,
-        "fragments": 4.313,
-        "drift": 1.555,
-        "cloud": 0.068,
-        "planes": 0.529,
-        "layout": 0.131,
-        "refine": 0.008,
-        "levels": 0.025,
-        "openings": 1.062,
+        "fragments": 4.39,
+        "drift": 1.599,
+        "cloud": 0.072,
+        "planes": 0.544,
+        "layout": 0.137,
+        "refine": 0.009,
+        "levels": 0.028,
+        "openings": 1.086,
         "measure": 0.001,
-        "damage": 18.502
+        "damage": 0.198
       },
       "warnings": [
         "intervals for the lidar tier are not yet calibrated against a benchmark"
@@ -231,6 +225,12 @@
           "id": "bedroom-WIN1",
           "outcome": "missed",
           "truth_kind": "window",
+          "within_tolerance": false
+        },
+        {
+          "id": "room_1-P1",
+          "outcome": "phantom",
+          "predicted_kind": "passage",
           "within_tolerance": false
         },
         {
@@ -299,11 +299,11 @@
           "kind": "ceiling_height",
           "id": "bedroom",
           "truth": 2.6399,
-          "value": 2.6021,
-          "lo": 2.5785,
-          "hi": 2.6257,
+          "value": 2.6023,
+          "lo": 2.5787,
+          "hi": 2.6259,
           "basis": "observed",
-          "error": -0.0378,
+          "error": -0.0376,
           "covered": false
         },
         {
@@ -312,26 +312,26 @@
           "kind": "floor_area",
           "id": "bedroom",
           "truth": 11.859,
-          "value": 12.4783,
-          "lo": 12.2564,
-          "hi": 12.7002,
+          "value": 12.0743,
+          "lo": 11.8606,
+          "hi": 12.288,
           "basis": "inferred",
-          "error": 0.6193,
+          "error": 0.2153,
           "covered": false
         }
       ],
       "timings_s": {
         "keyframes": 0.002,
-        "fragments": 2.47,
-        "drift": 1.008,
+        "fragments": 2.551,
+        "drift": 1.013,
         "cloud": 0.049,
         "planes": 0.403,
         "layout": 0.083,
         "refine": 0.01,
-        "levels": 0.024,
-        "openings": 0.576,
+        "levels": 0.028,
+        "openings": 0.59,
         "measure": 0.001,
-        "damage": 15.741
+        "damage": 0.218
       },
       "warnings": [
         "intervals for the lidar tier are not yet calibrated against a benchmark"
@@ -370,9 +370,9 @@
           "within_tolerance": false
         },
         {
-          "id": "room_1-D1",
+          "id": "room_1-WIN1",
           "outcome": "phantom",
-          "predicted_kind": "door",
+          "predicted_kind": "window",
           "within_tolerance": false
         }
       ],
@@ -435,11 +435,11 @@
           "kind": "ceiling_height",
           "id": "bedroom",
           "truth": 2.6399,
-          "value": 2.6127,
-          "lo": 2.589,
-          "hi": 2.6363,
+          "value": 2.6128,
+          "lo": 2.5891,
+          "hi": 2.6364,
           "basis": "observed",
-          "error": -0.0272,
+          "error": -0.0271,
           "covered": false
         },
         {
@@ -448,26 +448,26 @@
           "kind": "floor_area",
           "id": "bedroom",
           "truth": 11.859,
-          "value": 15.7839,
-          "lo": 15.3126,
-          "hi": 16.2552,
+          "value": 15.7338,
+          "lo": 15.2783,
+          "hi": 16.1893,
           "basis": "inferred",
-          "error": 3.9249,
+          "error": 3.8748,
           "covered": false
         }
       ],
       "timings_s": {
         "keyframes": 0.002,
-        "fragments": 3.401,
-        "drift": 1.466,
-        "cloud": 0.072,
-        "planes": 0.848,
-        "layout": 0.129,
-        "refine": 0.006,
-        "levels": 0.033,
-        "openings": 1.132,
+        "fragments": 3.424,
+        "drift": 1.395,
+        "cloud": 0.069,
+        "planes": 0.637,
+        "layout": 0.125,
+        "refine": 0.008,
+        "levels": 0.032,
+        "openings": 1.006,
         "measure": 0.001,
-        "damage": 13.364
+        "damage": 0.188
       },
       "warnings": [
         "intervals for the lidar tier are not yet calibrated against a benchmark"

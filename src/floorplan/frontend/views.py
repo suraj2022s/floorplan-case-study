@@ -47,6 +47,9 @@ VIEW_PLANES = PlaneConfig(
 )
 
 
+KEEP_POINTS = 4000  # points kept per view for frame-to-frame alignment
+
+
 @dataclass
 class View:
     """A still image with metric depth, as a depth model provides it."""
@@ -71,6 +74,10 @@ class LevelView:
     floor: Level | None
     ceiling_height: float | None
     notes: list[str] = field(default_factory=list)
+    # a thinned copy of the view's points and normals in the local frame, used to measure
+    # how far the camera moved between two consecutive video frames
+    points: np.ndarray = field(default_factory=lambda: np.zeros((0, 3)), repr=False)
+    normals: np.ndarray = field(default_factory=lambda: np.zeros((0, 3)), repr=False)
 
     @property
     def facing_axis(self) -> int:
@@ -120,9 +127,18 @@ def single_frame_capture(
 
 
 def level_view(
-    view: View, cloud_config: CloudConfig = VIEW_CLOUD, plane_config: PlaneConfig = VIEW_PLANES
+    view: View,
+    cloud_config: CloudConfig = VIEW_CLOUD,
+    plane_config: PlaneConfig = VIEW_PLANES,
+    wall_min_top: float | None = None,
 ) -> LevelView:
-    """Level a view, put its floor at z = 0 and align its walls with the axes."""
+    """Level a view, put its floor at z = 0 and align its walls with the axes.
+
+    `wall_min_top` is how high a vertical surface must reach to count as a wall. Left as
+    None it follows the ceiling, which suits a photo taken from across the room. A video
+    frame is often a close-up that shows a wall only up to head height; the tracker passes
+    a low value so such frames still give it something to hold on to.
+    """
     notes: list[str] = []
     valid = view.depth > 0
     points = backproject(view.depth.astype(np.float64), view.K)
@@ -161,7 +177,7 @@ def level_view(
     cloud = fragment_clouds(capture, cloud_config)[0][0]
     floor0 = find_level(cloud, facing_up=True, config=plane_config) or Level(np.zeros(3), 0.0, 0)
     ceiling0 = find_level(cloud, facing_up=False, config=plane_config)
-    walls = _own_walls(find_wall_lines(cloud, floor0, ceiling0, plane_config))
+    walls = _own_walls(find_wall_lines(cloud, floor0, ceiling0, plane_config, min_top=wall_min_top))
     turn = 0.0
     if walls:
         strongest = max(walls, key=lambda wall: wall.count)
@@ -172,7 +188,10 @@ def level_view(
     c, s = np.cos(turn), np.sin(turn)
     R_turn = np.array([[c, -s, 0.0], [s, c, 0.0], [0.0, 0.0, 1.0]])
     aligned = [_turn_wall(wall, R_turn[:2, :2]) for wall in walls]
+    step = max(1, len(cloud) // KEEP_POINTS)
     return LevelView(
+        points=(cloud.xyz[::step] @ R_turn.T).astype(np.float32),
+        normals=(cloud.normal[::step] @ R_turn.T).astype(np.float32),
         view=view,
         R_local_cam=R_turn @ R_level_cam,
         camera_height=camera_height,

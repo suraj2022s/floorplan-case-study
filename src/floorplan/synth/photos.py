@@ -61,17 +61,65 @@ def protocol_views(
         # a hand-held photo is never perfectly level or square to the wall
         yaw += np.radians(rng.normal(0, 3.0))
         pitch = np.radians(rng.normal(0, 3.0))
-        scale = float(np.exp(rng.normal(0, scale_sigma)))
-        noise = NoiseModel(sigma_a=0.001, sigma_b=pixel_noise, scale_bias=scale - 1.0)
-        depth, _ = render_depth(raycaster, pose(x, y, z, yaw, pitch), PHOTO, noise, rng)
-        # A network's depth is smooth from pixel to pixel; what it gets wrong varies slowly
-        # across the image. Model that as a gentle tilt and bow of the whole depth map.
-        height, width = depth.shape
-        u = np.linspace(-1, 1, width)[None, :]
-        v = np.linspace(-1, 1, height)[:, None]
-        a, b, c = rng.normal(0, warp, size=3)
-        depth = np.where(depth > 0, depth * (1 + a * u + b * v + c * (u**2 + v**2 - 0.6)), 0)
-        views.append(
-            View(name=f"{room_name}_{slot + 1}", depth=depth.astype(np.float32), K=PHOTO.K_depth)
+        depth = _model_like_depth(
+            raycaster, pose(x, y, z, yaw, pitch), rng, scale_sigma, pixel_noise, warp
         )
+        views.append(View(name=f"{room_name}_{slot + 1}", depth=depth, K=PHOTO.K_depth))
     return views
+
+
+def _model_like_depth(raycaster, T_world_cam, rng, scale_sigma, pixel_noise, warp) -> np.ndarray:
+    scale = float(np.exp(rng.normal(0, scale_sigma)))
+    noise = NoiseModel(sigma_a=0.001, sigma_b=pixel_noise, scale_bias=scale - 1.0)
+    depth, _ = render_depth(raycaster, T_world_cam, PHOTO, noise, rng)
+    # A network's depth is smooth from pixel to pixel; what it gets wrong varies slowly
+    # across the image. Model that as a gentle tilt and bow of the whole depth map.
+    height, width = depth.shape
+    u = np.linspace(-1, 1, width)[None, :]
+    v = np.linspace(-1, 1, height)[:, None]
+    a, b, c = rng.normal(0, warp, size=3)
+    depth = np.where(depth > 0, depth * (1 + a * u + b * v + c * (u**2 + v**2 - 0.6)), 0)
+    return depth.astype(np.float32)
+
+
+def walk_views(
+    scene: SceneSpec,
+    route: list[tuple[float, float, bool]],
+    every: int = 3,
+    seed: int = 0,
+    scale_sigma: float = 0.02,
+    pixel_noise: float = 0.001,
+    warp: float = 0.006,
+) -> tuple[list[View], list[np.ndarray]]:
+    """Frames sampled from a walkthrough, as a video tier would get them, and their true
+    poses (for checking the recovered camera path)."""
+    from floorplan.synth.render import walk_route
+
+    rng = np.random.default_rng(seed)
+    vertices, triangles = scene.mesh()
+    raycaster = o3d.t.geometry.RaycastingScene()
+    raycaster.add_triangles(o3d.core.Tensor(vertices), o3d.core.Tensor(triangles))
+    dense = walk_route(route, PHOTO, spin_step_deg=6.0, tilt_deg=15.0)
+    # the scripted walker snaps to a new heading at each waypoint; a person turns round
+    # gradually, so fill each snap with a turn on the spot
+    smooth = [dense[0]]
+    for T in dense[1:]:
+        before = smooth[-1]
+        yaw0 = np.arctan2(before[1, 2], before[0, 2])
+        yaw1 = np.arctan2(T[1, 2], T[0, 2])
+        turn = (yaw1 - yaw0 + np.pi) % (2 * np.pi) - np.pi
+        steps = int(abs(turn) // np.radians(12.0))
+        pitch = np.arcsin(np.clip(before[2, 2], -1, 1))
+        for i in range(1, steps + 1):
+            smooth.append(pose(*before[:3, 3], yaw0 + turn * i / (steps + 1), pitch))
+        smooth.append(T)
+    poses = smooth[::every]
+    views = [
+        View(
+            name=f"frame_{k:04d}",
+            K=PHOTO.K_depth,
+            depth=_model_like_depth(raycaster, T, rng, scale_sigma, pixel_noise, warp),
+        )
+        for k, T in enumerate(poses)
+    ]
+    return views, poses

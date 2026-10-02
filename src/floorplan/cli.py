@@ -71,8 +71,20 @@ def run(
         # time not spent in the shared back-end: loading the model and predicting depth
         spent = sum(plan.timings.values())
         plan.timings["depth_model"] = round(time.perf_counter() - started - spent, 3)
+    elif tier == "video":
+        from floorplan.frontend.video import video_capture
+        from floorplan.models.depth import DepthModel
+
+        started = time.perf_counter()
+        model = DepthModel()
+        loaded = video_capture(capture, model)
+        front_end = time.perf_counter() - started
+        plan = run_pipeline(loaded, config)
+        plan.stats["depth_model"] = model.describe()
+        plan.stats["video"] = loaded.notes
+        plan.timings = {"depth_and_tracking": round(front_end, 3), **plan.timings}
     else:
-        raise typer.BadParameter(f"the {tier} tier is not implemented yet")
+        raise typer.BadParameter(f"unknown tier {tier!r}; use lidar, video or photo")
 
     plan_file = out / "plan.json"
     write_json(plan_file, plan_to_dict(plan, capture.name))

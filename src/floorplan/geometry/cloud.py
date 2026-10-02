@@ -27,6 +27,7 @@ class CloudConfig:
     edge_rel: float = 0.04
     normal_step: int = 2  # pixels each side used for the surface-normal difference
     batch_frames: int = 24
+    pixel_stride: int = 1  # use every n-th pixel each way; dense image depth needs fewer
 
 
 @dataclass
@@ -100,6 +101,10 @@ def frame_points(
     points = backproject(depth.astype(np.float64), frame.K)
     normals, has_normal = _normals(points, valid, config.normal_step)
     keep = valid & has_normal
+    if config.pixel_stride > 1:
+        grid = np.zeros_like(keep)
+        grid[:: config.pixel_stride, :: config.pixel_stride] = True
+        keep &= grid
     R, t = frame.T_world_cam[:3, :3], frame.T_world_cam[:3, 3]
     xyz = points[keep] @ R.T + t
     normal = normals[keep] @ R.T

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Large inputs and outputs: fetched or regenerated, never committed
+captures/
+weights/
+out/
+.cache/
+
+# Local tool settings
+.claude/settings.local.json
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store

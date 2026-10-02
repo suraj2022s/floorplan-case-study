@@ -1,4 +1,11 @@
-"""Draw room finding's internals for one capture: wall lines, seen stretches, cells, groups."""
+"""Draw room finding's internals for one capture: wall lines, seen stretches, cells, rooms.
+
+    python bench/public/layout_debug.py <ARKitScenes capture dir> <out.png>
+
+Development tool. Grey: where floor or ceiling was seen; blue cells: counted as inside (with
+their evidence share); orange dots: stretches of wall seen to full height; green: the path;
+red: the rooms found.
+"""
 
 import sys
 
@@ -34,8 +41,10 @@ print(len(lines), "wall lines")
 for k, line in enumerate(lines):
     t = (line.supported_bins + 0.5) * SUPPORT_BIN
     span = f"{t.min():.2f}..{t.max():.2f}" if len(t) else "none"
+    facing = np.degrees(np.arctan2(line.normal[1], line.normal[0]))
     print(
-        f"  line {k}: facing {np.degrees(np.arctan2(line.normal[1], line.normal[0])):7.1f}, offset {line.offset:6.3f}, supported {line.supported_length:.2f} m over {span}, rms {line.rms * 1000:.1f} mm"
+        f"  line {k}: facing {facing:7.1f}, offset {line.offset:6.3f}, seen "
+        f"{line.supported_length:.2f} m over {span}, rms {line.rms * 1000:.1f} mm"
     )
 
 cfg = config.layout
@@ -62,7 +71,7 @@ figure, axis = plt.subplots(figsize=(9, 9))
 axis.imshow(
     evidence, extent=(xs[0], xs[-1], ys[0], ys[-1]), origin="lower", cmap="Greys", alpha=0.35
 )
-for c, s in zip(cells, share):
+for c, s in zip(cells, share, strict=True):
     xx, yy = c.exterior.xy
     axis.fill(xx, yy, alpha=0.15 if s >= 0.5 else 0.0, color="#2a78d6")
     axis.plot(xx, yy, color="#c3c2be", linewidth=0.4)

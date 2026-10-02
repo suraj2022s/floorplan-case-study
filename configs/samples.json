@@ -1,0 +1,47 @@
+{
+  "iphone15pro": {
+    "about": "Files written by a real iPhone 15 Pro: a portrait photo from the 0.5x lens (HEIC), a square photo (JPEG), a portrait 1080p clip, and a Live Photo (still plus its clip). Used to test that the photo and video tiers read what an iPhone 15 writes.",
+    "source": "PhotoPrism sample archive, https://dl.photoprism.app/samples/",
+    "licence": "PhotoPrism sample-file terms (CC BY-NC-SA 4.0). Not redistributed in this repository; fetched for local tests only.",
+    "dir": "iphone15pro",
+    "files": {
+      "iphone_15_pro.heic": {
+        "url": "https://dl.photoprism.app/samples/Brands/Apple/Apple%20iPhone%2015%20Pro/iphone_15_pro.heic",
+        "sha256": "c68e438f92341da271a731a059113db9395366f4c2f78ead5ded64deba7de463"
+      },
+      "2024-03-28_17-26-14.jpg": {
+        "url": "https://dl.photoprism.app/samples/Brands/Apple/Apple%20iPhone%2015%20Pro/2024-03-28_17-26-14.jpg",
+        "sha256": "0e316e7b48ab199460621644e35676a015fd1abf12a348388f96d0b5f6285bb7"
+      },
+      "2024-03-28_17-26-17.mov": {
+        "url": "https://dl.photoprism.app/samples/Brands/Apple/Apple%20iPhone%2015%20Pro/2024-03-28_17-26-17.mov",
+        "sha256": "193bae17fc3e35425e98647151b43cdad4c40f981c818bb956a5c0541f2c9c41"
+      },
+      "IMG_0011.heic": {
+        "url": "https://dl.photoprism.app/samples/Formats/Live/Apple/IMG_0011.heic",
+        "sha256": "3a76436c39412f7eae3395b453e995063b4ddcde429b02f8d8c448c680a52b46"
+      },
+      "IMG_0011.mov": {
+        "url": "https://dl.photoprism.app/samples/Formats/Live/Apple/IMG_0011.mov",
+        "sha256": "8430465de98bc186e3cb63bf17b789bb41ebf8003e9f25feaea5b2a2e0b5b5a3"
+      }
+    }
+  },
+  "stray-kitchen": {
+    "about": "One complete recording made with the Stray Scanner app on a LiDAR iPhone (2063 frames, 34 s, a kitchen worktop). Used to test the LiDAR tier's reader on what the app really writes. Four frames of it are kept in tests/data/stray_real_excerpt.",
+    "source": "Diffraction, Egocentric Kitchen Capture Sample (2026), https://huggingface.co/datasets/diffracting/egocentric-kitchen-sample, revision 75ccd3fc9fbb78be56029539ab1ebf9fb1f3e2f4",
+    "licence": "CC BY 4.0",
+    "dir": "stray_kitchen",
+    "files": {
+      "pepper-dicing.zip": {
+        "url": "https://huggingface.co/datasets/diffracting/egocentric-kitchen-sample/resolve/75ccd3fc9fbb78be56029539ab1ebf9fb1f3e2f4/sensors/pepper-dicing.zip",
+        "sha256": "477b42ac2c8044dc3ecec64a9f86429cc379f3e6ab7ba1a0c7ad24f48db45fa5"
+      },
+      "pepper-dicing.mp4": {
+        "url": "https://huggingface.co/datasets/diffracting/egocentric-kitchen-sample/resolve/75ccd3fc9fbb78be56029539ab1ebf9fb1f3e2f4/videos/pepper-dicing.mp4",
+        "sha256": "e164e7b06fa2f73e41f87eba48f59ef9b808a9b99516a9a02e6cda3afcf7558b"
+      }
+    },
+    "unpack": {"archive": "pepper-dicing.zip", "to": "pepper-dicing", "also": {"pepper-dicing.mp4": "rgb.mp4"}}
+  }
+}

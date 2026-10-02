@@ -1,0 +1,56 @@
+# Ground truth for one site. Copy this file, rename it to <site>.yaml, fill it in.
+# How to measure: see ../GT_PROTOCOL.md. Lengths in metres, to the millimetre.
+
+site: example-flat            # short name, also used for the capture folders
+measured_on: 2026-10-03
+measured_by: ""
+instrument:
+  type: laser                 # laser | steel_tape
+  model: ""
+  stated_accuracy_mm: 2
+sketch: sketch.jpg            # photo of the hand-drawn plan with labels
+
+rooms:
+  - id: living
+    # Walls in order: W1 has the door you came in through; then turn to your RIGHT.
+    walls:
+      - {id: W1, length: 0.000, repeat: 0.000, note: ""}
+      - {id: W2, length: 0.000, repeat: 0.000, note: ""}
+      - {id: W3, length: 0.000, repeat: 0.000, note: ""}
+      - {id: W4, length: 0.000, repeat: 0.000, note: ""}
+    ceiling_height:
+      middle: 0.000
+      corner_a: 0.000
+      corner_b: 0.000
+    diagonals: [0.000, 0.000]   # leave empty [] for rooms that are not four-walled
+    openings:
+      - id: D1
+        wall: W1
+        kind: door              # door | passage | window
+        width: {top: 0.000, middle: 0.000, bottom: 0.000}
+        height: 0.000
+        sill: 0.000             # 0 for doors and passages
+        from_left_corner: 0.000 # along the wall, facing it from inside this room
+        wall_thickness: 0.000
+        connects: corridor      # room id on the other side, or "outside"
+
+# Rooms joined by an opening, one pair per opening.
+adjacency:
+  - [living, corridor]
+
+# Two or more long distances through doorways, wall face to wall face.
+cross_room_distances:
+  - {from: "living W3", to: "corridor W2", value: 0.000, note: ""}
+
+# Staged or real damage in the furnished room.
+damage:
+  - id: DMG1
+    room: living
+    surface: W2                 # wall id, "ceiling" or "floor"
+    class: water_stain          # see configs/rules.yaml for the class list
+    staged: true                # true if you created it for the benchmark
+    width: 0.000                # widest horizontal extent
+    height: 0.000               # tallest vertical extent
+    from_left_corner: 0.000     # to the nearest edge of the damage
+    above_floor: 0.000          # to the lowest edge of the damage
+    note: ""

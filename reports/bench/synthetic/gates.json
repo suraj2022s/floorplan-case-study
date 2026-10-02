@@ -1,0 +1,1622 @@
+{
+  "benchmark": "synthetic",
+  "gates": [
+    {
+      "gate": "Opening widths",
+      "tier": "lidar",
+      "status": "PASS",
+      "value": "18/18 = 100%",
+      "threshold": "<= 2 cm on >= 85%; a miss and a phantom each count as a miss",
+      "detail": "0 missed, 0 phantom, 0 found but off by more than 2 cm"
+    },
+    {
+      "gate": "Ceiling height",
+      "tier": "lidar",
+      "status": "PASS",
+      "value": "11/11 rooms within 1.5 cm; worst 0.0 cm",
+      "threshold": "<= 1.5 cm in every room",
+      "detail": "mean signed error -0.00 cm"
+    },
+    {
+      "gate": "Ceiling height, repeat captures",
+      "tier": "lidar",
+      "status": "PASS",
+      "value": "spread 0.00 cm over 1 room pair(s)",
+      "threshold": "spread across captures <= 1 cm",
+      "detail": "repeatable and unbiased; mean error -0.01 cm"
+    },
+    {
+      "gate": "Repeatability per wall",
+      "tier": "lidar",
+      "status": "PASS",
+      "value": "4/4 walls agree; worst 0.00 cm",
+      "threshold": "two captures agree within 1 cm or 0.5% per wall",
+      "detail": "reading 'or' as whichever is larger. Strict reading (whichever is smaller): 4/4"
+    },
+    {
+      "gate": "Wall lengths",
+      "tier": "lidar",
+      "status": "not evaluated",
+      "value": "median 0.0 cm, worst 0.5 cm (0.1%); 0 wall(s) not found",
+      "threshold": "set by the Round 1 gate table (not yet in spec/)",
+      "detail": ""
+    },
+    {
+      "gate": "Whole-property stitch",
+      "tier": "lidar",
+      "status": "PASS",
+      "value": "flat: footprint -0.0%; flat-drift: footprint -0.1%",
+      "threshold": "one plan, correct adjacency, no overlaps, footprint within +-8%, interval holds",
+      "detail": ""
+    },
+    {
+      "gate": "Interval calibration",
+      "tier": "lidar",
+      "status": "PASS",
+      "value": "89/89 = 100% of 90% intervals contain the truth",
+      "threshold": ">= 84% (90% less two standard errors at n=89)",
+      "detail": "ceiling_height 11/11; floor_area 11/11; footprint_area 5/5; opening_width 18/18; wall_length 44/44"
+    }
+  ],
+  "ablation": [
+    {
+      "capture": "flat-drift",
+      "correction": "on",
+      "rooms": "4 / 4",
+      "walls_found": 16,
+      "walls_measured": 16,
+      "footprint_error": "-0.06%",
+      "worst_wall_cm": "0.5",
+      "overlap": 0.0
+    },
+    {
+      "capture": "flat-drift",
+      "correction": "off",
+      "rooms": "4 / 4",
+      "walls_found": 16,
+      "walls_measured": 16,
+      "footprint_error": "-0.05%",
+      "worst_wall_cm": "0.9",
+      "overlap": 0.0
+    }
+  ],
+  "failed_captures": [],
+  "captures": [
+    {
+      "capture": "box-room-a",
+      "tier": "lidar",
+      "site": "box-room-a",
+      "group": "box-room",
+      "rooms_found": 1,
+      "rooms_measured": 1,
+      "adjacency_correct": true,
+      "adjacency": {
+        "measured": [],
+        "found": []
+      },
+      "overlap_area": 0.0,
+      "openings": [
+        {
+          "id": "room-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D1",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.002,
+          "within_tolerance": true
+        },
+        {
+          "id": "room-WIN1",
+          "outcome": "matched",
+          "predicted": "room_1-WIN1",
+          "truth_kind": "window",
+          "predicted_kind": "window",
+          "width_error": -0.0047,
+          "within_tolerance": true
+        }
+      ],
+      "rows": [
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "room-S",
+          "truth": 4.2,
+          "value": 4.2,
+          "lo": 4.164,
+          "hi": 4.2359,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "room-W",
+          "truth": 3.35,
+          "value": 3.3499,
+          "lo": 3.3207,
+          "hi": 3.3792,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "room-N",
+          "truth": 4.2,
+          "value": 4.2,
+          "lo": 4.1641,
+          "hi": 4.2359,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "room-E",
+          "truth": 3.35,
+          "value": 3.35,
+          "lo": 3.3207,
+          "hi": 3.3792,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "room",
+          "truth": 2.74,
+          "value": 2.7399,
+          "lo": 2.7153,
+          "hi": 2.7645,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "room",
+          "truth": 14.07,
+          "value": 14.0698,
+          "lo": 13.833,
+          "hi": 14.3065,
+          "basis": "observed",
+          "error": -0.0002,
+          "covered": true
+        },
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "room-D1",
+          "truth": 0.9,
+          "value": 0.898,
+          "lo": 0.8785,
+          "hi": 0.9174,
+          "basis": "observed",
+          "error": -0.002,
+          "covered": true
+        },
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "room-WIN1",
+          "truth": 1.2,
+          "value": 1.1953,
+          "lo": 1.1814,
+          "hi": 1.2092,
+          "basis": "observed",
+          "error": -0.0047,
+          "covered": true
+        },
+        {
+          "capture": "box-room-a",
+          "tier": "lidar",
+          "kind": "footprint_area",
+          "id": "box-room-a",
+          "truth": 14.07,
+          "value": 14.0698,
+          "lo": 13.833,
+          "hi": 14.3065,
+          "basis": "observed",
+          "error": -0.0002,
+          "covered": true
+        }
+      ],
+      "timings_s": {
+        "keyframes": 0.001,
+        "fragments": 5.94,
+        "drift": 1.839,
+        "cloud": 0.103,
+        "planes": 0.159,
+        "layout": 0.017,
+        "refine": 0.009,
+        "levels": 0.029,
+        "openings": 1.012,
+        "measure": 0.001
+      },
+      "warnings": [
+        "intervals for the lidar tier are not yet calibrated against a benchmark"
+      ]
+    },
+    {
+      "capture": "box-room-b",
+      "tier": "lidar",
+      "site": "box-room-b",
+      "group": "box-room",
+      "rooms_found": 1,
+      "rooms_measured": 1,
+      "adjacency_correct": true,
+      "adjacency": {
+        "measured": [],
+        "found": []
+      },
+      "overlap_area": 0.0,
+      "openings": [
+        {
+          "id": "room-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D1",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.002,
+          "within_tolerance": true
+        },
+        {
+          "id": "room-WIN1",
+          "outcome": "matched",
+          "predicted": "room_1-WIN1",
+          "truth_kind": "window",
+          "predicted_kind": "window",
+          "width_error": -0.0046,
+          "within_tolerance": true
+        }
+      ],
+      "rows": [
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "room-S",
+          "truth": 4.2,
+          "value": 4.2,
+          "lo": 4.164,
+          "hi": 4.2359,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "room-W",
+          "truth": 3.35,
+          "value": 3.3499,
+          "lo": 3.3207,
+          "hi": 3.3792,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "room-N",
+          "truth": 4.2,
+          "value": 4.2,
+          "lo": 4.1641,
+          "hi": 4.2359,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "room-E",
+          "truth": 3.35,
+          "value": 3.35,
+          "lo": 3.3207,
+          "hi": 3.3793,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "room",
+          "truth": 2.74,
+          "value": 2.7399,
+          "lo": 2.7153,
+          "hi": 2.7645,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "room",
+          "truth": 14.07,
+          "value": 14.0698,
+          "lo": 13.833,
+          "hi": 14.3066,
+          "basis": "observed",
+          "error": -0.0002,
+          "covered": true
+        },
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "room-D1",
+          "truth": 0.9,
+          "value": 0.898,
+          "lo": 0.8786,
+          "hi": 0.9175,
+          "basis": "observed",
+          "error": -0.002,
+          "covered": true
+        },
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "room-WIN1",
+          "truth": 1.2,
+          "value": 1.1954,
+          "lo": 1.1815,
+          "hi": 1.2094,
+          "basis": "observed",
+          "error": -0.0046,
+          "covered": true
+        },
+        {
+          "capture": "box-room-b",
+          "tier": "lidar",
+          "kind": "footprint_area",
+          "id": "box-room-b",
+          "truth": 14.07,
+          "value": 14.0698,
+          "lo": 13.833,
+          "hi": 14.3066,
+          "basis": "observed",
+          "error": -0.0002,
+          "covered": true
+        }
+      ],
+      "timings_s": {
+        "keyframes": 0.001,
+        "fragments": 5.593,
+        "drift": 2.149,
+        "cloud": 0.094,
+        "planes": 0.153,
+        "layout": 0.018,
+        "refine": 0.007,
+        "levels": 0.03,
+        "openings": 1.016,
+        "measure": 0.001
+      },
+      "warnings": [
+        "intervals for the lidar tier are not yet calibrated against a benchmark"
+      ]
+    },
+    {
+      "capture": "furnished-room",
+      "tier": "lidar",
+      "site": "furnished-room",
+      "group": null,
+      "rooms_found": 1,
+      "rooms_measured": 1,
+      "adjacency_correct": true,
+      "adjacency": {
+        "measured": [],
+        "found": []
+      },
+      "overlap_area": 0.0,
+      "openings": [
+        {
+          "id": "bedroom-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D1",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.0028,
+          "within_tolerance": true
+        },
+        {
+          "id": "bedroom-WIN1",
+          "outcome": "matched",
+          "predicted": "room_1-WIN1",
+          "truth_kind": "window",
+          "predicted_kind": "window",
+          "width_error": -0.0005,
+          "within_tolerance": true
+        }
+      ],
+      "rows": [
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-S",
+          "truth": 3.8,
+          "value": 3.7999,
+          "lo": 3.7671,
+          "hi": 3.8326,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-W",
+          "truth": 3.2,
+          "value": 3.2001,
+          "lo": 3.1719,
+          "hi": 3.2282,
+          "basis": "observed",
+          "error": 0.0001,
+          "covered": true
+        },
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-N",
+          "truth": 3.8,
+          "value": 3.8001,
+          "lo": 3.7673,
+          "hi": 3.8329,
+          "basis": "observed",
+          "error": 0.0001,
+          "covered": true
+        },
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-E",
+          "truth": 3.2,
+          "value": 3.2,
+          "lo": 3.1719,
+          "hi": 3.2281,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "bedroom",
+          "truth": 2.65,
+          "value": 2.65,
+          "lo": 2.626,
+          "hi": 2.6739,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "bedroom",
+          "truth": 12.16,
+          "value": 12.1601,
+          "lo": 11.9548,
+          "hi": 12.3654,
+          "basis": "observed",
+          "error": 0.0001,
+          "covered": true
+        },
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "bedroom-D1",
+          "truth": 0.85,
+          "value": 0.8472,
+          "lo": 0.8352,
+          "hi": 0.8593,
+          "basis": "observed",
+          "error": -0.0028,
+          "covered": true
+        },
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "bedroom-WIN1",
+          "truth": 1.4,
+          "value": 1.3995,
+          "lo": 1.3843,
+          "hi": 1.4146,
+          "basis": "observed",
+          "error": -0.0005,
+          "covered": true
+        },
+        {
+          "capture": "furnished-room",
+          "tier": "lidar",
+          "kind": "footprint_area",
+          "id": "furnished-room",
+          "truth": 12.16,
+          "value": 12.1601,
+          "lo": 11.9548,
+          "hi": 12.3654,
+          "basis": "observed",
+          "error": 0.0001,
+          "covered": true
+        }
+      ],
+      "timings_s": {
+        "keyframes": 0.002,
+        "fragments": 8.746,
+        "drift": 2.2,
+        "cloud": 0.116,
+        "planes": 0.137,
+        "layout": 0.015,
+        "refine": 0.006,
+        "levels": 0.025,
+        "openings": 1.532,
+        "measure": 0.001
+      },
+      "warnings": [
+        "intervals for the lidar tier are not yet calibrated against a benchmark"
+      ]
+    },
+    {
+      "capture": "flat",
+      "tier": "lidar",
+      "site": "flat",
+      "group": null,
+      "rooms_found": 4,
+      "rooms_measured": 4,
+      "adjacency_correct": true,
+      "adjacency": {
+        "measured": [
+          [
+            "bedroom",
+            "corridor"
+          ],
+          [
+            "corridor",
+            "kitchen"
+          ],
+          [
+            "corridor",
+            "living"
+          ]
+        ],
+        "found": [
+          [
+            "bedroom",
+            "corridor"
+          ],
+          [
+            "corridor",
+            "kitchen"
+          ],
+          [
+            "corridor",
+            "living"
+          ]
+        ]
+      },
+      "overlap_area": 0.0,
+      "openings": [
+        {
+          "id": "corridor-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D1",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.0024,
+          "within_tolerance": true
+        },
+        {
+          "id": "bedroom-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D4",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.004,
+          "within_tolerance": true
+        },
+        {
+          "id": "living-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D2",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.0052,
+          "within_tolerance": true
+        },
+        {
+          "id": "kitchen-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D3",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.0044,
+          "within_tolerance": true
+        },
+        {
+          "id": "bedroom-WIN1",
+          "outcome": "matched",
+          "predicted": "room_3-WIN1",
+          "truth_kind": "window",
+          "predicted_kind": "window",
+          "width_error": -0.0037,
+          "within_tolerance": true
+        },
+        {
+          "id": "living-WIN1",
+          "outcome": "matched",
+          "predicted": "room_2-WIN1",
+          "truth_kind": "window",
+          "predicted_kind": "window",
+          "width_error": -0.0052,
+          "within_tolerance": true
+        }
+      ],
+      "rows": [
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "corridor-S",
+          "truth": 1.2,
+          "value": 1.1999,
+          "lo": 1.1859,
+          "hi": 1.2139,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "corridor-W",
+          "truth": 6.0,
+          "value": 5.9998,
+          "lo": 5.9495,
+          "hi": 6.0502,
+          "basis": "observed",
+          "error": -0.0002,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "corridor-N",
+          "truth": 1.2,
+          "value": 1.1999,
+          "lo": 1.1859,
+          "hi": 1.2139,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "corridor-E",
+          "truth": 6.0,
+          "value": 6.0,
+          "lo": 5.9496,
+          "hi": 6.0503,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "corridor",
+          "truth": 2.7,
+          "value": 2.7,
+          "lo": 2.6757,
+          "hi": 2.7243,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "corridor",
+          "truth": 7.2,
+          "value": 7.1993,
+          "lo": 7.0679,
+          "hi": 7.3307,
+          "basis": "observed",
+          "error": -0.0007,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-S",
+          "truth": 3.6,
+          "value": 3.5994,
+          "lo": 3.5681,
+          "hi": 3.6306,
+          "basis": "observed",
+          "error": -0.0006,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-W",
+          "truth": 3.6,
+          "value": 3.6,
+          "lo": 3.5688,
+          "hi": 3.6312,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-N",
+          "truth": 3.6,
+          "value": 3.5991,
+          "lo": 3.5679,
+          "hi": 3.6303,
+          "basis": "observed",
+          "error": -0.0009,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-E",
+          "truth": 3.6,
+          "value": 3.6,
+          "lo": 3.5688,
+          "hi": 3.6312,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "bedroom",
+          "truth": 2.7,
+          "value": 2.7,
+          "lo": 2.6757,
+          "hi": 2.7243,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "bedroom",
+          "truth": 12.96,
+          "value": 12.9572,
+          "lo": 12.7389,
+          "hi": 13.1756,
+          "basis": "observed",
+          "error": -0.0028,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "living-S",
+          "truth": 4.5,
+          "value": 4.4993,
+          "lo": 4.461,
+          "hi": 4.5376,
+          "basis": "observed",
+          "error": -0.0007,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "living-W",
+          "truth": 3.4,
+          "value": 3.4,
+          "lo": 3.3704,
+          "hi": 3.4297,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "living-N",
+          "truth": 4.5,
+          "value": 4.4988,
+          "lo": 4.4605,
+          "hi": 4.5371,
+          "basis": "observed",
+          "error": -0.0012,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "living-E",
+          "truth": 3.4,
+          "value": 3.4,
+          "lo": 3.3703,
+          "hi": 3.4297,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "living",
+          "truth": 2.7,
+          "value": 2.7,
+          "lo": 2.6757,
+          "hi": 2.7243,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "living",
+          "truth": 15.3,
+          "value": 15.2968,
+          "lo": 15.0398,
+          "hi": 15.5539,
+          "basis": "observed",
+          "error": -0.0032,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "kitchen-S",
+          "truth": 2.8,
+          "value": 2.801,
+          "lo": 2.7759,
+          "hi": 2.826,
+          "basis": "observed",
+          "error": 0.001,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "kitchen-W",
+          "truth": 2.48,
+          "value": 2.4788,
+          "lo": 2.4561,
+          "hi": 2.5014,
+          "basis": "observed",
+          "error": -0.0012,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "kitchen-N",
+          "truth": 2.8,
+          "value": 2.801,
+          "lo": 2.776,
+          "hi": 2.8261,
+          "basis": "observed",
+          "error": 0.001,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "kitchen-E",
+          "truth": 2.48,
+          "value": 2.4787,
+          "lo": 2.456,
+          "hi": 2.5013,
+          "basis": "observed",
+          "error": -0.0013,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "kitchen",
+          "truth": 2.55,
+          "value": 2.5499,
+          "lo": 2.5268,
+          "hi": 2.5731,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "kitchen",
+          "truth": 6.944,
+          "value": 6.9429,
+          "lo": 6.8235,
+          "hi": 7.0623,
+          "basis": "observed",
+          "error": -0.0011,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "corridor-D1",
+          "truth": 0.9,
+          "value": 0.8976,
+          "lo": 0.8853,
+          "hi": 0.9099,
+          "basis": "observed",
+          "error": -0.0024,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "bedroom-D1",
+          "truth": 0.8,
+          "value": 0.796,
+          "lo": 0.7861,
+          "hi": 0.8059,
+          "basis": "observed",
+          "error": -0.004,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "living-D1",
+          "truth": 0.9,
+          "value": 0.8948,
+          "lo": 0.8843,
+          "hi": 0.9052,
+          "basis": "observed",
+          "error": -0.0052,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "kitchen-D1",
+          "truth": 0.75,
+          "value": 0.7456,
+          "lo": 0.736,
+          "hi": 0.7552,
+          "basis": "observed",
+          "error": -0.0044,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "bedroom-WIN1",
+          "truth": 1.5,
+          "value": 1.4963,
+          "lo": 1.4806,
+          "hi": 1.5121,
+          "basis": "observed",
+          "error": -0.0037,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "living-WIN1",
+          "truth": 1.8,
+          "value": 1.7948,
+          "lo": 1.7771,
+          "hi": 1.8126,
+          "basis": "observed",
+          "error": -0.0052,
+          "covered": true
+        },
+        {
+          "capture": "flat",
+          "tier": "lidar",
+          "kind": "footprint_area",
+          "id": "flat",
+          "truth": 42.404,
+          "value": 42.3962,
+          "lo": 41.6921,
+          "hi": 43.1004,
+          "basis": "observed",
+          "error": -0.0078,
+          "covered": true
+        }
+      ],
+      "timings_s": {
+        "keyframes": 0.006,
+        "fragments": 30.037,
+        "drift": 30.713,
+        "cloud": 0.588,
+        "planes": 1.08,
+        "layout": 0.217,
+        "refine": 0.039,
+        "levels": 0.162,
+        "openings": 5.665,
+        "measure": 0.001
+      },
+      "warnings": [
+        "intervals for the lidar tier are not yet calibrated against a benchmark"
+      ]
+    },
+    {
+      "capture": "flat-drift",
+      "tier": "lidar",
+      "site": "flat-drift",
+      "group": null,
+      "rooms_found": 4,
+      "rooms_measured": 4,
+      "adjacency_correct": true,
+      "adjacency": {
+        "measured": [
+          [
+            "bedroom",
+            "corridor"
+          ],
+          [
+            "corridor",
+            "kitchen"
+          ],
+          [
+            "corridor",
+            "living"
+          ]
+        ],
+        "found": [
+          [
+            "bedroom",
+            "corridor"
+          ],
+          [
+            "corridor",
+            "kitchen"
+          ],
+          [
+            "corridor",
+            "living"
+          ]
+        ]
+      },
+      "overlap_area": 0.0,
+      "openings": [
+        {
+          "id": "corridor-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D1",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": 0.0004,
+          "within_tolerance": true
+        },
+        {
+          "id": "bedroom-D1",
+          "outcome": "matched",
+          "predicted": "room_3-D1",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": 0.0007,
+          "within_tolerance": true
+        },
+        {
+          "id": "living-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D2",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.0097,
+          "within_tolerance": true
+        },
+        {
+          "id": "kitchen-D1",
+          "outcome": "matched",
+          "predicted": "room_1-D3",
+          "truth_kind": "door",
+          "predicted_kind": "door",
+          "width_error": -0.0026,
+          "within_tolerance": true
+        },
+        {
+          "id": "bedroom-WIN1",
+          "outcome": "matched",
+          "predicted": "room_3-WIN1",
+          "truth_kind": "window",
+          "predicted_kind": "window",
+          "width_error": 0.0012,
+          "within_tolerance": true
+        },
+        {
+          "id": "living-WIN1",
+          "outcome": "matched",
+          "predicted": "room_2-WIN1",
+          "truth_kind": "window",
+          "predicted_kind": "window",
+          "width_error": -0.001,
+          "within_tolerance": true
+        }
+      ],
+      "rows": [
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "corridor-S",
+          "truth": 1.2,
+          "value": 1.1997,
+          "lo": 1.1857,
+          "hi": 1.2137,
+          "basis": "observed",
+          "error": -0.0003,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "corridor-W",
+          "truth": 6.0,
+          "value": 6.0045,
+          "lo": 5.9541,
+          "hi": 6.0548,
+          "basis": "observed",
+          "error": 0.0045,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "corridor-N",
+          "truth": 1.2,
+          "value": 1.1988,
+          "lo": 1.1849,
+          "hi": 1.2128,
+          "basis": "observed",
+          "error": -0.0012,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "corridor-E",
+          "truth": 6.0,
+          "value": 5.9988,
+          "lo": 5.9485,
+          "hi": 6.0491,
+          "basis": "observed",
+          "error": -0.0012,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "corridor",
+          "truth": 2.7,
+          "value": 2.7,
+          "lo": 2.6757,
+          "hi": 2.7243,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "corridor",
+          "truth": 7.2,
+          "value": 7.1975,
+          "lo": 7.0661,
+          "hi": 7.3288,
+          "basis": "observed",
+          "error": -0.0025,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-S",
+          "truth": 3.6,
+          "value": 3.5998,
+          "lo": 3.5686,
+          "hi": 3.631,
+          "basis": "observed",
+          "error": -0.0002,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-W",
+          "truth": 3.6,
+          "value": 3.6,
+          "lo": 3.5688,
+          "hi": 3.6313,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-N",
+          "truth": 3.6,
+          "value": 3.5996,
+          "lo": 3.5684,
+          "hi": 3.6308,
+          "basis": "observed",
+          "error": -0.0004,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "bedroom-E",
+          "truth": 3.6,
+          "value": 3.5978,
+          "lo": 3.5667,
+          "hi": 3.629,
+          "basis": "observed",
+          "error": -0.0022,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "bedroom",
+          "truth": 2.7,
+          "value": 2.7,
+          "lo": 2.6757,
+          "hi": 2.7243,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "bedroom",
+          "truth": 12.96,
+          "value": 12.9551,
+          "lo": 12.7368,
+          "hi": 13.1734,
+          "basis": "observed",
+          "error": -0.0049,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "living-S",
+          "truth": 4.5,
+          "value": 4.4977,
+          "lo": 4.4594,
+          "hi": 4.5359,
+          "basis": "observed",
+          "error": -0.0023,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "living-W",
+          "truth": 3.4,
+          "value": 3.3977,
+          "lo": 3.368,
+          "hi": 3.4273,
+          "basis": "observed",
+          "error": -0.0023,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "living-N",
+          "truth": 4.5,
+          "value": 4.5,
+          "lo": 4.4617,
+          "hi": 4.5383,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "living-E",
+          "truth": 3.4,
+          "value": 3.397,
+          "lo": 3.3673,
+          "hi": 3.4266,
+          "basis": "observed",
+          "error": -0.003,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "living",
+          "truth": 2.7,
+          "value": 2.7,
+          "lo": 2.6757,
+          "hi": 2.7243,
+          "basis": "observed",
+          "error": 0.0,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "living",
+          "truth": 15.3,
+          "value": 15.2839,
+          "lo": 15.0271,
+          "hi": 15.5408,
+          "basis": "observed",
+          "error": -0.0161,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "kitchen-S",
+          "truth": 2.8,
+          "value": 2.7995,
+          "lo": 2.7745,
+          "hi": 2.8246,
+          "basis": "observed",
+          "error": -0.0005,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "kitchen-W",
+          "truth": 2.48,
+          "value": 2.4788,
+          "lo": 2.4562,
+          "hi": 2.5015,
+          "basis": "observed",
+          "error": -0.0012,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "kitchen-N",
+          "truth": 2.8,
+          "value": 2.8024,
+          "lo": 2.7774,
+          "hi": 2.8275,
+          "basis": "observed",
+          "error": 0.0024,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "wall_length",
+          "id": "kitchen-E",
+          "truth": 2.48,
+          "value": 2.4783,
+          "lo": 2.4556,
+          "hi": 2.5009,
+          "basis": "observed",
+          "error": -0.0017,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "ceiling_height",
+          "id": "kitchen",
+          "truth": 2.55,
+          "value": 2.5499,
+          "lo": 2.5267,
+          "hi": 2.5731,
+          "basis": "observed",
+          "error": -0.0001,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "floor_area",
+          "id": "kitchen",
+          "truth": 6.944,
+          "value": 6.9424,
+          "lo": 6.823,
+          "hi": 7.0618,
+          "basis": "observed",
+          "error": -0.0016,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "corridor-D1",
+          "truth": 0.9,
+          "value": 0.9004,
+          "lo": 0.888,
+          "hi": 0.9127,
+          "basis": "observed",
+          "error": 0.0004,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "bedroom-D1",
+          "truth": 0.8,
+          "value": 0.8007,
+          "lo": 0.7888,
+          "hi": 0.8125,
+          "basis": "observed",
+          "error": 0.0007,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "living-D1",
+          "truth": 0.9,
+          "value": 0.8903,
+          "lo": 0.8799,
+          "hi": 0.9007,
+          "basis": "observed",
+          "error": -0.0097,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "kitchen-D1",
+          "truth": 0.75,
+          "value": 0.7474,
+          "lo": 0.7378,
+          "hi": 0.7571,
+          "basis": "observed",
+          "error": -0.0026,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "bedroom-WIN1",
+          "truth": 1.5,
+          "value": 1.5012,
+          "lo": 1.4854,
+          "hi": 1.517,
+          "basis": "observed",
+          "error": 0.0012,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "opening_width",
+          "id": "living-WIN1",
+          "truth": 1.8,
+          "value": 1.799,
+          "lo": 1.7812,
+          "hi": 1.8168,
+          "basis": "observed",
+          "error": -0.001,
+          "covered": true
+        },
+        {
+          "capture": "flat-drift",
+          "tier": "lidar",
+          "kind": "footprint_area",
+          "id": "flat-drift",
+          "truth": 42.404,
+          "value": 42.3789,
+          "lo": 41.675,
+          "hi": 43.0827,
+          "basis": "observed",
+          "error": -0.0251,
+          "covered": true
+        }
+      ],
+      "timings_s": {
+        "keyframes": 0.007,
+        "fragments": 28.053,
+        "drift": 27.709,
+        "cloud": 0.531,
+        "planes": 1.959,
+        "layout": 0.636,
+        "refine": 0.081,
+        "levels": 0.159,
+        "openings": 5.603,
+        "measure": 0.001
+      },
+      "warnings": [
+        "intervals for the lidar tier are not yet calibrated against a benchmark"
+      ]
+    }
+  ]
+}

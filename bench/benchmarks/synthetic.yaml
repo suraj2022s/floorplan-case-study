@@ -1,0 +1,27 @@
+name: synthetic
+description: >
+  Synthetic scenes with exactly known dimensions, rendered as LiDAR captures. This benchmark
+  checks the geometry code and the scorer. It says nothing about real sensors, glass, mirrors
+  or real drift, and none of its numbers are reported as benchmark accuracy.
+
+captures:
+  - id: box-room-a
+    path: .cache/bench/synthetic/box-room-a
+    group: box-room            # captures in one group are repeats of the same room
+    synth: {scene: box_room, seed: 0}
+  - id: box-room-b
+    path: .cache/bench/synthetic/box-room-b
+    group: box-room
+    synth: {scene: box_room, seed: 1}
+  - id: furnished-room
+    path: .cache/bench/synthetic/furnished-room
+    synth: {scene: furnished_room, seed: 0}
+  - id: flat
+    path: .cache/bench/synthetic/flat
+    synth: {scene: flat, seed: 0}
+  - id: flat-drift
+    path: .cache/bench/synthetic/flat-drift
+    synth: {scene: flat, seed: 2, drift: true}
+
+ablations:
+  drift: [flat-drift]

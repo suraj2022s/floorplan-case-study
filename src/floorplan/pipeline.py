@@ -27,7 +27,7 @@ import shapely
 
 from floorplan.capture import Capture, select_keyframes
 from floorplan.geometry.cloud import Cloud, CloudConfig, fragment_clouds, merge_clouds
-from floorplan.geometry.drift import correct_drift
+from floorplan.geometry.drift import DriftConfig, correct_drift
 from floorplan.geometry.layout import LayoutConfig, Room, find_rooms, refine_room
 from floorplan.geometry.openings import Opening, OpeningConfig, find_openings
 from floorplan.geometry.planes import (
@@ -52,10 +52,66 @@ from floorplan.uncertainty.budget import (
 class PipelineConfig:
     cloud: CloudConfig = field(default_factory=CloudConfig)
     planes: PlaneConfig = field(default_factory=PlaneConfig)
+    drift: DriftConfig = field(default_factory=DriftConfig)
     layout: LayoutConfig = field(default_factory=LayoutConfig)
     openings: OpeningConfig = field(default_factory=OpeningConfig)
     correct_drift: bool = True
     room_inset: float = 0.10  # metres kept clear of the walls when fitting a room's levels
+
+
+def config_for(tier: str, correct_drift: bool = True) -> PipelineConfig:
+    """Settings for a tier.
+
+    The stages are the same for every tier. What differs is how tight the tolerances can be:
+    LiDAR depth is good to millimetres, depth predicted from an image is good to
+    centimetres and bows flat walls slightly, so the bands inside which points count as
+    "on the wall" are wider. Still images have no order in time either, so drift correction
+    treats each photo as its own fragment with no smoothness between neighbours.
+    """
+    if tier == "lidar":
+        return PipelineConfig(correct_drift=correct_drift)
+    cloud = CloudConfig(
+        voxel=0.03,
+        min_confidence=0,
+        min_depth=0.3,
+        max_depth=9.0,
+        edge_abs=0.05,
+        edge_rel=0.05,
+        normal_step=3,
+        batch_frames=1 if tier == "photo" else 8,
+    )
+    planes = PlaneConfig(
+        level_band=0.10,
+        inlier_band=0.07,
+        min_points=200,
+        max_rms=0.06,
+        copy_offset=0.20,
+        copy_angle_deg=6.0,
+    )
+    openings = OpeningConfig(
+        cell=0.03,
+        wall_band=0.08,
+        beyond=0.20,
+        max_range=9.0,
+        min_width=0.50,
+        jamb_search=0.15,
+        max_thickness=0.50,
+        face_sigma=0.02,
+        grid_sigma=0.03,
+    )
+    drift = DriftConfig(
+        assign_distance=(0.35, 0.25, 0.18, 0.12),
+        merge_offset=0.35,
+        merge_angle_deg=8.0,
+        thin=1,
+        point_sigma=0.03,
+        max_wall_rms=0.15,
+        step_sigma_shift=10.0 if tier == "photo" else 0.03,
+        step_sigma_turn_deg=90.0 if tier == "photo" else 0.3,
+    )
+    return PipelineConfig(
+        cloud=cloud, planes=planes, drift=drift, openings=openings, correct_drift=correct_drift
+    )
 
 
 @dataclass
@@ -282,7 +338,7 @@ def run(capture: Capture, config: PipelineConfig | None = None) -> Plan:
     if config.correct_drift:
         started = time.perf_counter()
         keyframes, fragments, stats["drift"] = correct_drift(
-            keyframes, fragments, ranges, plane_config=config.planes
+            keyframes, fragments, ranges, config.drift, config.planes
         )
         if not stats["drift"]["applied"]:
             warnings.append(

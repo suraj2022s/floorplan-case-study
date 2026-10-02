@@ -44,22 +44,36 @@ def run(
     drift: bool = typer.Option(True, "--drift/--no-drift", help="Correct pose drift."),
 ) -> None:
     """Run the pipeline on one capture and write plan.json, plan.svg, plan.png, run_log.json."""
-    from floorplan.io.stray import read_stray
+    import time
+
     from floorplan.output.render import draw_plan
     from floorplan.output.serialize import plan_to_dict, run_log, write_json
-    from floorplan.pipeline import PipelineConfig
+    from floorplan.pipeline import config_for
     from floorplan.pipeline import run as run_pipeline
 
     tier = detect_tier(capture) if tier == "auto" else tier
     out = out or Path("out") / capture.name
     out.mkdir(parents=True, exist_ok=True)
+    config = config_for(tier, correct_drift=drift)
 
     if tier == "lidar":
-        loaded = read_stray(capture)
+        from floorplan.io.stray import read_stray
+
+        plan = run_pipeline(read_stray(capture), config)
+    elif tier == "photo":
+        from floorplan.frontend.photo import photo_plan
+        from floorplan.models.depth import DepthModel
+
+        started = time.perf_counter()
+        model = DepthModel()
+        plan = photo_plan(capture, model.view, config)
+        plan.stats["depth_model"] = model.describe()
+        # time not spent in the shared back-end: loading the model and predicting depth
+        spent = sum(plan.timings.values())
+        plan.timings["depth_model"] = round(time.perf_counter() - started - spent, 3)
     else:
         raise typer.BadParameter(f"the {tier} tier is not implemented yet")
 
-    plan = run_pipeline(loaded, PipelineConfig(correct_drift=drift))
     plan_file = out / "plan.json"
     write_json(plan_file, plan_to_dict(plan, capture.name))
     draw_plan(plan, capture.name, out / "plan")

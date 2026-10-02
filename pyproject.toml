@@ -26,6 +26,7 @@ learned = [
     "huggingface-hub>=0.24",
     "pillow-heif>=0.18",
     "moge @ git+https://github.com/microsoft/MoGe.git@74fbce054ebed49800de42d0ad0e83495065719a",
+    "transformers>=4.45",
 ]
 
 [project.scripts]

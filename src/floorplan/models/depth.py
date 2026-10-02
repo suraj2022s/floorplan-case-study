@@ -97,6 +97,15 @@ class DepthModel:
         self._model = MoGeModel.from_pretrained(str(weights)).to(self.device).eval()
         return self._model
 
+    def release(self) -> None:
+        """Free the model: the laptop GPU cannot hold this and the detector at once."""
+        if self._model is not None:
+            import torch
+
+            self._model = None
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+
     def describe(self) -> dict:
         return {
             "model": "MoGe-2",
@@ -143,6 +152,7 @@ class DepthModel:
                 image=data["image"],
                 normal=data["normal"].astype(np.float32),
                 source=source,
+                detail=data["detail"] if "detail" in data else None,
             )
 
         import torch
@@ -187,6 +197,10 @@ class DepthModel:
                 [0.0, 0.0, 1.0],
             ]
         )
+        # a larger copy of the image, kept compressed, for looking for damage later
+        _, detail = cv2.imencode(
+            ".jpg", cv2.cvtColor(small, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 90]
+        )
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         np.savez_compressed(
             cached,
@@ -194,6 +208,7 @@ class DepthModel:
             K=K,
             image=image_small,
             normal=normal_small.astype(np.float16),
+            detail=detail,
         )
         return View(
             name=name,
@@ -202,6 +217,7 @@ class DepthModel:
             image=image_small,
             normal=normal_small.astype(np.float32),
             source=source,
+            detail=detail,
         )
 
     def _choose_without_loading(self) -> None:

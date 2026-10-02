@@ -1,6 +1,6 @@
 """Download the model weights listed in configs/weights.json into weights/.
 
-Each file is pinned to an exact revision and checked against its SHA-256. A file that is
+Every file is pinned to an exact revision and checked against its SHA-256. A file that is
 already present and matches is not downloaded again.
 
     python scripts/fetch_weights.py                # every model
@@ -28,7 +28,12 @@ def main() -> int:
         return 2
     for name in wanted:
         entry = manifest[name]
-        download(entry["url"], ROOT / "weights" / entry["file"], sha256=entry["sha256"])
+        if "files" in entry:  # a model made of several files, kept together in a folder
+            folder = ROOT / "weights" / entry["dir"]
+            for file_name, item in entry["files"].items():
+                download(item["url"], folder / file_name, sha256=item["sha256"])
+        else:
+            download(entry["url"], ROOT / "weights" / entry["file"], sha256=entry["sha256"])
     return 0
 
 

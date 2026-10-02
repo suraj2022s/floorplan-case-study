@@ -1,0 +1,65 @@
+# Concealed-damage rules.
+#
+# Each rule looks at visible damage and where it sits, and raises a flag when that pattern
+# usually means there is more damage out of sight. A flag is a reason to inspect, never a
+# diagnosis. Every flag in the output names the rule that fired and the regions it fired on,
+# so anyone can check it against this file.
+#
+# Conditions (all that are present must hold):
+#   classes            damage classes the rule applies to
+#   surface            wall | ceiling | floor
+#   max_above_floor    the region's lower edge is at most this far above the floor (m)
+#   max_below_ceiling  the region's upper edge is at most this far below the ceiling (m)
+#   min_area           the region's bounding area is at least this (m2)
+#   near_opening       {kinds: [...], within: m}  the region is within this distance of an
+#                      opening of one of these kinds on the same wall
+
+rules:
+  - id: CEIL_WATER
+    when: {classes: [water_stain], surface: ceiling}
+    message: >-
+      Water stain on a ceiling. Water has come through from above: a roof, a pipe, or a wet
+      room over this one. The source and the state of the space above are not visible.
+    inspect: MOISTURE_INSPECTION
+
+  - id: WALL_BASE_MOISTURE
+    when: {classes: [water_stain, mould, peeling_paint], surface: wall, max_above_floor: 0.30}
+    message: >-
+      Moisture damage at the foot of a wall. Typical of rising damp, a leak under the floor
+      or a failed seal at the floor edge. The wall base and the floor edge behind the
+      skirting are likely to be wet beyond what shows.
+    inspect: MOISTURE_INSPECTION
+
+  - id: WALL_TOP_MOISTURE
+    when: {classes: [water_stain, mould, peeling_paint], surface: wall, max_below_ceiling: 0.30}
+    message: >-
+      Moisture damage at the top of a wall. Water is tracking down from above the ceiling
+      line; the ceiling void or the wall head is likely to be wet.
+    inspect: MOISTURE_INSPECTION
+
+  - id: WINDOW_SURROUND_MOISTURE
+    when:
+      classes: [water_stain, mould, peeling_paint]
+      surface: wall
+      near_opening: {kinds: [window], within: 0.40}
+    message: >-
+      Moisture damage beside a window. Points to a failed seal, sill or flashing; the
+      reveal and the wall below the sill may be wet inside.
+    inspect: MOISTURE_INSPECTION
+
+  - id: CRACK_AT_OPENING
+    when:
+      classes: [crack]
+      surface: wall
+      near_opening: {kinds: [door, window, passage], within: 0.30}
+    message: >-
+      Crack beside an opening. Cracks that start at the corner of a door or window often
+      mean movement over the opening (the lintel) or settlement, which filling will not fix.
+    inspect: STRUCTURAL_INSPECTION
+
+  - id: MOULD_EXTENT
+    when: {classes: [mould], min_area: 0.50}
+    message: >-
+      Mould over a large area. Growth this extensive usually continues on the hidden side
+      of the lining and in the cavity behind it.
+    inspect: MOISTURE_INSPECTION

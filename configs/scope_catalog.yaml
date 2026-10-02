@@ -1,0 +1,64 @@
+# Scope catalogue: the repair line items a damage region or a flag gives rise to.
+#
+# quantity:
+#   damage_area     the region's bounding area, times `margin`, at least `minimum`
+#   damage_length   the region's longer side
+#   surface_area    the whole surface: a wall's length times ceiling height less its
+#                   openings, or the room's floor area for a ceiling. Paint is priced corner
+#                   to corner, because a patch of new paint on an old wall shows.
+#   one             a single visit
+
+items:
+  STAIN_BLOCK:
+    description: Seal the stain with stain-blocking primer
+    unit: m2
+    quantity: damage_area
+    margin: 1.5
+    minimum: 0.5
+  MOULD_TREAT:
+    description: Treat mould with fungicidal wash and allow to dry
+    unit: m2
+    quantity: damage_area
+    margin: 1.5
+    minimum: 0.5
+  SCRAPE_PRIME:
+    description: Scrape back loose paint, fill and prime
+    unit: m2
+    quantity: damage_area
+    margin: 1.3
+    minimum: 0.5
+  CRACK_FILL:
+    description: Rake out, fill and tape the crack
+    unit: m
+    quantity: damage_length
+  PATCH_PLASTER:
+    description: Cut back and patch plaster
+    unit: m2
+    quantity: damage_area
+    margin: 1.2
+    minimum: 0.1
+  REPAINT_WALL:
+    description: Repaint the wall, corner to corner, two coats
+    unit: m2
+    quantity: surface_area
+  REPAINT_CEILING:
+    description: Repaint the ceiling, two coats
+    unit: m2
+    quantity: surface_area
+  MOISTURE_INSPECTION:
+    description: Moisture inspection of the flagged surface and what lies behind it
+    unit: each
+    quantity: one
+  STRUCTURAL_INSPECTION:
+    description: Structural inspection of the flagged crack
+    unit: each
+    quantity: one
+
+# Items per damage class, in order. REPAINT becomes REPAINT_WALL or REPAINT_CEILING by the
+# surface, and is listed once per surface however many regions are on it.
+by_class:
+  water_stain: [STAIN_BLOCK, REPAINT]
+  mould: [MOULD_TREAT, STAIN_BLOCK, REPAINT]
+  peeling_paint: [SCRAPE_PRIME, REPAINT]
+  crack: [CRACK_FILL, REPAINT]
+  hole: [PATCH_PLASTER, REPAINT]

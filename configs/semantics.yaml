@@ -1,0 +1,46 @@
+# What the image detector is asked to find, and how sure it must be.
+#
+# Each class has one or more short phrases. A box counts for the class when the detector's
+# score for any of its phrases reaches the threshold. Thresholds are starting values chosen
+# before any benchmark capture existed; they are tuned on benchmark captures only, never on
+# the holdout, and the report says what was changed and why.
+
+damage:
+  water_stain:
+    phrases: ["water stain", "damp patch on the wall"]
+    threshold: 0.20
+  crack:
+    phrases: ["crack in the wall"]
+    threshold: 0.20
+  mould:
+    phrases: ["mold on the wall"]
+    threshold: 0.20
+  peeling_paint:
+    phrases: ["peeling paint"]
+    threshold: 0.20
+  hole:
+    phrases: ["hole in the wall"]
+    threshold: 0.20
+
+# Things that are not damage but change how the geometry should be read.
+structure:
+  mirror:
+    phrases: ["mirror"]
+    threshold: 0.30
+  television:
+    phrases: ["television screen"]
+    threshold: 0.30
+  door:
+    phrases: ["door"]
+    threshold: 0.30
+  window:
+    phrases: ["window"]
+    threshold: 0.30
+
+# At most this many images are examined per capture; they are spread evenly through it.
+max_images: 40
+# A damage region must be seen in this many images. Photos have few images, so one is enough.
+min_views:
+  lidar: 2
+  video: 2
+  photo: 1

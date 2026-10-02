@@ -1,0 +1,24 @@
+name: arkitscenes
+description: >
+  Public data, used while no iPhone is available: one bedroom from Apple's ARKitScenes
+  dataset, captured three times with the LiDAR of an iPad Pro (ARKit poses and depth) and
+  scanned with a Faro laser. Ground truth is read off the laser scan
+  (bench/ground_truth/arkitscenes-467138.yaml). This is real sensor data with laser ground
+  truth, but it is not the benchmark set the brief specifies: one room only, no multi-room
+  capture, no staged damage, an iPad rather than an iPhone, and captures made by Apple's
+  operators rather than by following our protocol. Fetch with
+  python scripts/fetch_arkitscenes.py.
+
+captures:
+  - id: bedroom-a
+    path: .cache/arkitscenes/47333462
+    group: bedroom
+    truth: bench/ground_truth/arkitscenes-467138.yaml
+  - id: bedroom-b
+    path: .cache/arkitscenes/47333463
+    group: bedroom
+    truth: bench/ground_truth/arkitscenes-467138.yaml
+  - id: bedroom-c
+    path: .cache/arkitscenes/47333468
+    group: bedroom
+    truth: bench/ground_truth/arkitscenes-467138.yaml

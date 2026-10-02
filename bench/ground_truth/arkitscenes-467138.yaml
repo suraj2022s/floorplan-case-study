@@ -1,0 +1,42 @@
+# Ground truth for one bedroom of Apple's ARKitScenes dataset (visit 467138), read off the
+# Faro Focus S70 laser scan Apple published for it (laser scan 190170) by
+# bench/public/laser_truth.py, which prints every line it fitted. Not a tape measurement by
+# us. Walls in the order of bench/GT_PROTOCOL.md: W1 has the entrance door, then clockwise.
+site: arkitscenes-467138
+source: "ARKitScenes raw, laser_scanner_point_clouds/467138/190170.ply"
+instrument:
+  type: laser
+  model: Faro Focus S70 (scan published by Apple)
+  stated_accuracy_mm: 2
+read_off_by: bench/public/laser_truth.py
+rooms:
+  - id: bedroom
+    walls:
+      - {id: W1, length: 3.1877, note: "entrance door; laser wall facing 67.64 deg"}
+      - {id: W2, length: 3.7213, note: "long wall with the TV, the desk and a curtained window"}
+      - {id: W3, length: 3.1804, note: "window wall, curtains in front of it"}
+      - {id: W4, length: 3.7278, note: "long wall with the bed"}
+    ceiling_height:
+      middle: 2.6399   # ceiling plane to the lowest floor layer, at the scanner
+    floor_area: 11.859
+    openings:
+      - id: D1
+        wall: W1
+        kind: door
+        width: 0.732
+        from_left_corner: 0.757
+        connects: outside   # the hall is not part of this benchmark
+      - id: WIN1
+        wall: W3
+        kind: window
+        width: 1.326
+        from_left_corner: 1.128
+        connects: outside
+      - id: WIN2
+        wall: W2
+        kind: window
+        width: 0.56
+        from_left_corner: 1.62
+        connects: outside
+        unscored: true      # a sheer curtain hides its edges from the laser; width unknown
+adjacency: []

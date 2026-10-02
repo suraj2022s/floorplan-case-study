@@ -69,6 +69,7 @@ class CaptureScore:
     rooms_measured: int = 0
     rooms_found: int = 0
     rooms_with_wrong_wall_count: list[str] = field(default_factory=list)
+    merged_walls: dict = field(default_factory=dict)  # room -> [walls in plan, sides scored]
     adjacency_correct: bool = False
     adjacency_detail: dict = field(default_factory=dict)
     overlap_area: float = 0.0
@@ -130,6 +131,11 @@ def score_capture(
         name_of[match.predicted.id] = room.id
         if not match.wall_count_matches:
             score.rooms_with_wrong_wall_count.append(room.id)
+        if match.predicted.raw_wall_count != len(match.predicted.walls):
+            score.merged_walls[room.id] = [
+                match.predicted.raw_wall_count,
+                len(match.predicted.walls),
+            ]
         for index, length in enumerate(room.walls):
             wall = match.predicted_wall(index)
             measurement = None if wall is None else match.predicted.walls[wall]
@@ -167,6 +173,8 @@ def score_capture(
             )
 
     for pair in match_openings(matches, prediction):
+        if pair.unscored:
+            continue  # a real opening whose width could not be measured: not counted
         if pair.truth is not None and pair.predicted is not None:
             row = _row(
                 capture,

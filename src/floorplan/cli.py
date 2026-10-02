@@ -24,9 +24,12 @@ def _build_plan(tier: str, source: Path, config):
     from floorplan.pipeline import run as run_pipeline
 
     if tier == "lidar":
+        from floorplan.io.arkitscenes import is_arkitscenes, read_arkitscenes
         from floorplan.io.stray import read_stray
 
-        return run_pipeline(read_stray(source), config), None
+        # Apple's public ARKitScenes layout is read for the public-data benchmark only
+        reader = read_arkitscenes if is_arkitscenes(source) else read_stray
+        return run_pipeline(reader(source), config), None
     if tier == "photo":
         from floorplan.frontend.photo import photo_plan
         from floorplan.models.depth import DepthModel

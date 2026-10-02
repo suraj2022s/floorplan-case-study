@@ -46,6 +46,7 @@ class TruthOpening:
     sill: float
     centre_from_left: float  # along the wall, clockwise direction, to the opening's middle
     connects: str | None  # room id on the other side, or None for outside
+    unscored: bool = False  # real, but its width could not be measured: neither hit nor miss
 
 
 @dataclass
@@ -101,6 +102,7 @@ def load_truth(path: Path) -> Truth:
                     sill=float(opening.get("sill") or 0.0),
                     centre_from_left=float(opening["from_left_corner"]) + width / 2,
                     connects=None if connects in (None, "outside") else str(connects),
+                    unscored=bool(opening.get("unscored", False)),
                 )
             )
         rooms.append(room)
@@ -185,11 +187,82 @@ class PredictedOpening:
 @dataclass
 class PredictedRoom:
     id: str
-    walls: list[dict]  # length measurements, clockwise
+    walls: list[dict]  # length measurements, clockwise (merged into sides, see _sides)
     wall_ids: list[str]
     ceiling_height: dict
     floor_area: dict
     polygon: np.ndarray
+    raw_wall_count: int = 0  # walls in plan.json before merging
+
+
+JOG_LENGTH = 0.25  # a wall shorter than this between two parallel walls is a step, not a wall
+SAME_SIDE_DEG = 20.0  # consecutive walls closer than this in direction form one side
+Z90 = 1.6449
+
+
+def _sides(walls: list[dict]) -> tuple[list[dict], list[tuple[np.ndarray, np.ndarray]], list[str]]:
+    """Merge a predicted room's walls into the sides a tape measure would be run along.
+
+    A plan can break one real wall into pieces (a step of a few centimetres at a curtain or
+    a reveal, a slight bend). Ground truth has one length per wall, measured corner to
+    corner, so for matching the pieces are merged: steps shorter than JOG_LENGTH between two
+    parallel pieces are dropped, and consecutive pieces within SAME_SIDE_DEG of each other
+    become one side, measured corner to corner along its mean direction. The merge is
+    reported (raw_wall_count), so a jagged plan stays visible in the results.
+    """
+    segments = [(np.array(w["start"], float), np.array(w["end"], float)) for w in walls]
+    count = len(segments)
+    lengths = [float(np.linalg.norm(end - start)) for start, end in segments]
+
+    def direction(k: int) -> np.ndarray:
+        start, end = segments[k % count]
+        return (end - start) / max(float(np.linalg.norm(end - start)), 1e-9)
+
+    def angle(a: np.ndarray, b: np.ndarray) -> float:
+        return float(np.degrees(np.arccos(np.clip(a @ b, -1.0, 1.0))))
+
+    jog = [
+        lengths[k] < JOG_LENGTH and angle(direction(k - 1), direction(k + 1)) < SAME_SIDE_DEG
+        for k in range(count)
+    ]
+    keep = [k for k in range(count) if not jog[k]]
+    if len(keep) < 3:
+        keep = list(range(count))
+    first = 0  # start at a kept wall that begins a new side
+    for position, k in enumerate(keep):
+        if angle(direction(keep[position - 1]), direction(k)) >= SAME_SIDE_DEG:
+            first = position
+            break
+    ordered = keep[first:] + keep[:first]
+    groups: list[list[int]] = []
+    for k in ordered:
+        if groups and angle(direction(groups[-1][-1]), direction(k)) < SAME_SIDE_DEG:
+            groups[-1].append(k)
+        else:
+            groups.append([k])
+    merged, merged_segments, ids = [], [], []
+    for group in groups:
+        start, end = segments[group[0]][0], segments[group[-1]][1]
+        mean = sum(direction(k) * lengths[k] for k in group)
+        mean = mean / max(float(np.linalg.norm(mean)), 1e-9)
+        value = float((end - start) @ mean)
+        sigma = max(float(walls[k]["length"].get("sigma") or 0.0) for k in group)
+        observed = sum(lengths[k] for k in group if walls[k]["length"].get("basis") == "observed")
+        basis = "observed" if observed >= 0.7 * sum(lengths[k] for k in group) else "inferred"
+        merged.append(
+            {
+                "value": value,
+                "lo": value - Z90 * sigma,
+                "hi": value + Z90 * sigma,
+                "sigma": sigma,
+                "basis": basis,
+                "coverage": 0.9,
+                "unit": "m",
+            }
+        )
+        merged_segments.append((start, end))
+        ids.append("+".join(walls[k]["id"] for k in group))
+    return merged, merged_segments, ids
 
 
 @dataclass
@@ -208,18 +281,23 @@ def load_prediction(path: Path) -> Prediction:
     rooms = []
     lookup: dict[str, PredictedRoom] = {}
     for entry in data["rooms"]:
-        walls = list(reversed(entry["walls"]))  # the pipeline writes counter-clockwise
+        # the pipeline writes walls counter-clockwise; reversed, with each wall's ends
+        # swapped, they run clockwise from start to end
+        walls = [
+            {**wall, "start": wall["end"], "end": wall["start"]}
+            for wall in reversed(entry["walls"])
+        ]
+        sides, segments, ids = _sides(walls)
         room = PredictedRoom(
             id=entry["id"],
-            walls=[wall["length"] for wall in walls],
-            wall_ids=[wall["id"] for wall in walls],
+            walls=sides,
+            wall_ids=ids,
             ceiling_height=entry["ceiling_height"],
             floor_area=entry["floor_area"],
             polygon=np.array(entry["polygon"], dtype=float),
+            raw_wall_count=len(walls),
         )
-        room._segments = [  # type: ignore[attr-defined]
-            (np.array(wall["start"], float), np.array(wall["end"], float)) for wall in walls
-        ]
+        room._segments = segments  # type: ignore[attr-defined]
         rooms.append(room)
         lookup[room.id] = room
 
@@ -237,8 +315,8 @@ def load_prediction(path: Path) -> Prediction:
                 and across < 0.6
                 and (best is None or across < best[0])
             ):
-                # walls are stored counter-clockwise start -> end; clockwise runs end -> start
-                best = (across, index, length - along)
+                # sides run clockwise from start to end
+                best = (across, index, along)
         return None if best is None else (room.id, best[1], best[2])
 
     openings = []
@@ -341,6 +419,10 @@ def match_rooms(truth: Truth, prediction: Prediction) -> list[RoomMatch]:
 class OpeningMatch:
     truth: TruthOpening | None  # None for a phantom
     predicted: PredictedOpening | None  # None for a miss
+
+    @property
+    def unscored(self) -> bool:
+        return self.truth is not None and self.truth.unscored
 
 
 def match_openings(matches: list[RoomMatch], prediction: Prediction) -> list[OpeningMatch]:

@@ -20,6 +20,7 @@ import zipfile
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from floorplan.io.arkitscenes import is_arkitscenes
 from floorplan.io.stray import is_stray_capture
 
 IMAGE_SUFFIXES = (".heic", ".heif", ".jpg", ".jpeg", ".png")
@@ -119,7 +120,7 @@ def _unzip(archive: Path, workdir: Path | None) -> Path:
 
 def _kind(folder: Path) -> str | None:
     """What a folder holds, looking no deeper than its room sub-folders."""
-    if is_stray_capture(folder):
+    if is_stray_capture(folder) or is_arkitscenes(folder):
         return "lidar"
     photo_rooms = [sub for sub in _subfolders(folder) if images_in(sub)]
     clips, stills = videos_in(folder), images_in(folder)

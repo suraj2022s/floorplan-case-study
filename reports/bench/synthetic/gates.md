@@ -10,7 +10,7 @@ Synthetic scenes with exactly known dimensions, rendered as LiDAR captures. This
 | lidar | Ceiling height | **PASS** | 11/11 rooms within 1.5 cm; worst 0.0 cm | <= 1.5 cm in every room | mean signed error -0.00 cm |
 | lidar | Ceiling height, repeat captures | **PASS** | spread 0.00 cm over 1 room pair(s) | spread across captures <= 1 cm | repeatable and unbiased; mean error -0.01 cm |
 | lidar | Repeatability per wall | **PASS** | 4/4 walls agree; worst 0.00 cm | two captures agree within 1 cm or 0.5% per wall | reading 'or' as whichever is larger. Strict reading (whichever is smaller): 4/4 |
-| lidar | Wall lengths | **not evaluated** | median 0.0 cm, worst 0.5 cm (0.1%); 0 wall(s) not found | set by the Round 1 gate table (not yet in spec/) |  |
+| lidar | Wall lengths | **not evaluated** | median 0.0 cm, worst 0.4 cm (0.1%); 0 wall(s) not found | set by the Round 1 gate table (not yet in spec/) |  |
 | lidar | Whole-property stitch | **PASS** | flat: footprint -0.0%; flat-drift: footprint -0.1% | one plan, correct adjacency, no overlaps, footprint within +-8%, interval holds |  |
 | lidar | Interval calibration | **PASS** | 89/89 = 100% of 90% intervals contain the truth | >= 84% (90% less two standard errors at n=89) | ceiling_height 11/11; floor_area 11/11; footprint_area 5/5; opening_width 18/18; wall_length 44/44 |
 
@@ -29,11 +29,11 @@ Synthetic scenes with exactly known dimensions, rendered as LiDAR captures. This
 | Capture | Item | Truth (m) | Measured [90% interval] | Error (cm) | Truth in interval |
 |---|---|---|---|---|---|
 | box-room-a | room-S | 4.200 | 4.200 [4.164, 4.236] | +0.0 | yes |
-| box-room-a | room-W | 3.350 | 3.350 [3.321, 3.379] | -0.0 | yes |
+| box-room-a | room-W | 3.350 | 3.350 [3.321, 3.379] | +0.0 | yes |
 | box-room-a | room-N | 4.200 | 4.200 [4.164, 4.236] | +0.0 | yes |
 | box-room-a | room-E | 3.350 | 3.350 [3.321, 3.379] | +0.0 | yes |
 | box-room-b | room-S | 4.200 | 4.200 [4.164, 4.236] | +0.0 | yes |
-| box-room-b | room-W | 3.350 | 3.350 [3.321, 3.379] | -0.0 | yes |
+| box-room-b | room-W | 3.350 | 3.350 [3.321, 3.379] | +0.0 | yes |
 | box-room-b | room-N | 4.200 | 4.200 [4.164, 4.236] | +0.0 | yes |
 | box-room-b | room-E | 3.350 | 3.350 [3.321, 3.379] | +0.0 | yes |
 | furnished-room | bedroom-S | 3.800 | 3.800 [3.767, 3.833] | -0.0 | yes |
@@ -43,34 +43,34 @@ Synthetic scenes with exactly known dimensions, rendered as LiDAR captures. This
 | flat | corridor-S | 1.200 | 1.200 [1.186, 1.214] | -0.0 | yes |
 | flat | corridor-W | 6.000 | 6.000 [5.949, 6.050] | -0.0 | yes |
 | flat | corridor-N | 1.200 | 1.200 [1.186, 1.214] | -0.0 | yes |
-| flat | corridor-E | 6.000 | 6.000 [5.950, 6.050] | +0.0 | yes |
+| flat | corridor-E | 6.000 | 6.000 [5.950, 6.050] | -0.0 | yes |
 | flat | bedroom-S | 3.600 | 3.599 [3.568, 3.631] | -0.1 | yes |
 | flat | bedroom-W | 3.600 | 3.600 [3.569, 3.631] | +0.0 | yes |
 | flat | bedroom-N | 3.600 | 3.599 [3.568, 3.630] | -0.1 | yes |
 | flat | bedroom-E | 3.600 | 3.600 [3.569, 3.631] | +0.0 | yes |
 | flat | living-S | 4.500 | 4.499 [4.461, 4.538] | -0.1 | yes |
 | flat | living-W | 3.400 | 3.400 [3.370, 3.430] | +0.0 | yes |
-| flat | living-N | 4.500 | 4.499 [4.460, 4.537] | -0.1 | yes |
+| flat | living-N | 4.500 | 4.499 [4.461, 4.537] | -0.1 | yes |
 | flat | living-E | 3.400 | 3.400 [3.370, 3.430] | +0.0 | yes |
 | flat | kitchen-S | 2.800 | 2.801 [2.776, 2.826] | +0.1 | yes |
 | flat | kitchen-W | 2.480 | 2.479 [2.456, 2.501] | -0.1 | yes |
 | flat | kitchen-N | 2.800 | 2.801 [2.776, 2.826] | +0.1 | yes |
 | flat | kitchen-E | 2.480 | 2.479 [2.456, 2.501] | -0.1 | yes |
 | flat-drift | corridor-S | 1.200 | 1.200 [1.186, 1.214] | -0.0 | yes |
-| flat-drift | corridor-W | 6.000 | 6.005 [5.954, 6.055] | +0.5 | yes |
+| flat-drift | corridor-W | 6.000 | 6.004 [5.954, 6.055] | +0.4 | yes |
 | flat-drift | corridor-N | 1.200 | 1.199 [1.185, 1.213] | -0.1 | yes |
-| flat-drift | corridor-E | 6.000 | 5.999 [5.949, 6.049] | -0.1 | yes |
+| flat-drift | corridor-E | 6.000 | 5.999 [5.948, 6.049] | -0.1 | yes |
 | flat-drift | bedroom-S | 3.600 | 3.600 [3.569, 3.631] | -0.0 | yes |
-| flat-drift | bedroom-W | 3.600 | 3.600 [3.569, 3.631] | +0.0 | yes |
+| flat-drift | bedroom-W | 3.600 | 3.600 [3.569, 3.631] | -0.0 | yes |
 | flat-drift | bedroom-N | 3.600 | 3.600 [3.568, 3.631] | -0.0 | yes |
 | flat-drift | bedroom-E | 3.600 | 3.598 [3.567, 3.629] | -0.2 | yes |
 | flat-drift | living-S | 4.500 | 4.498 [4.459, 4.536] | -0.2 | yes |
 | flat-drift | living-W | 3.400 | 3.398 [3.368, 3.427] | -0.2 | yes |
-| flat-drift | living-N | 4.500 | 4.500 [4.462, 4.538] | +0.0 | yes |
+| flat-drift | living-N | 4.500 | 4.500 [4.462, 4.538] | -0.0 | yes |
 | flat-drift | living-E | 3.400 | 3.397 [3.367, 3.427] | -0.3 | yes |
-| flat-drift | kitchen-S | 2.800 | 2.800 [2.775, 2.825] | -0.0 | yes |
-| flat-drift | kitchen-W | 2.480 | 2.479 [2.456, 2.502] | -0.1 | yes |
-| flat-drift | kitchen-N | 2.800 | 2.802 [2.777, 2.828] | +0.2 | yes |
+| flat-drift | kitchen-S | 2.800 | 2.800 [2.774, 2.825] | -0.0 | yes |
+| flat-drift | kitchen-W | 2.480 | 2.479 [2.456, 2.501] | -0.1 | yes |
+| flat-drift | kitchen-N | 2.800 | 2.802 [2.777, 2.827] | +0.2 | yes |
 | flat-drift | kitchen-E | 2.480 | 2.478 [2.456, 2.501] | -0.2 | yes |
 
 ## Ceiling heights
@@ -167,8 +167,8 @@ The same capture run with drift correction on and off.
 
 | Capture | Correction | Rooms | Walls found / measured | Footprint error | Worst wall error (cm) | Room overlap (m²) |
 |---|---|---|---|---|---|---|
-| flat-drift | on | 4 / 4 | 16 / 16 | -0.06% | 0.5 | 0.000 |
-| flat-drift | off | 4 / 4 | 16 / 16 | -0.05% | 0.9 | 0.000 |
+| flat-drift | on | 4 / 4 | 16 / 16 | -0.06% | 0.4 | 0.000 |
+| flat-drift | off | 4 / 4 | 16 / 16 | -0.05% | 0.8 | 0.000 |
 
 ## Timing (seconds)
 

@@ -17,6 +17,17 @@ dependencies = [
     "matplotlib>=3.8",
 ]
 
+[project.optional-dependencies]
+# Needed only by the photo and video tiers, which estimate depth with a learned model.
+# The LiDAR tier runs without any of this: `uv sync` alone is enough for it.
+learned = [
+    "torch>=2.4",
+    "torchvision>=0.19",
+    "huggingface-hub>=0.24",
+    "pillow-heif>=0.18",
+    "moge @ git+https://github.com/microsoft/MoGe.git@74fbce054ebed49800de42d0ad0e83495065719a",
+]
+
 [project.scripts]
 floorplan = "floorplan.cli:app"
 
@@ -30,8 +41,27 @@ dev = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.metadata]
+allow-direct-references = true
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/floorplan"]
+
+[tool.uv]
+# MoGe's package also declares its demo UI and the sparse-convolution library used only by
+# its newest model. We run its MoGe-2 model, which needs none of them, so they are left
+# out: the install stays small and works on macOS, where that library has no build.
+exclude-dependencies = ["gradio", "starlette", "flex-gemm", "pipeline"]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+# GPU builds of PyTorch on Windows and Linux; the default CPU/MPS build elsewhere.
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu130", marker = "sys_platform == 'win32' or sys_platform == 'linux'" }]
+torchvision = [{ index = "pytorch-cu130", marker = "sys_platform == 'win32' or sys_platform == 'linux'" }]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

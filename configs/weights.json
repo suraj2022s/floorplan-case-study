@@ -1,0 +1,18 @@
+{
+  "moge-2-vitl-normal": {
+    "file": "moge-2-vitl-normal.pt",
+    "url": "https://huggingface.co/Ruicheng/moge-2-vitl-normal/resolve/cb0e8bbd6b1e243589717c78e750b1ba4c093acf/model.pt",
+    "sha256": "280741fd09bc3f403ccff9967784c2a391b52d2c0742ae3efdb21d9f90cc1a01",
+    "bytes": 1323815904,
+    "licence": "MIT",
+    "role": "Monocular metric depth, surface normals and field of view for the photo and video tiers (default)."
+  },
+  "moge-2-vitb-normal": {
+    "file": "moge-2-vitb-normal.pt",
+    "url": "https://huggingface.co/Ruicheng/moge-2-vitb-normal/resolve/ca5f0e07ff01d3e5a364c1d954ed12ee1814b368/model.pt",
+    "sha256": "16b8110e86d5dc5a849db120ca96ef3a223fd30b0c9146d1d81db504073da5f6",
+    "bytes": 419110160,
+    "licence": "MIT",
+    "role": "Smaller version of the same model, used when there is no GPU or too little GPU memory."
+  }
+}

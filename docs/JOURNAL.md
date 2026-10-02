@@ -38,3 +38,41 @@ Short, dated notes on what was done and why. Times are IST.
   16 walls within 1.5 mm, 4 doors and 2 windows within 6 mm, adjacency correct, footprint
   42.396 m² against 42.404 m². These are synthetic results: they show the geometry code is
   right, not that it works on a real sensor.
+- **23:35** Benchmark scorer written. It runs each capture through the public command in
+  its own process and scores only the files that run writes. Ground truth is coordinate-free
+  (a tape gives lengths, not positions), so the scorer works out which predicted room and
+  which wall is which from lengths and opening positions.
+
+## 2026-10-03 (Sat)
+
+- **00:00** Photo tier, first version. Depth from MoGe-2: 0.8 s per image and 2.25 GB peak
+  on the laptop's RTX 3050 Ti, so it fits the 4 GB card. Each photo is levelled from its own
+  surface normals; the views of a room are fitted to one rectangle by least squares. On
+  synthetic photos with 3% scale error each, three of four rooms came out within about 3%.
+  Problem found: a photo also shows walls of the next room through an open door, and those
+  were being fitted as walls of this room. Fixed by dropping walls that lie behind another
+  wall of the same view.
+- **01:00-02:30** Video tier, first version: camera path recovered from depth frames and the
+  walls they see. Worked on a synthetic single room (walls within 1%). On the synthetic
+  four-room walk it held position to 5-25 cm for most of the path but slipped at doorways.
+- **02:45** Damage, concealed-damage rules and scope items in place, with OWLv2 as the
+  detector (0.4 s per image, 0.76 GB). On two undamaged indoor images every damage phrase
+  scored 0.14 or lower, under the 0.20 threshold. Not yet tried on real damage.
+- **03:00** First real data. With no iPhone available, ran the LiDAR tier on a bedroom from
+  ARKitScenes (Apple's public iPad LiDAR scans). It produced a sensible room straight away:
+  main walls 3.06 / 3.6 / 3.6 m, ceiling 2.607 m. The window end, with curtains, a reveal
+  and a view outside through the glass, produced a zig-zag outline and unstable openings.
+  Added clutter pruning. There is no ground truth for this scan, so "better" here means
+  "looks right against the RGB frames", nothing more.
+- **03:05** Measured the depth model against LiDAR on 40 frames of that scan: it reads 5.2%
+  long on average with 6.1% frame-to-frame spread. This is the dominant error at the photo
+  and video tiers and it replaces my guessed 3-5%.
+- **03:08** The video tracker fails on real footage. On the RGB frames of the real scan the
+  recovered path was off by 0.9 m on average over a 12.8 m walk; 33 of 120 frames showed no
+  usable wall (close-ups of furniture); the plan was unusable. Clean synthetic rooms had
+  hidden this. Decision: use a learned multi-view model (MapAnything) for poses.
+- **03:10** Searched for existing projects. Two public repositories are submissions for
+  this same case study; I read their READMEs only, to recognise what they were, and have
+  not used their code. Useful open-source finds: MapAnything (poses and metric depth from a
+  set of images) and a crack-segmentation model. Plane-DUSt3R, RoomFormer and several SLAM
+  systems were considered and set aside for licence, GPU memory or integration time.

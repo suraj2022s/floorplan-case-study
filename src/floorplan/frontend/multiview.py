@@ -35,8 +35,13 @@ MAX_VIDEO_FRAMES = 32
 
 
 def images_to_capture(
-    images: list[np.ndarray], names: list[str], sources: list[Path | None],
-    model: MultiViewModel, tier: str, scale_sigma: float, source: Path,
+    images: list[np.ndarray],
+    names: list[str],
+    sources: list[Path | None],
+    model: MultiViewModel,
+    tier: str,
+    scale_sigma: float,
+    source: Path,
     room: str | None = None,
 ) -> Capture:
     """Posed, levelled metric depth frames for images of one scene."""
@@ -64,16 +69,18 @@ def images_to_capture(
     )
 
 
-def room_plan(name: str, files: list[Path], model: MultiViewModel,
-              config: PipelineConfig | None = None) -> Plan:
+def room_plan(
+    name: str, files: list[Path], model: MultiViewModel, config: PipelineConfig | None = None
+) -> Plan:
     """A single-room plan from the photos of one room."""
     from floorplan.models.depth import load_image
 
     config = config or config_for("photo")
     images = [load_image(path)[0] for path in files]
     names = [f"{name}/{path.stem}" for path in files]
-    capture = images_to_capture(images, names, list(files), model, "photo", PHOTO_SCALE_SIGMA,
-                                files[0].parent, room=name)
+    capture = images_to_capture(
+        images, names, list(files), model, "photo", PHOTO_SCALE_SIGMA, files[0].parent, room=name
+    )
     plan = run(capture, config)
 
     # keep the room the photos were taken in; anything else was seen through a doorway
@@ -87,8 +94,9 @@ def room_plan(name: str, files: list[Path], model: MultiViewModel,
     openings = [o for o in plan.openings if o.room == main.id]
     for opening in openings:
         opening.other_room = None  # neighbours are assigned when the rooms are joined
-    plan = replace(plan, rooms=[main], openings=openings, adjacency=[],
-                   footprint_area=main.floor_area)
+    plan = replace(
+        plan, rooms=[main], openings=openings, adjacency=[], footprint_area=main.floor_area
+    )
     plan.stats["photos"] = len(files)
     _rename(plan, main.id, name)
     return plan
@@ -114,10 +122,12 @@ def video_capture(path: Path, model: MultiViewModel, max_frames: int = MAX_VIDEO
     path = find_video(path)
     frames, times = sample_frames(path, rate=2.0, max_frames=max_frames)
     names = [f"{path.stem}_{k:04d}" for k in range(len(frames))]
-    capture = images_to_capture(frames, names, [None] * len(frames), model, "video",
-                                VIDEO_SCALE_SIGMA, path)
-    capture.notes.update({"frames_sampled": len(frames),
-                          "clip_seconds": round(times[-1], 1) if times else 0.0})
+    capture = images_to_capture(
+        frames, names, [None] * len(frames), model, "video", VIDEO_SCALE_SIGMA, path
+    )
+    capture.notes.update(
+        {"frames_sampled": len(frames), "clip_seconds": round(times[-1], 1) if times else 0.0}
+    )
     return capture
 
 

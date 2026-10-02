@@ -40,8 +40,13 @@ class PosedView:
 
 
 class MultiViewModel:
-    def __init__(self, device: str | None = None, weights_dir: Path | None = None,
-                 cache_dir: Path | None = None, long_side: int = 1024) -> None:
+    def __init__(
+        self,
+        device: str | None = None,
+        weights_dir: Path | None = None,
+        cache_dir: Path | None = None,
+        long_side: int = 1024,
+    ) -> None:
         self.folder = Path(weights_dir or ROOT / "weights") / WEIGHTS
         self.cache_dir = Path(cache_dir or ROOT / ".cache" / "multiview")
         self.device = device or os.environ.get("FLOORPLAN_MULTIVIEW_DEVICE")
@@ -80,8 +85,9 @@ class MultiViewModel:
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
 
-    def reconstruct(self, images: list[np.ndarray], names: list[str],
-                    sources: list[Path | None] | None = None) -> list[PosedView]:
+    def reconstruct(
+        self, images: list[np.ndarray], names: list[str], sources: list[Path | None] | None = None
+    ) -> list[PosedView]:
         """Posed metric depth views for RGB images of one scene."""
         sources = sources or [None] * len(images)
         digest = hashlib.sha256()
@@ -94,9 +100,14 @@ class MultiViewModel:
             data = np.load(cached)
             return [
                 PosedView(
-                    View(name=names[k], depth=data[f"depth_{k}"], K=data[f"K_{k}"],
-                         image=data[f"image_{k}"], source=sources[k],
-                         detail=data[f"detail_{k}"]),
+                    View(
+                        name=names[k],
+                        depth=data[f"depth_{k}"],
+                        K=data[f"K_{k}"],
+                        image=data[f"image_{k}"],
+                        source=sources[k],
+                        detail=data[f"detail_{k}"],
+                    ),
                     data[f"pose_{k}"],
                     data[f"confidence_{k}"],
                 )
@@ -113,16 +124,23 @@ class MultiViewModel:
                 height, width = image.shape[:2]
                 scale = min(1.0, self.long_side / max(height, width))
                 if scale < 1.0:
-                    image = cv2.resize(image, (round(width * scale), round(height * scale)),
-                                       interpolation=cv2.INTER_AREA)
+                    image = cv2.resize(
+                        image,
+                        (round(width * scale), round(height * scale)),
+                        interpolation=cv2.INTER_AREA,
+                    )
                 path = Path(folder) / f"{k:04d}.png"
                 cv2.imwrite(str(path), cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
                 paths.append(str(path))
             views = load_images(paths)
         with torch.inference_mode():
             predictions = model.infer(
-                views, memory_efficient_inference=True, minibatch_size=1,
-                use_amp=self.device == "cuda", amp_dtype="bf16", apply_mask=True,
+                views,
+                memory_efficient_inference=True,
+                minibatch_size=1,
+                use_amp=self.device == "cuda",
+                amp_dtype="bf16",
+                apply_mask=True,
                 mask_edges=True,
             )
 
@@ -136,14 +154,28 @@ class MultiViewModel:
             picture = (prediction["img_no_norm"][0].float().cpu().numpy() * 255).clip(0, 255)
             picture = picture.astype(np.uint8)
             depth = np.where(mask & np.isfinite(depth) & (depth > 0) & (depth < 30), depth, 0.0)
-            _, detail = cv2.imencode(".jpg", cv2.cvtColor(picture, cv2.COLOR_RGB2BGR),
-                                     [cv2.IMWRITE_JPEG_QUALITY, 90])
-            view = View(name=names[k], depth=depth.astype(np.float32), K=K.astype(np.float64),
-                        image=picture, source=sources[k], detail=detail)
+            _, detail = cv2.imencode(
+                ".jpg", cv2.cvtColor(picture, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 90]
+            )
+            view = View(
+                name=names[k],
+                depth=depth.astype(np.float32),
+                K=K.astype(np.float64),
+                image=picture,
+                source=sources[k],
+                detail=detail,
+            )
             results.append(PosedView(view, pose, confidence))
-            store.update({f"depth_{k}": view.depth, f"K_{k}": view.K, f"image_{k}": picture,
-                          f"pose_{k}": pose, f"confidence_{k}": confidence,
-                          f"detail_{k}": detail})
+            store.update(
+                {
+                    f"depth_{k}": view.depth,
+                    f"K_{k}": view.K,
+                    f"image_{k}": picture,
+                    f"pose_{k}": pose,
+                    f"confidence_{k}": confidence,
+                    f"detail_{k}": detail,
+                }
+            )
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         np.savez_compressed(cached, **store)
         return results

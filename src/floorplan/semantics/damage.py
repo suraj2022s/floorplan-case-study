@@ -65,6 +65,7 @@ class DamageRegion:
     along_surface: float  # metres from the surface's first corner to the region's near edge
     above_floor: float  # walls: metres from the floor to the region's lower edge
     centre: np.ndarray  # (3,) in the plan's frame
+    along: np.ndarray  # (3,) unit: the direction `width` is measured in
     score: float
     views: int
     frames: list[str] = field(default_factory=list)
@@ -279,6 +280,7 @@ def damage_regions(
                 along_surface=u0,
                 above_floor=v0 if surface.kind == "wall" else 0.0,
                 centre=centre,
+                along=surface.along,
                 score=float(max(s.score for s in group)),
                 views=len({s.frame for s in group}),
                 frames=sorted({s.frame for s in group}),

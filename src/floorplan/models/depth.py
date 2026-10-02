@@ -49,9 +49,23 @@ def load_image(path: Path) -> tuple[np.ndarray, float | None]:
     fov_x = None
     if focal_35:
         height, width = image.shape[:2]
-        focal_pixels = float(focal_35) / FULL_FRAME_DIAGONAL * float(np.hypot(width, height))
+        focal_pixels = float(focal_35) / FULL_FRAME_DIAGONAL * sensor_diagonal(width, height)
         fov_x = float(np.degrees(2 * np.arctan(width / (2 * focal_pixels))))
     return image, fov_x
+
+
+def sensor_diagonal(width: int, height: int) -> float:
+    """Diagonal, in pixels, of the full 4:3 sensor frame an image was cut from.
+
+    The "35 mm equivalent" focal length a phone writes describes the full 4:3 frame. A 16:9
+    or square photo is that frame with two sides cut off, and the phone leaves the number
+    unchanged (seen on real iPhone 15 Pro files: a 1:1 photo still says 24 mm). Using the
+    cropped picture's own diagonal would make a square photo look 15% wider than it is.
+    """
+    long_side, short_side = max(width, height), min(width, height)
+    if long_side * 3 >= short_side * 4:  # 4:3 or wider: the long side is the sensor's
+        return long_side * 5.0 / 4.0
+    return short_side * 5.0 / 3.0  # squarer than 4:3: the short side is the sensor's
 
 
 class DepthModel:

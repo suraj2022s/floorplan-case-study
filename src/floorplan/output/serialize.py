@@ -80,9 +80,9 @@ def plan_to_dict(plan: Plan, capture_name: str) -> dict:
         "openings": openings,
         "adjacency": [{"rooms": [a, b], "via": opening} for a, b, opening in plan.adjacency],
         "footprint_area": plan.footprint_area.to_dict(),
-        "damage_regions": [],
-        "concealed_damage_flags": [],
-        "scope_items": [],
+        "damage_regions": [region.to_dict() for region in plan.damage],
+        "concealed_damage_flags": [flag.to_dict() for flag in plan.flags],
+        "scope_items": [item.to_dict() for item in plan.scope],
         "intervals": {
             "coverage": 0.90,
             "calibrated": plan.calibration.calibrated,

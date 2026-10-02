@@ -170,6 +170,7 @@ def read_stray(path: Path | str) -> Capture:
                 timestamp=float(value(row, "timestamp")),
                 K=K,
                 T_world_cam=ARKIT_TO_ZUP @ T_arkit_cam,
+                name=f"{number:06d}",
             )
         )
         depth_files.append(depth_file)
@@ -241,3 +242,61 @@ def write_stray(
 
     (path / "odometry.csv").write_text("\n".join(lines) + "\n", newline="\n")
     np.savetxt(path / "camera_matrix.csv", K_rgb, delimiter=",", fmt="%.6f")
+
+
+def attach_images(plan, capture_dir: Path | str, limit: int = 40, long_side: int = 1280) -> int:
+    """Give a finished LiDAR plan the RGB frames to look for damage in.
+
+    Up to `limit` of the plan's frames are picked, spread evenly through the walk, and read
+    from rgb.mp4 in one pass. Each comes with intrinsics scaled to its size and the LiDAR
+    depth map of the same frame. Returns how many were attached (0 if there is no video).
+    """
+    capture_dir = Path(capture_dir)
+    video = capture_dir / "rgb.mp4"
+    if not video.is_file() or not plan.frames:
+        return 0
+    picks = np.unique(
+        np.linspace(0, len(plan.frames) - 1, min(limit, len(plan.frames))).round().astype(int)
+    )
+    chosen = [plan.frames[i] for i in picks]
+    wanted = {frame.index for frame in chosen}
+
+    reader = cv2.VideoCapture(str(video))
+    images: dict[int, np.ndarray] = {}
+    try:
+        index, last = 0, max(wanted)
+        while index <= last and reader.grab():
+            if index in wanted:
+                ok, frame = reader.retrieve()
+                if ok:
+                    height, width = frame.shape[:2]
+                    scale = min(1.0, long_side / max(height, width))
+                    if scale < 1.0:
+                        frame = cv2.resize(
+                            frame,
+                            (round(width * scale), round(height * scale)),
+                            interpolation=cv2.INTER_AREA,
+                        )
+                    images[index] = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            index += 1
+    finally:
+        reader.release()
+
+    def loader(frame, image):
+        def load():
+            depth_file = capture_dir / "depth" / f"{frame.index:06d}.png"
+            if not depth_file.is_file():
+                depth_file = depth_file.with_suffix(".npy")
+            depth = _load_depth_file(depth_file) if depth_file.is_file() else None
+            K = frame.K.copy()
+            if depth is not None:
+                K[0] *= image.shape[1] / depth.shape[1]
+                K[1] *= image.shape[0] / depth.shape[0]
+            return image, K, depth
+
+        return load
+
+    for frame in chosen:
+        if frame.index in images:
+            plan.images[frame.name] = loader(frame, images[frame.index])
+    return len(plan.images)

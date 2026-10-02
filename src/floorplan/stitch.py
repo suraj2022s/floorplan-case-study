@@ -27,6 +27,7 @@ from dataclasses import dataclass
 import numpy as np
 from shapely.geometry import Polygon
 
+from floorplan.capture import Frame
 from floorplan.pipeline import OpeningResult, Plan, RoomResult, WallResult
 from floorplan.uncertainty.budget import Measurement, quadrature
 
@@ -198,6 +199,7 @@ def _move_room(room: RoomResult, placement: Placement) -> RoomResult:
         room.ceiling_height_range,
         room.entered,
         list(room.notes),
+        room.floor_z,
     )
 
 
@@ -211,6 +213,24 @@ def stitch(plans: list[Plan]) -> Plan:
         _move_room(plan.rooms[0], placement)
         for plan, placement in zip(plans, placements, strict=True)
     ]
+
+    # the frames each room was built from, moved into the property frame with their room
+    frames = []
+    for plan, placement in zip(plans, placements, strict=True):
+        move = np.eye(4)
+        c, s = np.cos(placement.theta), np.sin(placement.theta)
+        move[:2, :2] = [[c, -s], [s, c]]
+        move[:2, 3] = placement.shift
+        frames.extend(
+            Frame(
+                index=f.index,
+                timestamp=f.timestamp,
+                K=f.K,
+                T_world_cam=move @ f.T_world_cam,
+                name=f.name,
+            )
+            for f in plan.frames
+        )
 
     twin_of = {b: a for a, b in pairs}
     openings: list[OpeningResult] = []
@@ -274,7 +294,10 @@ def stitch(plans: list[Plan]) -> Plan:
         stats={
             "rooms": [plan.stats for plan in plans],
             "door_pairs": len(pairs),
+            "scale_sigma": max(plan.stats.get("scale_sigma", 0.05) for plan in plans),
             "joined_by": "doors matched by width and height, overlaps rejected",
         },
         calibration=plans[0].calibration,
+        frames=frames,
+        images={name: loader for plan in plans for name, loader in plan.images.items()},
     )

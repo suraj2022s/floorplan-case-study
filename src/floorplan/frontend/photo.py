@@ -69,7 +69,9 @@ def _rename(plan: Plan, old: str, new: str) -> None:
         opening.wall = opening.wall.replace(old, new, 1)
 
 
-def _rectangle_plan(name: str, fit: RoomFit, views: list[LevelView], notes: list[str]) -> Plan:
+def _rectangle_plan(
+    name: str, fit: RoomFit, views: list[LevelView], notes: list[str], capture=None
+) -> Plan:
     """The fallback when the back-end cannot close a room from the photos: the rectangle the
     views were fitted to, with every wall marked as inferred and wide intervals."""
     budget = BUDGETS["photo"]
@@ -118,8 +120,10 @@ def _rectangle_plan(name: str, fit: RoomFit, views: list[LevelView], notes: list
         adjacency=[],
         warnings=[f"{name}: rectangle fallback used"],
         timings={},
-        stats={"fallback": "rectangle"},
+        stats={"fallback": "rectangle", "scale_sigma": PHOTO_SCALE_SIGMA},
         calibration=calibration,
+        frames=[] if capture is None else list(capture.frames),
+        images={} if capture is None else dict(capture.images),
     )
 
 
@@ -142,7 +146,12 @@ def room_plan(name: str, views: list[View], config: PipelineConfig | None = None
     try:
         plan = run(capture, config)
     except RuntimeError as problem:
-        return _rectangle_plan(name, fit, levelled, notes + [str(problem)])
+        return _rectangle_plan(name, fit, levelled, notes + [str(problem)], capture)
+    if plan.stats.get("closure") == "fallback":
+        # The walls seen do not close a room. The rectangle the views were fitted to is a
+        # better stand-in than the box around what was observed, because it also accounts
+        # for the wall behind the photographer, which no photo shows.
+        return _rectangle_plan(name, fit, levelled, notes, capture)
 
     # keep the room the photos were taken in; anything else was seen through a doorway
     cameras = np.array([frame.position[:2] for frame in capture.frames])

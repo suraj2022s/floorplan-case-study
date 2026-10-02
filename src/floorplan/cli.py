@@ -42,6 +42,9 @@ def run(
     out: Path = typer.Option(None, help="Output folder (default: out/<capture name>)."),
     tier: str = typer.Option("auto", help="auto, lidar, video or photo."),
     drift: bool = typer.Option(True, "--drift/--no-drift", help="Correct pose drift."),
+    damage: bool = typer.Option(
+        True, "--damage/--no-damage", help="Look for damage in the images."
+    ),
 ) -> None:
     """Run the pipeline on one capture and write plan.json, plan.svg, plan.png, run_log.json."""
     import time
@@ -86,6 +89,28 @@ def run(
     else:
         raise typer.BadParameter(f"unknown tier {tier!r}; use lidar, video or photo")
 
+    if damage:
+        started = time.perf_counter()
+        try:
+            from floorplan.models.detect import Detector
+            from floorplan.semantics.run import add_semantics
+
+            if tier == "lidar":
+                from floorplan.io.stray import attach_images
+
+                attach_images(plan, capture)
+            else:
+                model.release()  # the GPU cannot hold the depth model and the detector at once
+            detector = Detector()
+            add_semantics(plan, detector)
+            detector.release()
+        except ImportError:
+            plan.warnings.append(
+                "the learned-model packages are not installed (uv sync --extra learned); "
+                "damage was not assessed"
+            )
+        plan.timings["damage"] = round(time.perf_counter() - started, 3)
+
     plan_file = out / "plan.json"
     write_json(plan_file, plan_to_dict(plan, capture.name))
     draw_plan(plan, capture.name, out / "plan")
@@ -107,6 +132,13 @@ def run(
         typer.echo(
             f"  {opening.id}: {opening.kind}, width {opening.width.value:.3f} m ({opening.method})"
         )
+    for region in plan.damage:
+        typer.echo(
+            f"  {region.id}: {region.kind} on {region.surface}, "
+            f"{region.width.value:.2f} x {region.height.value:.2f} m"
+        )
+    for flag in plan.flags:
+        typer.echo(f"  {flag.id}: {flag.rule_id} on {flag.surface}")
     for warning in plan.warnings:
         typer.echo(f"  warning: {warning}")
     typer.echo(f"  wrote {out / 'plan.json'}, plan.svg, plan.png, run_log.json")

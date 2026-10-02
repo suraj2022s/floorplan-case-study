@@ -33,7 +33,7 @@ from itertools import product
 import numpy as np
 
 from floorplan.capture import Capture, Frame
-from floorplan.frontend.views import LevelView
+from floorplan.frontend.views import LevelView, image_loader
 
 STANDOFF = 0.35  # metres from the wall behind the person to the camera
 STANDOFF_SIGMA = 0.15
@@ -240,7 +240,15 @@ def room_capture(
         T[:3, :3] = turn @ view.R_local_cam
         T[:2, 3] = fit.positions[slot]
         T[2, 3] = view.camera_height * fit.scales[slot]
-        frames.append(Frame(index=slot, timestamp=float(slot), K=view.view.K, T_world_cam=T))
+        frames.append(
+            Frame(
+                index=slot,
+                timestamp=float(slot),
+                K=view.view.K,
+                T_world_cam=T,
+                name=f"{room}/{view.view.name}",
+            )
+        )
         depths.append((view.view.depth * fit.scales[slot]).astype(np.float32))
     return Capture(
         tier=tier,
@@ -251,5 +259,9 @@ def room_capture(
         depth_sigma_b=0.01,
         scale_sigma=scale_sigma,
         room_of_frame=[room] * len(frames),
+        images={
+            frame.name: image_loader(views[index].view, depths[slot])
+            for slot, (frame, index) in enumerate(zip(frames, used, strict=True))
+        },
         notes={"views": [views[i].view.name for i in used], "room_fit_rms_m": round(fit.rms, 4)},
     )

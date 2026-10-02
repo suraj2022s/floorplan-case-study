@@ -19,6 +19,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import cv2
 import numpy as np
 
 from floorplan.capture import Capture, Frame
@@ -60,6 +61,7 @@ class View:
     image: np.ndarray | None = None  # (H, W, 3) uint8 RGB at the same resolution
     normal: np.ndarray | None = None  # (H, W, 3) unit normals in the camera frame
     source: Path | None = None
+    detail: np.ndarray | None = None  # JPEG bytes of a larger copy of the image, for damage
 
 
 @dataclass
@@ -201,6 +203,46 @@ def level_view(
         ceiling_height=ceiling_height,
         notes=notes,
     )
+
+
+def image_loader(view: View, depth: np.ndarray, long_side: int = 1600):
+    """A loader for the damage stage: (RGB image, intrinsics for that image, depth).
+
+    The image is the original file when there is one, at a higher resolution than the depth
+    map, because small damage needs pixels. Returns None when the view has no image.
+    """
+
+    def load():
+        if (
+            view.source is not None
+            and Path(view.source).suffix.lower() in (".heic", ".heif", ".jpg", ".jpeg", ".png")
+            and Path(view.source).is_file()
+        ):
+            from floorplan.models.depth import load_image
+
+            image, _ = load_image(Path(view.source))
+            scale = min(1.0, long_side / max(image.shape[:2]))
+            if scale < 1.0:
+                image = cv2.resize(
+                    image,
+                    (round(image.shape[1] * scale), round(image.shape[0] * scale)),
+                    interpolation=cv2.INTER_AREA,
+                )
+        elif view.detail is not None:
+            image = cv2.cvtColor(cv2.imdecode(view.detail, cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB)
+        elif view.image is not None:
+            image = view.image
+        else:
+            return None
+        factor_x = image.shape[1] / view.depth.shape[1]
+        factor_y = image.shape[0] / view.depth.shape[0]
+        K = view.K.copy()
+        K[0, 0], K[1, 1] = K[0, 0] * factor_x, K[1, 1] * factor_y
+        K[0, 2] = (view.K[0, 2] + 0.5) * factor_x - 0.5
+        K[1, 2] = (view.K[1, 2] + 0.5) * factor_y - 0.5
+        return image, K, depth
+
+    return load
 
 
 def _own_walls(walls: list[WallLine]) -> list[WallLine]:

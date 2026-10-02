@@ -32,6 +32,7 @@ class Frame:
     timestamp: float  # seconds
     K: np.ndarray  # 3x3 intrinsics at depth-map resolution
     T_world_cam: np.ndarray  # 4x4 camera-to-world
+    name: str = ""  # identifies the frame's image (file stem, or frame number)
 
     @property
     def position(self) -> np.ndarray:
@@ -58,6 +59,9 @@ class Capture:
     scale_sigma: float = 0.005
     room_of_frame: list[str] | None = None  # photo tier: the room folder each frame came from
     notes: dict = field(default_factory=dict)
+    # frame name -> loader returning (RGB image, intrinsics for that image, depth or None);
+    # used after the plan is built to look for damage in the images
+    images: dict = field(default_factory=dict, repr=False)
 
     def __post_init__(self) -> None:
         if self.tier not in TIERS:
@@ -96,6 +100,7 @@ class Capture:
                 None if self.room_of_frame is None else [self.room_of_frame[p] for p in positions]
             ),
             notes=dict(self.notes),
+            images=self.images,
         )
 
     def with_poses(self, poses: list[np.ndarray]) -> Capture:
@@ -103,7 +108,13 @@ class Capture:
         if len(poses) != len(self.frames):
             raise ValueError("one pose per frame is required")
         frames = [
-            Frame(index=f.index, timestamp=f.timestamp, K=f.K, T_world_cam=np.asarray(T, float))
+            Frame(
+                index=f.index,
+                timestamp=f.timestamp,
+                K=f.K,
+                T_world_cam=np.asarray(T, float),
+                name=f.name,
+            )
             for f, T in zip(self.frames, poses, strict=True)
         ]
         return Capture(
@@ -117,6 +128,7 @@ class Capture:
             scale_sigma=self.scale_sigma,
             room_of_frame=self.room_of_frame,
             notes=dict(self.notes),
+            images=self.images,
         )
 
 

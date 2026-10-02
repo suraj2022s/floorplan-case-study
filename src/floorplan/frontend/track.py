@@ -36,7 +36,7 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 from floorplan.capture import Capture, Frame
-from floorplan.frontend.views import LevelView
+from floorplan.frontend.views import LevelView, image_loader
 
 SCALE_SIGMA = 0.03  # how far one frame's depth scale may sit from the model's average
 STEP_SIGMA = 1.0  # metres; a loose "the camera does not teleport" between sampled frames
@@ -382,7 +382,13 @@ def track_capture(
         T[:2, 3] = track.positions[slot]
         T[2, 3] = heights[slot] * track.scales[slot]
         frames.append(
-            Frame(index=index, timestamp=float(timestamps[index]), K=view.view.K, T_world_cam=T)
+            Frame(
+                index=index,
+                timestamp=float(timestamps[index]),
+                K=view.view.K,
+                T_world_cam=T,
+                name=view.view.name,
+            )
         )
         depths.append((view.view.depth * track.scales[slot]).astype(np.float32))
     return Capture(
@@ -393,6 +399,10 @@ def track_capture(
         depth_sigma_a=0.01,
         depth_sigma_b=0.01,
         scale_sigma=scale_sigma,
+        images={
+            frame.name: image_loader(views[index].view, depths[slot])
+            for slot, (frame, index) in enumerate(zip(frames, track.used, strict=True))
+        },
         notes={
             "frames_tracked": len(frames),
             "walls_tracked": track.walls,

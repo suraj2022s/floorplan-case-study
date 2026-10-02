@@ -25,7 +25,7 @@ from dataclasses import dataclass, field
 import numpy as np
 import shapely
 
-from floorplan.capture import Capture, select_keyframes
+from floorplan.capture import Capture, Frame, select_keyframes
 from floorplan.geometry.cloud import Cloud, CloudConfig, fragment_clouds, merge_clouds
 from floorplan.geometry.drift import DriftConfig, correct_drift
 from floorplan.geometry.layout import (
@@ -140,6 +140,7 @@ class RoomResult:
     ceiling_height_range: tuple[float, float]
     entered: bool
     notes: list[str]
+    floor_z: float = 0.0  # height of the floor in the plan's frame, at the room's middle
 
 
 @dataclass
@@ -170,6 +171,12 @@ class Plan:
     timings: dict[str, float]
     stats: dict
     calibration: Calibration
+    damage: list = field(default_factory=list)  # semantics.damage.DamageRegion
+    flags: list = field(default_factory=list)  # semantics.rules.Flag
+    scope: list = field(default_factory=list)  # semantics.scope.ScopeItem
+    # the posed frames the plan was built from, for looking at the images afterwards
+    frames: list[Frame] = field(default_factory=list, repr=False)
+    images: dict = field(default_factory=dict, repr=False)  # frame name -> image loader
 
 
 def _room_levels(
@@ -294,6 +301,7 @@ def _measure_room(
         ceiling_height_range=height_range,
         entered=room.entered,
         notes=notes + ([] if room.entered else ["seen through an opening but not walked into"]),
+        floor_z=float(floor.z_at(centre)[0]),
     )
 
 
@@ -328,7 +336,7 @@ def run(capture: Capture, config: PipelineConfig | None = None) -> Plan:
     config = config or PipelineConfig()
     timings: dict[str, float] = {}
     warnings: list[str] = []
-    stats: dict = {"frames_in": len(capture)}
+    stats: dict = {"frames_in": len(capture), "scale_sigma": capture.scale_sigma}
 
     def stage(name: str, started: float) -> None:
         timings[name] = round(time.perf_counter() - started, 3)
@@ -392,6 +400,7 @@ def run(capture: Capture, config: PipelineConfig | None = None) -> Plan:
         if rescue is None:
             raise RuntimeError("no room found: the capture shows too little floor and wall")
         rooms = [rescue]
+        stats["closure"] = "fallback"
         warnings.append(
             "the captured walls do not close a room; the plan is the rectangle around what "
             "was seen and its unseen sides are inferred. Capture every wall to measure it."
@@ -484,6 +493,8 @@ def run(capture: Capture, config: PipelineConfig | None = None) -> Plan:
         timings=timings,
         stats=stats,
         calibration=calibration,
+        frames=list(keyframes.frames),
+        images=dict(capture.images),
     )
 
 

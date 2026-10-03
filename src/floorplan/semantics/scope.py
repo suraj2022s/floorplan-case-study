@@ -152,14 +152,21 @@ def build_scope(
                 quantity = Measurement(1.0, 0.0, unit="each")
             add(code, quantity, region.room, region.surface, [region.id])
 
+    inspections: dict[tuple[str, str], ScopeItem] = {}
     for flag in flags:
-        if flag.inspect:
-            add(
-                flag.inspect,
-                Measurement(1.0, 0.0, unit="each"),
-                flag.room,
-                flag.surface,
-                list(flag.damage_ids),
-                flag.rule_id,
-            )
+        if not flag.inspect:
+            continue
+        key = (flag.inspect, flag.surface)
+        if key in inspections:  # one visit inspects the surface, however many rules ask for it
+            ids = inspections[key].damage_ids
+            ids.extend(i for i in flag.damage_ids if i not in ids)
+            continue
+        inspections[key] = add(
+            flag.inspect,
+            Measurement(1.0, 0.0, unit="each"),
+            flag.room,
+            flag.surface,
+            list(flag.damage_ids),
+            flag.rule_id,
+        )
     return items

@@ -23,6 +23,7 @@ IMAGE = np.zeros((480, 640, 3), np.uint8)
 CLASSES = {
     "water_stain": {"phrases": ["water stain"], "threshold": 0.2},
     "crack": {"phrases": ["crack in the wall"], "threshold": 0.2},
+    "mould": {"phrases": ["mold on the wall"], "threshold": 0.2},
 }
 
 
@@ -123,6 +124,20 @@ def test_crack_beside_the_door(box_room_plan):
     assert flags[0].evidence["distance_to_opening_m"] < 0.3
     assert [item.code for item in scope] == ["CRACK_FILL", "REPAINT_WALL", "STRUCTURAL_INSPECTION"]
     assert scope[0].quantity.value == pytest.approx(0.5, abs=0.02)  # the crack's length
+
+
+def test_two_rules_on_one_wall_ask_for_one_inspection(box_room_plan):
+    # 0.9 x 0.7 m of mould at the foot of the east wall: both the wall-base and the
+    # mould-extent rules fire, but one visit inspects the wall
+    corners = np.array([[4.2, 1.0, 0.05], [4.2, 1.9, 0.05], [4.2, 1.9, 0.75], [4.2, 1.0, 0.75]])
+    view = pose(2.1, 1.3, 1.4, 0.0, np.radians(-25.0))
+    plan, regions, flags, scope = _run(box_room_plan, view, "mold on the wall", corners)
+
+    assert len(regions) == 1 and regions[0].kind == "mould"
+    assert [flag.rule_id for flag in flags] == ["WALL_BASE_MOISTURE", "MOULD_EXTENT"]
+    inspections = [item for item in scope if item.code == "MOISTURE_INSPECTION"]
+    assert len(inspections) == 1
+    assert inspections[0].damage_ids == [regions[0].id]
 
 
 def test_a_box_on_furniture_is_not_wall_damage(box_room_plan):

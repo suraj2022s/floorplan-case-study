@@ -188,6 +188,33 @@ def merge_sightings(sightings: list[Sighting], min_overlap: float = 0.2) -> list
     return groups
 
 
+def one_class_per_patch(detections: list, phrase_class: dict[str, str], overlap: float = 0.5):
+    """Keep, for every patch of damage, only the class the detector is surest of.
+
+    On real damage photos the classes bleed into each other: a mould patch also scores as a
+    crack and as peeling paint, a crack as a water stain. A patch has one cause, so where
+    boxes of different classes overlap (the smaller box at least `overlap` inside the
+    larger), only the highest-scoring one is kept.
+    """
+    kept: list = []
+    for detection in sorted(detections, key=lambda d: -d.score):
+        x0, y0, x1, y1 = detection.box
+        area = max((x1 - x0) * (y1 - y0), 1e-9)
+        clash = False
+        for other in kept:
+            if phrase_class[other.label] == phrase_class[detection.label]:
+                continue
+            a0, b0, a1, b1 = other.box
+            shared = max(0.0, min(x1, a1) - max(x0, a0)) * max(0.0, min(y1, b1) - max(y0, b0))
+            smaller = min(area, max((a1 - a0) * (b1 - b0), 1e-9))
+            if shared >= overlap * smaller:
+                clash = True
+                break
+        if not clash:
+            kept.append(detection)
+    return kept
+
+
 def find_sightings(
     plan: Plan,
     images: dict[str, Callable[[], tuple[np.ndarray, np.ndarray, np.ndarray | None]]],
@@ -212,10 +239,13 @@ def find_sightings(
         if loaded is None:
             continue
         image, K, depth = loaded
-        for detection in detect(image, phrases, lowest):
+        found = [
+            d
+            for d in detect(image, phrases, lowest)
+            if d.score >= classes[phrase_class[d.label]]["threshold"]
+        ]
+        for detection in one_class_per_patch(found, phrase_class):
             kind = phrase_class[detection.label]
-            if detection.score < classes[kind]["threshold"]:
-                continue
             x0, y0, x1, y1 = detection.box
             # a box that fills most of the image is the model describing the scene, not a patch
             if (x1 - x0) * (y1 - y0) > 0.6 * image.shape[0] * image.shape[1]:

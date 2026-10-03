@@ -42,6 +42,55 @@
         "sha256": "e164e7b06fa2f73e41f87eba48f59ef9b808a9b99516a9a02e6cda3afcf7558b"
       }
     },
-    "unpack": {"archive": "pepper-dicing.zip", "to": "pepper-dicing", "also": {"pepper-dicing.mp4": "rgb.mp4"}}
+    "unpack": {
+      "archive": "pepper-dicing.zip",
+      "to": "pepper-dicing",
+      "also": {
+        "pepper-dicing.mp4": "rgb.mp4"
+      }
+    }
+  },
+  "damage-photos": {
+    "about": "Real photographs of interior damage (water damage, cracks, mould, peeling paint), 1280 px wide, used to check the damage detector on real damage before the benchmark's staged damage exists. 'shows' is what each photo shows, read off the photo and its Commons description.",
+    "source": "Wikimedia Commons, https://commons.wikimedia.org/wiki/File:<name>",
+    "licence": "Each file's own Commons licence (CC BY / CC BY-SA / public domain); not redistributed here, fetched for local tests only.",
+    "dir": "damage",
+    "files": {
+      "Ceiling_sheetrock_damaged_by_water_so_paint_was_peeling.jpg": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Ceiling_sheetrock_damaged_by_water_so_paint_was_peeling.jpg?width=1280",
+        "sha256": "dabfd2227a33efa7b085d6f8519bec47f43b1542c7eaafed81047abb3d52eb8d",
+        "shows": "water_stain|peeling_paint"
+      },
+      "A_water_damaged_public_house_wall_in_Broadstairs_Kent_England.jpg": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/A_water_damaged_public_house_wall_in_Broadstairs_Kent_England.jpg?width=1280",
+        "sha256": "eb95aff2b7bb4c213838404abf867d0584fec9b7469373a44c7f897e628ced6a",
+        "shows": "water_stain|peeling_paint"
+      },
+      "Cracked_Wall.jpg": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Cracked_Wall.jpg?width=1280",
+        "sha256": "1cf8ef31bc06d0e6203f815e9ee7a00fe98b5c6a92be4d2201d19702b2589f48",
+        "shows": "crack"
+      },
+      "Cracked_wall_03.jpg": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Cracked_wall_03.jpg?width=1280",
+        "sha256": "82eb65d6e467f1e75d4cf7a3661c81c58d160afb9d87ac1dd3509403243a378b",
+        "shows": "crack"
+      },
+      "Black_mold_in_a_building.JPG": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Black_mold_in_a_building.JPG?width=1280",
+        "sha256": "25e3bc9faa172f35746c5f9fbb4bdc6d2981533b2d137a597b71b47d114709f7",
+        "shows": "mould"
+      },
+      "Indoor_Mold.jpg": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Indoor_Mold.jpg?width=1280",
+        "sha256": "91d9eea9e57ce089e5164c81cea882809fda76649d17ef80bdeeb3791bd7d93b",
+        "shows": "mould"
+      },
+      "Paint_peeling_off_bathroom_wall.jpg": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Paint_peeling_off_bathroom_wall.jpg?width=1280",
+        "sha256": "e1c8f1ffb28a59a86ed48a22a8ed9837792e31b325bd062e0f22dc8797e6692a",
+        "shows": "peeling_paint"
+      }
+    }
   }
 }

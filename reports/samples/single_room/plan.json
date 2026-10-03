@@ -1,0 +1,526 @@
+{
+  "schema_version": "1.0",
+  "capture": {
+    "name": "c00a170fe1",
+    "tier": "lidar"
+  },
+  "units": {
+    "length": "m",
+    "area": "m2"
+  },
+  "frame": "metric, gravity-aligned, z up; x and y are arbitrary but shared by all rooms",
+  "rooms": [
+    {
+      "id": "room_1",
+      "polygon": [
+        [
+          1.4405,
+          -2.6771
+        ],
+        [
+          2.6184,
+          0.0853
+        ],
+        [
+          0.3444,
+          1.0704
+        ],
+        [
+          -0.8694,
+          -1.6775
+        ]
+      ],
+      "floor_area": {
+        "value": 7.5015,
+        "lo": 6.4651,
+        "hi": 8.5379,
+        "coverage": 0.9,
+        "sigma": 0.63006,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_1-W1",
+          "start": [
+            1.4405,
+            -2.6771
+          ],
+          "end": [
+            2.6184,
+            0.0853
+          ],
+          "length": {
+            "value": 3.003,
+            "lo": 2.7425,
+            "hi": 3.2636,
+            "coverage": 0.9,
+            "sigma": 0.15841,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.983
+        },
+        {
+          "id": "room_1-W2",
+          "start": [
+            2.6184,
+            0.0853
+          ],
+          "end": [
+            0.3444,
+            1.0704
+          ],
+          "length": {
+            "value": 2.4783,
+            "lo": 2.2232,
+            "hi": 2.7334,
+            "coverage": 0.9,
+            "sigma": 0.15511,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.163
+        },
+        {
+          "id": "room_1-W3",
+          "start": [
+            0.3444,
+            1.0704
+          ],
+          "end": [
+            -0.8694,
+            -1.6775
+          ],
+          "length": {
+            "value": 3.004,
+            "lo": 2.7435,
+            "hi": 3.2646,
+            "coverage": 0.9,
+            "sigma": 0.15842,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W4",
+          "start": [
+            -0.8694,
+            -1.6775
+          ],
+          "end": [
+            1.4405,
+            -2.6771
+          ],
+          "length": {
+            "value": 2.5169,
+            "lo": 2.2616,
+            "hi": 2.7723,
+            "coverage": 0.9,
+            "sigma": 0.15525,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.627
+        }
+      ],
+      "openings": [
+        "room_1-D1",
+        "room_1-D2",
+        "room_2-D1"
+      ],
+      "entered": true,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported"
+      ]
+    },
+    {
+      "id": "room_2",
+      "polygon": [
+        [
+          1.4345,
+          -2.6745
+        ],
+        [
+          -0.8694,
+          -1.6776
+        ],
+        [
+          -2.0865,
+          -4.433
+        ],
+        [
+          0.2618,
+          -5.438
+        ]
+      ],
+      "floor_area": {
+        "value": 7.6147,
+        "lo": 7.1521,
+        "hi": 8.0773,
+        "coverage": 0.9,
+        "sigma": 0.28125,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_2-W1",
+          "start": [
+            1.4345,
+            -2.6745
+          ],
+          "end": [
+            -0.8694,
+            -1.6776
+          ],
+          "length": {
+            "value": 2.5103,
+            "lo": 2.411,
+            "hi": 2.6096,
+            "coverage": 0.9,
+            "sigma": 0.06037,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.627
+        },
+        {
+          "id": "room_2-W2",
+          "start": [
+            -0.8694,
+            -1.6776
+          ],
+          "end": [
+            -2.0865,
+            -4.433
+          ],
+          "length": {
+            "value": 3.0123,
+            "lo": 2.9206,
+            "hi": 3.1039,
+            "coverage": 0.9,
+            "sigma": 0.0557,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.3
+        },
+        {
+          "id": "room_2-W3",
+          "start": [
+            -2.0865,
+            -4.433
+          ],
+          "end": [
+            0.2618,
+            -5.438
+          ],
+          "length": {
+            "value": 2.5543,
+            "lo": 2.4543,
+            "hi": 2.6542,
+            "coverage": 0.9,
+            "sigma": 0.06078,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.686
+        },
+        {
+          "id": "room_2-W4",
+          "start": [
+            0.2618,
+            -5.438
+          ],
+          "end": [
+            1.4345,
+            -2.6745
+          ],
+          "length": {
+            "value": 3.002,
+            "lo": 2.9106,
+            "hi": 3.0935,
+            "coverage": 0.9,
+            "sigma": 0.05558,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.817
+        }
+      ],
+      "openings": [
+        "room_2-D1",
+        "room_2-D2"
+      ],
+      "entered": true,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported"
+      ]
+    }
+  ],
+  "openings": [
+    {
+      "id": "room_1-D1",
+      "kind": "door",
+      "room": "room_1",
+      "wall": "room_1-W3",
+      "connects_to": null,
+      "width": {
+        "value": 1.0356,
+        "lo": 0.9795,
+        "hi": 1.0916,
+        "coverage": 0.9,
+        "sigma": 0.03408,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": -0.0156,
+      "wall_thickness": null,
+      "centre": [
+        0.1414,
+        0.611
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-D2",
+      "kind": "door",
+      "room": "room_1",
+      "wall": "room_1-W3",
+      "connects_to": null,
+      "width": {
+        "value": 0.4,
+        "lo": 0.3294,
+        "hi": 0.4706,
+        "coverage": 0.9,
+        "sigma": 0.0429,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 2.62,
+      "wall_thickness": null,
+      "centre": [
+        -0.7951,
+        -1.5092
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_2-D1",
+      "kind": "door",
+      "room": "room_2",
+      "wall": "room_2-W1",
+      "connects_to": "room_1",
+      "width": {
+        "value": 0.542,
+        "lo": 0.4903,
+        "hi": 0.5936,
+        "coverage": 0.9,
+        "sigma": 0.03141,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": -0.002,
+      "wall_thickness": 0.0,
+      "centre": [
+        1.1876,
+        -2.5677
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_2-D2",
+      "kind": "door",
+      "room": "room_2",
+      "wall": "room_2-W2",
+      "connects_to": null,
+      "width": {
+        "value": 0.8197,
+        "lo": 0.7659,
+        "hi": 0.8736,
+        "coverage": 0.9,
+        "sigma": 0.03274,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.82,
+      "wall_thickness": null,
+      "centre": [
+        -1.3663,
+        -2.8026
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    }
+  ],
+  "adjacency": [
+    {
+      "rooms": [
+        "room_1",
+        "room_2"
+      ],
+      "via": "room_2-D1"
+    }
+  ],
+  "footprint_area": {
+    "value": 15.1163,
+    "lo": 13.8647,
+    "hi": 16.3678,
+    "coverage": 0.9,
+    "sigma": 0.76085,
+    "unit": "m2",
+    "basis": "observed"
+  },
+  "damage_regions": [
+    {
+      "id": "room_2-DMG1",
+      "class": "crack",
+      "room": "room_2",
+      "surface": "room_2-floor",
+      "surface_kind": "floor",
+      "extent": {
+        "width": {
+          "value": 0.0948,
+          "lo": 0.0454,
+          "hi": 0.1443,
+          "coverage": 0.9,
+          "sigma": 0.03007,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "height": {
+          "value": 0.2977,
+          "lo": 0.2476,
+          "hi": 0.3478,
+          "coverage": 0.9,
+          "sigma": 0.03046,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "bounding_area": {
+          "value": 0.0282,
+          "lo": 0.0128,
+          "hi": 0.0437,
+          "coverage": 0.9,
+          "sigma": 0.0094,
+          "unit": "m2",
+          "basis": "observed"
+        }
+      },
+      "position": {
+        "along_surface": 0.143,
+        "above_floor": 0.0,
+        "centre": [
+          0.308,
+          -4.85,
+          -1.476
+        ]
+      },
+      "detector_score": 0.231,
+      "views": 2,
+      "frames": [
+        "000888",
+        "000950"
+      ]
+    }
+  ],
+  "concealed_damage_flags": [],
+  "scope_items": [
+    {
+      "id": "S1",
+      "code": "CRACK_FILL",
+      "description": "Rake out, fill and tape the crack",
+      "unit": "m",
+      "quantity": {
+        "value": 0.2977,
+        "lo": 0.2476,
+        "hi": 0.3478,
+        "coverage": 0.9,
+        "sigma": 0.03046,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "room": "room_2",
+      "surface": "room_2-floor",
+      "damage_regions": [
+        "room_2-DMG1"
+      ],
+      "rule_id": null
+    }
+  ],
+  "intervals": {
+    "coverage": 0.9,
+    "calibrated": false,
+    "calibration_source": "none: factors default to 1.0"
+  },
+  "warnings": [
+    "no ceiling found: tilt the phone up so the ceiling is captured",
+    "intervals for the lidar tier are not yet calibrated against a benchmark",
+    "room_2-WIN1 was dropped: a television is seen there, which reads as an opening to a depth sensor"
+  ]
+}

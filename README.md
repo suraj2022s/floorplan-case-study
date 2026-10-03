@@ -47,6 +47,17 @@ cannot measure exits with code 2 and one line saying what to recapture.
 
 How to capture: [docs/capture_protocol.md](docs/capture_protocol.md) (one page).
 
+## The supplied sample data
+
+The assessment came with three Stray Scanner recordings from a LiDAR iPhone. Their plans, run
+logs and what they show (a false ceiling found, two false damage detections fixed, one left)
+are in [reports/samples/](reports/samples/README.md). To run them again:
+
+```
+uv run python scripts/fetch_supplied.py                # 0.9 GB, SHA-256 checked
+uv run floorplan run captures/supplied/c7d28f72c6      # likewise c00a170fe1 and 1a8384c3f6
+```
+
 ## Try it without a phone
 
 ```
@@ -80,6 +91,7 @@ result and post-mortem for each round, with before and after regenerable at tagg
 | `docs/` | capture protocol, device matrix, design decisions, journal |
 | `configs/` | model weights and sample files (pinned), damage rules, scope catalogue |
 | `schema/` | the JSON Schema `plan.json` follows (none was supplied, so this one is ours) |
+| `reports/` | benchmark reports (`bench/`), runs on the supplied sample data (`samples/`), technical report |
 | `tests/` | unit and end-to-end tests (`uv run pytest`) |
 
 ## Models, data and licences
@@ -92,6 +104,7 @@ result and post-mortem for each round, with before and after regenerable at tagg
 | ARKitScenes (Apple) | public-data benchmark, development | Apple's dataset licence; not redistributed, fetched by script |
 | Stray Scanner sample recording (Diffraction) | testing the LiDAR reader on real files | CC BY 4.0; 4 frames in `tests/data` |
 | iPhone 15 Pro sample files (PhotoPrism) | testing the photo and video readers | sample-file terms; not redistributed, fetched by script |
+| Sample data supplied with the assessment | run as the email asks: `reports/samples/` | the assessors'; fetched by script, 12 frames per recording shown |
 
 Nothing calls an external service at run time.
 

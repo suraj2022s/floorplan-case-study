@@ -1,0 +1,983 @@
+{
+  "schema_version": "1.0",
+  "capture": {
+    "name": "c7d28f72c6",
+    "tier": "lidar"
+  },
+  "units": {
+    "length": "m",
+    "area": "m2"
+  },
+  "frame": "metric, gravity-aligned, z up; x and y are arbitrary but shared by all rooms",
+  "rooms": [
+    {
+      "id": "room_1",
+      "polygon": [
+        [
+          -1.5993,
+          -1.4759
+        ],
+        [
+          0.9871,
+          -2.9008
+        ],
+        [
+          2.3228,
+          -0.4845
+        ],
+        [
+          0.2759,
+          1.0141
+        ],
+        [
+          -0.1749,
+          1.2431
+        ]
+      ],
+      "floor_area": {
+        "value": 8.8059,
+        "lo": 8.2795,
+        "hi": 9.3323,
+        "coverage": 0.9,
+        "sigma": 0.31999,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "ceiling_height": {
+        "value": 2.9532,
+        "lo": 2.8797,
+        "hi": 3.0268,
+        "coverage": 0.9,
+        "sigma": 0.0447,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "ceiling_height_range": [
+        2.9377,
+        2.9696
+      ],
+      "walls": [
+        {
+          "id": "room_1-W1",
+          "start": [
+            -1.5993,
+            -1.4759
+          ],
+          "end": [
+            0.9871,
+            -2.9008
+          ],
+          "length": {
+            "value": 2.953,
+            "lo": 2.8493,
+            "hi": 3.0566,
+            "coverage": 0.9,
+            "sigma": 0.063,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.932
+        },
+        {
+          "id": "room_1-W2",
+          "start": [
+            0.9871,
+            -2.9008
+          ],
+          "end": [
+            2.3228,
+            -0.4845
+          ],
+          "length": {
+            "value": 2.7609,
+            "lo": 2.6623,
+            "hi": 2.8594,
+            "coverage": 0.9,
+            "sigma": 0.0599,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W3",
+          "start": [
+            2.3228,
+            -0.4845
+          ],
+          "end": [
+            0.2759,
+            1.0141
+          ],
+          "length": {
+            "value": 2.5368,
+            "lo": 1.8675,
+            "hi": 3.2062,
+            "coverage": 0.9,
+            "sigma": 0.40692,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.6
+        },
+        {
+          "id": "room_1-W4",
+          "start": [
+            0.2759,
+            1.0141
+          ],
+          "end": [
+            -0.1749,
+            1.2431
+          ],
+          "length": {
+            "value": 0.5057,
+            "lo": 0.162,
+            "hi": 0.8493,
+            "coverage": 0.9,
+            "sigma": 0.2089,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W5",
+          "start": [
+            -0.1749,
+            1.2431
+          ],
+          "end": [
+            -1.5993,
+            -1.4759
+          ],
+          "length": {
+            "value": 3.0695,
+            "lo": 2.9146,
+            "hi": 3.2243,
+            "coverage": 0.9,
+            "sigma": 0.09413,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        }
+      ],
+      "openings": [
+        "room_1-D1",
+        "room_1-D2"
+      ],
+      "entered": true,
+      "notes": []
+    },
+    {
+      "id": "room_2",
+      "polygon": [
+        [
+          -4.8921,
+          -7.5017
+        ],
+        [
+          -2.1336,
+          -8.9596
+        ],
+        [
+          0.3257,
+          -4.5368
+        ],
+        [
+          0.1309,
+          -4.4349
+        ],
+        [
+          0.9971,
+          -2.9063
+        ],
+        [
+          -1.5912,
+          -1.4804
+        ]
+      ],
+      "floor_area": {
+        "value": 21.1041,
+        "lo": 19.2746,
+        "hi": 22.9335,
+        "coverage": 0.9,
+        "sigma": 1.1122,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": 2.2754,
+        "lo": 2.2184,
+        "hi": 2.3324,
+        "coverage": 0.9,
+        "sigma": 0.03465,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "ceiling_height_range": [
+        2.2733,
+        2.2775
+      ],
+      "walls": [
+        {
+          "id": "room_2-W1",
+          "start": [
+            -4.8921,
+            -7.5017
+          ],
+          "end": [
+            -2.1336,
+            -8.9596
+          ],
+          "length": {
+            "value": 3.1201,
+            "lo": 2.8428,
+            "hi": 3.3974,
+            "coverage": 0.9,
+            "sigma": 0.16857,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.435
+        },
+        {
+          "id": "room_2-W2",
+          "start": [
+            -2.1336,
+            -8.9596
+          ],
+          "end": [
+            0.3257,
+            -4.5368
+          ],
+          "length": {
+            "value": 5.0606,
+            "lo": 4.7776,
+            "hi": 5.3436,
+            "coverage": 0.9,
+            "sigma": 0.17207,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_2-W3",
+          "start": [
+            0.3257,
+            -4.5368
+          ],
+          "end": [
+            0.1309,
+            -4.4349
+          ],
+          "length": {
+            "value": 0.2198,
+            "lo": -0.1293,
+            "hi": 0.569,
+            "coverage": 0.9,
+            "sigma": 0.21226,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_2-W4",
+          "start": [
+            0.1309,
+            -4.4349
+          ],
+          "end": [
+            0.9971,
+            -2.9063
+          ],
+          "length": {
+            "value": 1.7569,
+            "lo": 1.5053,
+            "hi": 2.0085,
+            "coverage": 0.9,
+            "sigma": 0.15297,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.057
+        },
+        {
+          "id": "room_2-W5",
+          "start": [
+            0.9971,
+            -2.9063
+          ],
+          "end": [
+            -1.5912,
+            -1.4804
+          ],
+          "length": {
+            "value": 2.955,
+            "lo": 2.6789,
+            "hi": 3.2311,
+            "coverage": 0.9,
+            "sigma": 0.16788,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.932
+        },
+        {
+          "id": "room_2-W6",
+          "start": [
+            -1.5912,
+            -1.4804
+          ],
+          "end": [
+            -4.8921,
+            -7.5017
+          ],
+          "length": {
+            "value": 6.8668,
+            "lo": 6.6857,
+            "hi": 7.0478,
+            "coverage": 0.9,
+            "sigma": 0.11006,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.409
+        }
+      ],
+      "openings": [
+        "room_1-D1",
+        "room_2-P1",
+        "room_2-WIN1"
+      ],
+      "entered": true,
+      "notes": []
+    },
+    {
+      "id": "room_3",
+      "polygon": [
+        [
+          2.8724,
+          -5.869
+        ],
+        [
+          4.3458,
+          -3.0733
+        ],
+        [
+          3.407,
+          -2.4082
+        ],
+        [
+          1.7737,
+          -1.7854
+        ],
+        [
+          0.3189,
+          -4.5331
+        ]
+      ],
+      "floor_area": {
+        "value": 9.275,
+        "lo": 8.7639,
+        "hi": 9.7862,
+        "coverage": 0.9,
+        "sigma": 0.31076,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "ceiling_height": {
+        "value": 3.069,
+        "lo": 2.9926,
+        "hi": 3.1453,
+        "coverage": 0.9,
+        "sigma": 0.04642,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "ceiling_height_range": [
+        3.0429,
+        3.0945
+      ],
+      "walls": [
+        {
+          "id": "room_3-W1",
+          "start": [
+            2.8724,
+            -5.869
+          ],
+          "end": [
+            4.3458,
+            -3.0733
+          ],
+          "length": {
+            "value": 3.1602,
+            "lo": 3.0485,
+            "hi": 3.2718,
+            "coverage": 0.9,
+            "sigma": 0.06788,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_3-W2",
+          "start": [
+            4.3458,
+            -3.0733
+          ],
+          "end": [
+            3.407,
+            -2.4082
+          ],
+          "length": {
+            "value": 1.1506,
+            "lo": 0.9345,
+            "hi": 1.3666,
+            "coverage": 0.9,
+            "sigma": 0.13133,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.958
+        },
+        {
+          "id": "room_3-W3",
+          "start": [
+            3.407,
+            -2.4082
+          ],
+          "end": [
+            1.7737,
+            -1.7854
+          ],
+          "length": {
+            "value": 1.748,
+            "lo": 1.5425,
+            "hi": 1.9536,
+            "coverage": 0.9,
+            "sigma": 0.12496,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_3-W4",
+          "start": [
+            1.7737,
+            -1.7854
+          ],
+          "end": [
+            0.3189,
+            -4.5331
+          ],
+          "length": {
+            "value": 3.1091,
+            "lo": 2.9968,
+            "hi": 3.2214,
+            "coverage": 0.9,
+            "sigma": 0.0683,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.887
+        },
+        {
+          "id": "room_3-W5",
+          "start": [
+            0.3189,
+            -4.5331
+          ],
+          "end": [
+            2.8724,
+            -5.869
+          ],
+          "length": {
+            "value": 2.8818,
+            "lo": 2.8052,
+            "hi": 2.9585,
+            "coverage": 0.9,
+            "sigma": 0.04659,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.397
+        }
+      ],
+      "openings": [
+        "room_3-D1",
+        "room_3-D2"
+      ],
+      "entered": true,
+      "notes": []
+    },
+    {
+      "id": "room_4",
+      "polygon": [
+        [
+          3.2954,
+          -5.2774
+        ],
+        [
+          6.3567,
+          -6.8258
+        ],
+        [
+          7.6322,
+          -4.3765
+        ],
+        [
+          7.2177,
+          -4.0771
+        ],
+        [
+          4.6101,
+          -2.7165
+        ]
+      ],
+      "floor_area": {
+        "value": 9.8057,
+        "lo": 9.283,
+        "hi": 10.3283,
+        "coverage": 0.9,
+        "sigma": 0.31775,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "ceiling_height": {
+        "value": 3.0809,
+        "lo": 3.0042,
+        "hi": 3.1575,
+        "coverage": 0.9,
+        "sigma": 0.0466,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "ceiling_height_range": [
+        3.0694,
+        3.0924
+      ],
+      "walls": [
+        {
+          "id": "room_4-W1",
+          "start": [
+            3.2954,
+            -5.2774
+          ],
+          "end": [
+            6.3567,
+            -6.8258
+          ],
+          "length": {
+            "value": 3.4306,
+            "lo": 3.3433,
+            "hi": 3.5179,
+            "coverage": 0.9,
+            "sigma": 0.05309,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_4-W2",
+          "start": [
+            6.3567,
+            -6.8258
+          ],
+          "end": [
+            7.6322,
+            -4.3765
+          ],
+          "length": {
+            "value": 2.7615,
+            "lo": 2.6823,
+            "hi": 2.8407,
+            "coverage": 0.9,
+            "sigma": 0.04815,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_4-W3",
+          "start": [
+            7.6322,
+            -4.3765
+          ],
+          "end": [
+            7.2177,
+            -4.0771
+          ],
+          "length": {
+            "value": 0.5113,
+            "lo": 0.2191,
+            "hi": 0.8036,
+            "coverage": 0.9,
+            "sigma": 0.17767,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_4-W4",
+          "start": [
+            7.2177,
+            -4.0771
+          ],
+          "end": [
+            4.6101,
+            -2.7165
+          ],
+          "length": {
+            "value": 2.9413,
+            "lo": 2.7602,
+            "hi": 3.1223,
+            "coverage": 0.9,
+            "sigma": 0.11006,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.458
+        },
+        {
+          "id": "room_4-W5",
+          "start": [
+            4.6101,
+            -2.7165
+          ],
+          "end": [
+            3.2954,
+            -5.2774
+          ],
+          "length": {
+            "value": 2.8786,
+            "lo": 2.784,
+            "hi": 2.9732,
+            "coverage": 0.9,
+            "sigma": 0.05751,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        }
+      ],
+      "openings": [
+        "room_4-D1",
+        "room_4-D2"
+      ],
+      "entered": true,
+      "notes": []
+    }
+  ],
+  "openings": [
+    {
+      "id": "room_1-D1",
+      "kind": "door",
+      "room": "room_1",
+      "wall": "room_1-W1",
+      "connects_to": "room_2",
+      "width": {
+        "value": 1.099,
+        "lo": 1.0709,
+        "hi": 1.1271,
+        "coverage": 0.9,
+        "sigma": 0.01708,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 2.3712,
+        "lo": 2.3096,
+        "hi": 2.4328,
+        "coverage": 0.9,
+        "sigma": 0.03743,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 1.8627,
+      "wall_thickness": 0.0,
+      "centre": [
+        0.5123,
+        -2.6392
+      ],
+      "width_method": "jamb_faces",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-D2",
+      "kind": "door",
+      "room": "room_1",
+      "wall": "room_1-W3",
+      "connects_to": null,
+      "width": {
+        "value": 2.5175,
+        "lo": 2.4378,
+        "hi": 2.5972,
+        "coverage": 0.9,
+        "sigma": 0.04844,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 2.6865,
+        "lo": 2.6175,
+        "hi": 2.7555,
+        "coverage": 0.9,
+        "sigma": 0.04195,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0225,
+      "wall_thickness": null,
+      "centre": [
+        1.289,
+        0.2724
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_2-P1",
+      "kind": "passage",
+      "room": "room_2",
+      "wall": "room_2-W2",
+      "connects_to": null,
+      "width": {
+        "value": 3.0535,
+        "lo": 2.9632,
+        "hi": 3.1439,
+        "coverage": 0.9,
+        "sigma": 0.05494,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 1.96,
+      "wall_thickness": null,
+      "centre": [
+        -0.4391,
+        -5.9123
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_2-WIN1",
+      "kind": "window",
+      "room": "room_2",
+      "wall": "room_2-W6",
+      "connects_to": null,
+      "width": {
+        "value": 0.7128,
+        "lo": 0.6876,
+        "hi": 0.738,
+        "coverage": 0.9,
+        "sigma": 0.01531,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 1.0728,
+        "lo": 1.0401,
+        "hi": 1.1055,
+        "coverage": 0.9,
+        "sigma": 0.01987,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 1.0218,
+      "position_along_wall": 0.8072,
+      "wall_thickness": null,
+      "centre": [
+        -2.1505,
+        -2.5007
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_3-D1",
+      "kind": "door",
+      "room": "room_3",
+      "wall": "room_3-W3",
+      "connects_to": null,
+      "width": {
+        "value": 1.7362,
+        "lo": 1.6704,
+        "hi": 1.8019,
+        "coverage": 0.9,
+        "sigma": 0.03998,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 2.8863,
+        "lo": 2.8125,
+        "hi": 2.9601,
+        "coverage": 0.9,
+        "sigma": 0.04484,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0,
+      "wall_thickness": null,
+      "centre": [
+        2.5959,
+        -2.0989
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_3-D2",
+      "kind": "door",
+      "room": "room_3",
+      "wall": "room_3-W5",
+      "connects_to": null,
+      "width": {
+        "value": 1.1379,
+        "lo": 1.0802,
+        "hi": 1.1956,
+        "coverage": 0.9,
+        "sigma": 0.03507,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 2.4645,
+        "lo": 2.4008,
+        "hi": 2.5283,
+        "coverage": 0.9,
+        "sigma": 0.03876,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 1.7,
+      "wall_thickness": null,
+      "centre": [
+        2.3293,
+        -5.5849
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_4-D1",
+      "kind": "door",
+      "room": "room_4",
+      "wall": "room_4-W1",
+      "connects_to": null,
+      "width": {
+        "value": 0.8327,
+        "lo": 0.7788,
+        "hi": 0.8867,
+        "coverage": 0.9,
+        "sigma": 0.0328,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 2.482,
+        "lo": 2.4178,
+        "hi": 2.5462,
+        "coverage": 0.9,
+        "sigma": 0.03901,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.2,
+      "wall_thickness": null,
+      "centre": [
+        3.8454,
+        -5.5556
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_4-D2",
+      "kind": "door",
+      "room": "room_4",
+      "wall": "room_4-W4",
+      "connects_to": null,
+      "width": {
+        "value": 2.3003,
+        "lo": 2.2393,
+        "hi": 2.3612,
+        "coverage": 0.9,
+        "sigma": 0.03704,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 2.8855,
+        "lo": 2.8117,
+        "hi": 2.9592,
+        "coverage": 0.9,
+        "sigma": 0.04483,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0264,
+      "wall_thickness": null,
+      "centre": [
+        6.1747,
+        -3.5329
+      ],
+      "width_method": "jamb_faces",
+      "evidence": "seen_through"
+    }
+  ],
+  "adjacency": [
+    {
+      "rooms": [
+        "room_1",
+        "room_2"
+      ],
+      "via": "room_1-D1"
+    }
+  ],
+  "footprint_area": {
+    "value": 48.9907,
+    "lo": 46.1122,
+    "hi": 51.8692,
+    "coverage": 0.9,
+    "sigma": 1.74997,
+    "unit": "m2",
+    "basis": "observed"
+  },
+  "damage_regions": [],
+  "concealed_damage_flags": [],
+  "scope_items": [],
+  "intervals": {
+    "coverage": 0.9,
+    "calibrated": false,
+    "calibration_source": "none: factors default to 1.0"
+  },
+  "warnings": [
+    "intervals for the lidar tier are not yet calibrated against a benchmark"
+  ]
+}

@@ -1,0 +1,3177 @@
+{
+  "schema_version": "1.0",
+  "capture": {
+    "name": "1a8384c3f6",
+    "tier": "lidar"
+  },
+  "units": {
+    "length": "m",
+    "area": "m2"
+  },
+  "frame": "metric, gravity-aligned, z up; x and y are arbitrary but shared by all rooms",
+  "rooms": [
+    {
+      "id": "room_1",
+      "polygon": [
+        [
+          -3.6215,
+          -3.8094
+        ],
+        [
+          -3.4464,
+          -3.7964
+        ],
+        [
+          -3.4452,
+          -3.8276
+        ],
+        [
+          -3.7039,
+          -3.8456
+        ],
+        [
+          -3.6765,
+          -4.4895
+        ],
+        [
+          2.7293,
+          -4.1129
+        ],
+        [
+          2.6541,
+          -3.3551
+        ],
+        [
+          0.3223,
+          -3.4799
+        ],
+        [
+          0.2612,
+          -2.6418
+        ],
+        [
+          2.5708,
+          -2.5178
+        ],
+        [
+          2.311,
+          0.0906
+        ],
+        [
+          1.9558,
+          0.0847
+        ],
+        [
+          0.0869,
+          -0.2302
+        ],
+        [
+          0.1323,
+          -0.8533
+        ],
+        [
+          0.2062,
+          -0.864
+        ],
+        [
+          0.132,
+          -0.869
+        ],
+        [
+          0.1354,
+          -0.9157
+        ],
+        [
+          -0.1705,
+          -0.8764
+        ],
+        [
+          -0.5691,
+          -0.9365
+        ],
+        [
+          -0.4824,
+          -2.6817
+        ],
+        [
+          -0.6018,
+          -2.6881
+        ],
+        [
+          -0.6714,
+          -0.8413
+        ],
+        [
+          -2.9546,
+          -0.5099
+        ],
+        [
+          -2.9319,
+          -0.8518
+        ],
+        [
+          -3.5521,
+          -0.9706
+        ],
+        [
+          -3.4601,
+          -3.2897
+        ],
+        [
+          -3.6444,
+          -3.27
+        ]
+      ],
+      "floor_area": {
+        "value": 21.1313,
+        "lo": 18.8526,
+        "hi": 23.41,
+        "coverage": 0.9,
+        "sigma": 1.38531,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_1-W1",
+          "start": [
+            -3.6215,
+            -3.8094
+          ],
+          "end": [
+            -3.4464,
+            -3.7964
+          ],
+          "length": {
+            "value": 0.1755,
+            "lo": -0.1737,
+            "hi": 0.5247,
+            "coverage": 0.9,
+            "sigma": 0.21228,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W2",
+          "start": [
+            -3.4464,
+            -3.7964
+          ],
+          "end": [
+            -3.4452,
+            -3.8276
+          ],
+          "length": {
+            "value": 0.0313,
+            "lo": 0.0026,
+            "hi": 0.06,
+            "coverage": 0.9,
+            "sigma": 0.01747,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W3",
+          "start": [
+            -3.4452,
+            -3.8276
+          ],
+          "end": [
+            -3.7039,
+            -3.8456
+          ],
+          "length": {
+            "value": 0.2593,
+            "lo": -0.0899,
+            "hi": 0.6084,
+            "coverage": 0.9,
+            "sigma": 0.21227,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W4",
+          "start": [
+            -3.7039,
+            -3.8456
+          ],
+          "end": [
+            -3.6765,
+            -4.4895
+          ],
+          "length": {
+            "value": 0.6445,
+            "lo": 0.3961,
+            "hi": 0.893,
+            "coverage": 0.9,
+            "sigma": 0.15104,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.167
+        },
+        {
+          "id": "room_1-W5",
+          "start": [
+            -3.6765,
+            -4.4895
+          ],
+          "end": [
+            2.7293,
+            -4.1129
+          ],
+          "length": {
+            "value": 6.4169,
+            "lo": 6.0335,
+            "hi": 6.8002,
+            "coverage": 0.9,
+            "sigma": 0.23305,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W6",
+          "start": [
+            2.7293,
+            -4.1129
+          ],
+          "end": [
+            2.6541,
+            -3.3551
+          ],
+          "length": {
+            "value": 0.7615,
+            "lo": 0.4118,
+            "hi": 1.1113,
+            "coverage": 0.9,
+            "sigma": 0.21264,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W7",
+          "start": [
+            2.6541,
+            -3.3551
+          ],
+          "end": [
+            0.3223,
+            -3.4799
+          ],
+          "length": {
+            "value": 2.3352,
+            "lo": 1.9813,
+            "hi": 2.6891,
+            "coverage": 0.9,
+            "sigma": 0.21514,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W8",
+          "start": [
+            0.3223,
+            -3.4799
+          ],
+          "end": [
+            0.2612,
+            -2.6418
+          ],
+          "length": {
+            "value": 0.8404,
+            "lo": 0.4908,
+            "hi": 1.19,
+            "coverage": 0.9,
+            "sigma": 0.21255,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W9",
+          "start": [
+            0.2612,
+            -2.6418
+          ],
+          "end": [
+            2.5708,
+            -2.5178
+          ],
+          "length": {
+            "value": 2.3129,
+            "lo": 1.9591,
+            "hi": 2.6667,
+            "coverage": 0.9,
+            "sigma": 0.21509,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W10",
+          "start": [
+            2.5708,
+            -2.5178
+          ],
+          "end": [
+            2.311,
+            0.0906
+          ],
+          "length": {
+            "value": 2.6213,
+            "lo": 2.2656,
+            "hi": 2.9769,
+            "coverage": 0.9,
+            "sigma": 0.21622,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.094
+        },
+        {
+          "id": "room_1-W11",
+          "start": [
+            2.311,
+            0.0906
+          ],
+          "end": [
+            1.9558,
+            0.0847
+          ],
+          "length": {
+            "value": 0.3552,
+            "lo": -0.0814,
+            "hi": 0.7918,
+            "coverage": 0.9,
+            "sigma": 0.26542,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W12",
+          "start": [
+            1.9558,
+            0.0847
+          ],
+          "end": [
+            0.0869,
+            -0.2302
+          ],
+          "length": {
+            "value": 1.8953,
+            "lo": 0.6606,
+            "hi": 3.1299,
+            "coverage": 0.9,
+            "sigma": 0.75059,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.447
+        },
+        {
+          "id": "room_1-W13",
+          "start": [
+            0.0869,
+            -0.2302
+          ],
+          "end": [
+            0.1323,
+            -0.8533
+          ],
+          "length": {
+            "value": 0.6248,
+            "lo": 0.3616,
+            "hi": 0.888,
+            "coverage": 0.9,
+            "sigma": 0.16001,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W14",
+          "start": [
+            0.1323,
+            -0.8533
+          ],
+          "end": [
+            0.2062,
+            -0.864
+          ],
+          "length": {
+            "value": 0.0746,
+            "lo": -1.1027,
+            "hi": 1.252,
+            "coverage": 0.9,
+            "sigma": 0.71575,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W15",
+          "start": [
+            0.2062,
+            -0.864
+          ],
+          "end": [
+            0.132,
+            -0.869
+          ],
+          "length": {
+            "value": 0.0743,
+            "lo": -1.1285,
+            "hi": 1.2772,
+            "coverage": 0.9,
+            "sigma": 0.73125,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W16",
+          "start": [
+            0.132,
+            -0.869
+          ],
+          "end": [
+            0.1354,
+            -0.9157
+          ],
+          "length": {
+            "value": 0.0467,
+            "lo": -0.2018,
+            "hi": 0.2953,
+            "coverage": 0.9,
+            "sigma": 0.15111,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W17",
+          "start": [
+            0.1354,
+            -0.9157
+          ],
+          "end": [
+            -0.1705,
+            -0.8764
+          ],
+          "length": {
+            "value": 0.3084,
+            "lo": 0.0277,
+            "hi": 0.5891,
+            "coverage": 0.9,
+            "sigma": 0.17063,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.833
+        },
+        {
+          "id": "room_1-W18",
+          "start": [
+            -0.1705,
+            -0.8764
+          ],
+          "end": [
+            -0.5691,
+            -0.9365
+          ],
+          "length": {
+            "value": 0.4031,
+            "lo": 0.2955,
+            "hi": 0.5107,
+            "coverage": 0.9,
+            "sigma": 0.0654,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.875
+        },
+        {
+          "id": "room_1-W19",
+          "start": [
+            -0.5691,
+            -0.9365
+          ],
+          "end": [
+            -0.4824,
+            -2.6817
+          ],
+          "length": {
+            "value": 1.7473,
+            "lo": 1.4945,
+            "hi": 2.0001,
+            "coverage": 0.9,
+            "sigma": 0.15369,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W20",
+          "start": [
+            -0.4824,
+            -2.6817
+          ],
+          "end": [
+            -0.6018,
+            -2.6881
+          ],
+          "length": {
+            "value": 0.1196,
+            "lo": 0.0586,
+            "hi": 0.1806,
+            "coverage": 0.9,
+            "sigma": 0.03709,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W21",
+          "start": [
+            -0.6018,
+            -2.6881
+          ],
+          "end": [
+            -0.6714,
+            -0.8413
+          ],
+          "length": {
+            "value": 1.8481,
+            "lo": 1.4933,
+            "hi": 2.203,
+            "coverage": 0.9,
+            "sigma": 0.21573,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.405
+        },
+        {
+          "id": "room_1-W22",
+          "start": [
+            -0.6714,
+            -0.8413
+          ],
+          "end": [
+            -2.9546,
+            -0.5099
+          ],
+          "length": {
+            "value": 2.3071,
+            "lo": 2.0413,
+            "hi": 2.5729,
+            "coverage": 0.9,
+            "sigma": 0.16158,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.239
+        },
+        {
+          "id": "room_1-W23",
+          "start": [
+            -2.9546,
+            -0.5099
+          ],
+          "end": [
+            -2.9319,
+            -0.8518
+          ],
+          "length": {
+            "value": 0.3426,
+            "lo": -0.0117,
+            "hi": 0.6969,
+            "coverage": 0.9,
+            "sigma": 0.21541,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W24",
+          "start": [
+            -2.9319,
+            -0.8518
+          ],
+          "end": [
+            -3.5521,
+            -0.9706
+          ],
+          "length": {
+            "value": 0.6315,
+            "lo": 0.3814,
+            "hi": 0.8815,
+            "coverage": 0.9,
+            "sigma": 0.15203,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W25",
+          "start": [
+            -3.5521,
+            -0.9706
+          ],
+          "end": [
+            -3.4601,
+            -3.2897
+          ],
+          "length": {
+            "value": 2.3209,
+            "lo": 1.9635,
+            "hi": 2.6783,
+            "coverage": 0.9,
+            "sigma": 0.21729,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.913
+        },
+        {
+          "id": "room_1-W26",
+          "start": [
+            -3.4601,
+            -3.2897
+          ],
+          "end": [
+            -3.6444,
+            -3.27
+          ],
+          "length": {
+            "value": 0.1853,
+            "lo": -0.0652,
+            "hi": 0.4358,
+            "coverage": 0.9,
+            "sigma": 0.15229,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W27",
+          "start": [
+            -3.6444,
+            -3.27
+          ],
+          "end": [
+            -3.6215,
+            -3.8094
+          ],
+          "length": {
+            "value": 0.5398,
+            "lo": 0.2895,
+            "hi": 0.7902,
+            "coverage": 0.9,
+            "sigma": 0.1522,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        }
+      ],
+      "openings": [
+        "room_1-D1",
+        "room_1-P1",
+        "room_1-WIN1",
+        "room_1-WIN2",
+        "room_1-WIN3",
+        "room_1-D2",
+        "room_1-D3",
+        "room_1-D4"
+      ],
+      "entered": true,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported"
+      ]
+    },
+    {
+      "id": "room_2",
+      "polygon": [
+        [
+          -4.7898,
+          -3.9375
+        ],
+        [
+          -4.735,
+          -5.2898
+        ],
+        [
+          -2.643,
+          -5.1127
+        ],
+        [
+          -2.6884,
+          -4.4282
+        ],
+        [
+          -3.6767,
+          -4.4855
+        ],
+        [
+          -3.7038,
+          -3.8485
+        ]
+      ],
+      "floor_area": {
+        "value": 2.1719,
+        "lo": 1.4892,
+        "hi": 2.8546,
+        "coverage": 0.9,
+        "sigma": 0.41502,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_2-W1",
+          "start": [
+            -4.7898,
+            -3.9375
+          ],
+          "end": [
+            -4.735,
+            -5.2898
+          ],
+          "length": {
+            "value": 1.3534,
+            "lo": 1.0026,
+            "hi": 1.7043,
+            "coverage": 0.9,
+            "sigma": 0.2133,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_2-W2",
+          "start": [
+            -4.735,
+            -5.2898
+          ],
+          "end": [
+            -2.643,
+            -5.1127
+          ],
+          "length": {
+            "value": 2.0995,
+            "lo": 1.8464,
+            "hi": 2.3526,
+            "coverage": 0.9,
+            "sigma": 0.15387,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_2-W3",
+          "start": [
+            -2.643,
+            -5.1127
+          ],
+          "end": [
+            -2.6884,
+            -4.4282
+          ],
+          "length": {
+            "value": 0.686,
+            "lo": 0.3366,
+            "hi": 1.0354,
+            "coverage": 0.9,
+            "sigma": 0.21241,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.25
+        },
+        {
+          "id": "room_2-W4",
+          "start": [
+            -2.6884,
+            -4.4282
+          ],
+          "end": [
+            -3.6767,
+            -4.4855
+          ],
+          "length": {
+            "value": 0.9899,
+            "lo": 0.6401,
+            "hi": 1.3398,
+            "coverage": 0.9,
+            "sigma": 0.21268,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_2-W5",
+          "start": [
+            -3.6767,
+            -4.4855
+          ],
+          "end": [
+            -3.7038,
+            -3.8485
+          ],
+          "length": {
+            "value": 0.6376,
+            "lo": 0.2882,
+            "hi": 0.9871,
+            "coverage": 0.9,
+            "sigma": 0.21245,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.167
+        },
+        {
+          "id": "room_2-W6",
+          "start": [
+            -3.7038,
+            -3.8485
+          ],
+          "end": [
+            -4.7898,
+            -3.9375
+          ],
+          "length": {
+            "value": 1.0897,
+            "lo": 0.8403,
+            "hi": 1.339,
+            "coverage": 0.9,
+            "sigma": 0.15159,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.13
+        }
+      ],
+      "openings": [
+        "room_1-D1",
+        "room_2-D1",
+        "room_2-D2",
+        "room_2-D3",
+        "room_3-P2"
+      ],
+      "entered": true,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported"
+      ]
+    },
+    {
+      "id": "room_3",
+      "polygon": [
+        [
+          -4.7167,
+          -5.4439
+        ],
+        [
+          -4.4269,
+          -5.427
+        ],
+        [
+          -3.954,
+          -8.7366
+        ],
+        [
+          -3.4134,
+          -8.6976
+        ],
+        [
+          -3.4276,
+          -8.365
+        ],
+        [
+          -3.4045,
+          -8.7003
+        ],
+        [
+          -3.4395,
+          -8.7028
+        ],
+        [
+          -3.4195,
+          -9.2226
+        ],
+        [
+          -2.3811,
+          -9.1349
+        ],
+        [
+          -2.65,
+          -5.1133
+        ],
+        [
+          -4.7221,
+          -5.2887
+        ]
+      ],
+      "floor_area": {
+        "value": 6.4549,
+        "lo": 5.4104,
+        "hi": 7.4994,
+        "coverage": 0.9,
+        "sigma": 0.63497,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_3-W1",
+          "start": [
+            -4.7167,
+            -5.4439
+          ],
+          "end": [
+            -4.4269,
+            -5.427
+          ],
+          "length": {
+            "value": 0.2903,
+            "lo": 0.0388,
+            "hi": 0.5418,
+            "coverage": 0.9,
+            "sigma": 0.15289,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.167
+        },
+        {
+          "id": "room_3-W2",
+          "start": [
+            -4.4269,
+            -5.427
+          ],
+          "end": [
+            -3.954,
+            -8.7366
+          ],
+          "length": {
+            "value": 3.3432,
+            "lo": 3.0788,
+            "hi": 3.6077,
+            "coverage": 0.9,
+            "sigma": 0.16076,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.015
+        },
+        {
+          "id": "room_3-W3",
+          "start": [
+            -3.954,
+            -8.7366
+          ],
+          "end": [
+            -3.4134,
+            -8.6976
+          ],
+          "length": {
+            "value": 0.542,
+            "lo": 0.1923,
+            "hi": 0.8918,
+            "coverage": 0.9,
+            "sigma": 0.2126,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.7
+        },
+        {
+          "id": "room_3-W4",
+          "start": [
+            -3.4134,
+            -8.6976
+          ],
+          "end": [
+            -3.4276,
+            -8.365
+          ],
+          "length": {
+            "value": 0.333,
+            "lo": -0.9015,
+            "hi": 1.5674,
+            "coverage": 0.9,
+            "sigma": 0.75046,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_3-W5",
+          "start": [
+            -3.4276,
+            -8.365
+          ],
+          "end": [
+            -3.4045,
+            -8.7003
+          ],
+          "length": {
+            "value": 0.3361,
+            "lo": -0.922,
+            "hi": 1.5943,
+            "coverage": 0.9,
+            "sigma": 0.76487,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_3-W6",
+          "start": [
+            -3.4045,
+            -8.7003
+          ],
+          "end": [
+            -3.4395,
+            -8.7028
+          ],
+          "length": {
+            "value": 0.0351,
+            "lo": -0.314,
+            "hi": 0.3841,
+            "coverage": 0.9,
+            "sigma": 0.2122,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_3-W7",
+          "start": [
+            -3.4395,
+            -8.7028
+          ],
+          "end": [
+            -3.4195,
+            -9.2226
+          ],
+          "length": {
+            "value": 0.5202,
+            "lo": 0.2724,
+            "hi": 0.768,
+            "coverage": 0.9,
+            "sigma": 0.15067,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.182
+        },
+        {
+          "id": "room_3-W8",
+          "start": [
+            -3.4195,
+            -9.2226
+          ],
+          "end": [
+            -2.3811,
+            -9.1349
+          ],
+          "length": {
+            "value": 1.0422,
+            "lo": 0.7926,
+            "hi": 1.2917,
+            "coverage": 0.9,
+            "sigma": 0.1517,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_3-W9",
+          "start": [
+            -2.3811,
+            -9.1349
+          ],
+          "end": [
+            -2.65,
+            -5.1133
+          ],
+          "length": {
+            "value": 4.0306,
+            "lo": 3.764,
+            "hi": 4.2972,
+            "coverage": 0.9,
+            "sigma": 0.1621,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_3-W10",
+          "start": [
+            -2.65,
+            -5.1133
+          ],
+          "end": [
+            -4.7221,
+            -5.2887
+          ],
+          "length": {
+            "value": 2.0795,
+            "lo": 2.008,
+            "hi": 2.151,
+            "coverage": 0.9,
+            "sigma": 0.04348,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_3-W11",
+          "start": [
+            -4.7221,
+            -5.2887
+          ],
+          "end": [
+            -4.7167,
+            -5.4439
+          ],
+          "length": {
+            "value": 0.1553,
+            "lo": -0.194,
+            "hi": 0.5045,
+            "coverage": 0.9,
+            "sigma": 0.21231,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        }
+      ],
+      "openings": [
+        "room_2-D1",
+        "room_3-P1",
+        "room_3-D1",
+        "room_3-P2"
+      ],
+      "entered": true,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported"
+      ]
+    },
+    {
+      "id": "room_4",
+      "polygon": [
+        [
+          -4.6728,
+          -3.8863
+        ],
+        [
+          -3.741,
+          -3.817
+        ],
+        [
+          -3.8068,
+          -2.8602
+        ],
+        [
+          -3.661,
+          -2.8524
+        ],
+        [
+          -3.7422,
+          -1.007
+        ],
+        [
+          -4.0279,
+          -1.0618
+        ],
+        [
+          -4.0684,
+          -0.3912
+        ],
+        [
+          -4.9157,
+          -0.2824
+        ],
+        [
+          -4.8977,
+          -0.7996
+        ],
+        [
+          -5.0313,
+          -0.8061
+        ],
+        [
+          -5.0609,
+          -0.8106
+        ],
+        [
+          -5.0457,
+          -1.0962
+        ],
+        [
+          -5.0282,
+          -1.2191
+        ],
+        [
+          -4.8834,
+          -1.2092
+        ],
+        [
+          -4.8828,
+          -1.2256
+        ],
+        [
+          -4.9994,
+          -1.2479
+        ]
+      ],
+      "floor_area": {
+        "value": 3.8027,
+        "lo": 3.3312,
+        "hi": 4.2742,
+        "coverage": 0.9,
+        "sigma": 0.28664,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_4-W1",
+          "start": [
+            -4.6728,
+            -3.8863
+          ],
+          "end": [
+            -3.741,
+            -3.817
+          ],
+          "length": {
+            "value": 0.9344,
+            "lo": 0.8641,
+            "hi": 1.0046,
+            "coverage": 0.9,
+            "sigma": 0.0427,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W2",
+          "start": [
+            -3.741,
+            -3.817
+          ],
+          "end": [
+            -3.8068,
+            -2.8602
+          ],
+          "length": {
+            "value": 0.959,
+            "lo": 0.6092,
+            "hi": 1.3088,
+            "coverage": 0.9,
+            "sigma": 0.21264,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.895
+        },
+        {
+          "id": "room_4-W3",
+          "start": [
+            -3.8068,
+            -2.8602
+          ],
+          "end": [
+            -3.661,
+            -2.8524
+          ],
+          "length": {
+            "value": 0.1461,
+            "lo": 0.1278,
+            "hi": 0.1644,
+            "coverage": 0.9,
+            "sigma": 0.01114,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W4",
+          "start": [
+            -3.661,
+            -2.8524
+          ],
+          "end": [
+            -3.7422,
+            -1.007
+          ],
+          "length": {
+            "value": 1.8472,
+            "lo": 1.4934,
+            "hi": 2.2009,
+            "coverage": 0.9,
+            "sigma": 0.21507,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_4-W5",
+          "start": [
+            -3.7422,
+            -1.007
+          ],
+          "end": [
+            -4.0279,
+            -1.0618
+          ],
+          "length": {
+            "value": 0.2909,
+            "lo": 0.0417,
+            "hi": 0.54,
+            "coverage": 0.9,
+            "sigma": 0.15147,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W6",
+          "start": [
+            -4.0279,
+            -1.0618
+          ],
+          "end": [
+            -4.0684,
+            -0.3912
+          ],
+          "length": {
+            "value": 0.6718,
+            "lo": 0.3178,
+            "hi": 1.0257,
+            "coverage": 0.9,
+            "sigma": 0.21517,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W7",
+          "start": [
+            -4.0684,
+            -0.3912
+          ],
+          "end": [
+            -4.9157,
+            -0.2824
+          ],
+          "length": {
+            "value": 0.8542,
+            "lo": 0.4992,
+            "hi": 1.2092,
+            "coverage": 0.9,
+            "sigma": 0.21584,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W8",
+          "start": [
+            -4.9157,
+            -0.2824
+          ],
+          "end": [
+            -4.8977,
+            -0.7996
+          ],
+          "length": {
+            "value": 0.5175,
+            "lo": 0.166,
+            "hi": 0.869,
+            "coverage": 0.9,
+            "sigma": 0.21371,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W9",
+          "start": [
+            -4.8977,
+            -0.7996
+          ],
+          "end": [
+            -5.0313,
+            -0.8061
+          ],
+          "length": {
+            "value": 0.1337,
+            "lo": -1.1244,
+            "hi": 1.3919,
+            "coverage": 0.9,
+            "sigma": 0.76486,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W10",
+          "start": [
+            -5.0313,
+            -0.8061
+          ],
+          "end": [
+            -5.0609,
+            -0.8106
+          ],
+          "length": {
+            "value": 0.03,
+            "lo": -1.2284,
+            "hi": 1.2883,
+            "coverage": 0.9,
+            "sigma": 0.765,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W11",
+          "start": [
+            -5.0609,
+            -0.8106
+          ],
+          "end": [
+            -5.0457,
+            -1.0962
+          ],
+          "length": {
+            "value": 0.286,
+            "lo": -0.9724,
+            "hi": 1.5444,
+            "coverage": 0.9,
+            "sigma": 0.76501,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W12",
+          "start": [
+            -5.0457,
+            -1.0962
+          ],
+          "end": [
+            -5.0282,
+            -1.2191
+          ],
+          "length": {
+            "value": 0.1241,
+            "lo": -1.1341,
+            "hi": 1.3824,
+            "coverage": 0.9,
+            "sigma": 0.76494,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W13",
+          "start": [
+            -5.0282,
+            -1.2191
+          ],
+          "end": [
+            -4.8834,
+            -1.2092
+          ],
+          "length": {
+            "value": 0.1451,
+            "lo": -0.2045,
+            "hi": 0.4946,
+            "coverage": 0.9,
+            "sigma": 0.2125,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W14",
+          "start": [
+            -4.8834,
+            -1.2092
+          ],
+          "end": [
+            -4.8828,
+            -1.2256
+          ],
+          "length": {
+            "value": 0.0163,
+            "lo": -0.3348,
+            "hi": 0.3675,
+            "coverage": 0.9,
+            "sigma": 0.21348,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W15",
+          "start": [
+            -4.8828,
+            -1.2256
+          ],
+          "end": [
+            -4.9994,
+            -1.2479
+          ],
+          "length": {
+            "value": 0.1187,
+            "lo": -0.1393,
+            "hi": 0.3767,
+            "coverage": 0.9,
+            "sigma": 0.15686,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_4-W16",
+          "start": [
+            -4.9994,
+            -1.2479
+          ],
+          "end": [
+            -4.6728,
+            -3.8863
+          ],
+          "length": {
+            "value": 2.6585,
+            "lo": 2.3029,
+            "hi": 3.0141,
+            "coverage": 0.9,
+            "sigma": 0.21621,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.396
+        }
+      ],
+      "openings": [
+        "room_2-D3",
+        "room_4-D1",
+        "room_4-D2",
+        "room_4-D3",
+        "room_4-D4",
+        "room_6-D1"
+      ],
+      "entered": true,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported"
+      ]
+    },
+    {
+      "id": "room_5",
+      "polygon": [
+        [
+          -6.5753,
+          -4.6607
+        ],
+        [
+          -5.2758,
+          -4.5704
+        ],
+        [
+          -5.2711,
+          -4.9487
+        ],
+        [
+          -5.2528,
+          -5.2739
+        ],
+        [
+          -4.7347,
+          -5.23
+        ],
+        [
+          -4.8335,
+          -3.0523
+        ],
+        [
+          -5.2944,
+          -3.0782
+        ],
+        [
+          -5.2942,
+          -3.094
+        ],
+        [
+          -5.4218,
+          -3.0804
+        ],
+        [
+          -6.6481,
+          -3.1492
+        ]
+      ],
+      "floor_area": {
+        "value": 3.0842,
+        "lo": 2.6957,
+        "hi": 3.4728,
+        "coverage": 0.9,
+        "sigma": 0.23621,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_5-W1",
+          "start": [
+            -6.5753,
+            -4.6607
+          ],
+          "end": [
+            -5.2758,
+            -4.5704
+          ],
+          "length": {
+            "value": 1.3027,
+            "lo": 1.0493,
+            "hi": 1.5561,
+            "coverage": 0.9,
+            "sigma": 0.15406,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.308
+        },
+        {
+          "id": "room_5-W2",
+          "start": [
+            -5.2758,
+            -4.5704
+          ],
+          "end": [
+            -5.2711,
+            -4.9487
+          ],
+          "length": {
+            "value": 0.3783,
+            "lo": -0.8573,
+            "hi": 1.614,
+            "coverage": 0.9,
+            "sigma": 0.75121,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_5-W3",
+          "start": [
+            -5.2711,
+            -4.9487
+          ],
+          "end": [
+            -5.2528,
+            -5.2739
+          ],
+          "length": {
+            "value": 0.3257,
+            "lo": -0.9082,
+            "hi": 1.5595,
+            "coverage": 0.9,
+            "sigma": 0.75012,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_5-W4",
+          "start": [
+            -5.2528,
+            -5.2739
+          ],
+          "end": [
+            -4.7347,
+            -5.23
+          ],
+          "length": {
+            "value": 0.52,
+            "lo": 0.2698,
+            "hi": 0.7701,
+            "coverage": 0.9,
+            "sigma": 0.15208,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.818
+        },
+        {
+          "id": "room_5-W5",
+          "start": [
+            -4.7347,
+            -5.23
+          ],
+          "end": [
+            -4.8335,
+            -3.0523
+          ],
+          "length": {
+            "value": 2.18,
+            "lo": 2.0994,
+            "hi": 2.2605,
+            "coverage": 0.9,
+            "sigma": 0.04898,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.698
+        },
+        {
+          "id": "room_5-W6",
+          "start": [
+            -4.8335,
+            -3.0523
+          ],
+          "end": [
+            -5.2944,
+            -3.0782
+          ],
+          "length": {
+            "value": 0.4616,
+            "lo": 0.2114,
+            "hi": 0.7118,
+            "coverage": 0.9,
+            "sigma": 0.15211,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_5-W7",
+          "start": [
+            -5.2944,
+            -3.0782
+          ],
+          "end": [
+            -5.2942,
+            -3.094
+          ],
+          "length": {
+            "value": 0.0158,
+            "lo": -0.0725,
+            "hi": 0.1042,
+            "coverage": 0.9,
+            "sigma": 0.05373,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_5-W8",
+          "start": [
+            -5.2942,
+            -3.094
+          ],
+          "end": [
+            -5.4218,
+            -3.0804
+          ],
+          "length": {
+            "value": 0.1283,
+            "lo": -1.1301,
+            "hi": 1.3868,
+            "coverage": 0.9,
+            "sigma": 0.76507,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_5-W9",
+          "start": [
+            -5.4218,
+            -3.0804
+          ],
+          "end": [
+            -6.6481,
+            -3.1492
+          ],
+          "length": {
+            "value": 1.2283,
+            "lo": 0.8867,
+            "hi": 1.5698,
+            "coverage": 0.9,
+            "sigma": 0.20764,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.24
+        },
+        {
+          "id": "room_5-W10",
+          "start": [
+            -6.6481,
+            -3.1492
+          ],
+          "end": [
+            -6.5753,
+            -4.6607
+          ],
+          "length": {
+            "value": 1.5132,
+            "lo": 1.2542,
+            "hi": 1.7722,
+            "coverage": 0.9,
+            "sigma": 0.15745,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.6
+        }
+      ],
+      "openings": [
+        "room_4-D4",
+        "room_5-WIN1",
+        "room_5-D1",
+        "room_5-WIN2"
+      ],
+      "entered": true,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported"
+      ]
+    },
+    {
+      "id": "room_6",
+      "polygon": [
+        [
+          -6.6818,
+          -2.2883
+        ],
+        [
+          -4.9895,
+          -2.1534
+        ],
+        [
+          -5.0457,
+          -1.0962
+        ],
+        [
+          -5.086,
+          -0.8144
+        ],
+        [
+          -5.3221,
+          -0.8504
+        ],
+        [
+          -5.3225,
+          -0.8202
+        ],
+        [
+          -5.4323,
+          -0.8255
+        ],
+        [
+          -5.3227,
+          -0.8071
+        ],
+        [
+          -5.3319,
+          -0.0642
+        ],
+        [
+          -5.5469,
+          -0.0332
+        ],
+        [
+          -5.5993,
+          0.8999
+        ],
+        [
+          -6.8426,
+          0.8396
+        ]
+      ],
+      "floor_area": {
+        "value": 4.6368,
+        "lo": 4.0636,
+        "hi": 5.21,
+        "coverage": 0.9,
+        "sigma": 0.34847,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_6-W1",
+          "start": [
+            -6.6818,
+            -2.2883
+          ],
+          "end": [
+            -4.9895,
+            -2.1534
+          ],
+          "length": {
+            "value": 1.6977,
+            "lo": 1.4447,
+            "hi": 1.9506,
+            "coverage": 0.9,
+            "sigma": 0.15375,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.824
+        },
+        {
+          "id": "room_6-W2",
+          "start": [
+            -4.9895,
+            -2.1534
+          ],
+          "end": [
+            -5.0457,
+            -1.0962
+          ],
+          "length": {
+            "value": 1.0587,
+            "lo": -0.1755,
+            "hi": 2.2928,
+            "coverage": 0.9,
+            "sigma": 0.7503,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W3",
+          "start": [
+            -5.0457,
+            -1.0962
+          ],
+          "end": [
+            -5.086,
+            -0.8144
+          ],
+          "length": {
+            "value": 0.2846,
+            "lo": -0.9735,
+            "hi": 1.5428,
+            "coverage": 0.9,
+            "sigma": 0.76487,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W4",
+          "start": [
+            -5.086,
+            -0.8144
+          ],
+          "end": [
+            -5.3221,
+            -0.8504
+          ],
+          "length": {
+            "value": 0.2389,
+            "lo": -0.1118,
+            "hi": 0.5896,
+            "coverage": 0.9,
+            "sigma": 0.21321,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W5",
+          "start": [
+            -5.3221,
+            -0.8504
+          ],
+          "end": [
+            -5.3225,
+            -0.8202
+          ],
+          "length": {
+            "value": 0.0302,
+            "lo": -0.3206,
+            "hi": 0.381,
+            "coverage": 0.9,
+            "sigma": 0.21324,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W6",
+          "start": [
+            -5.3225,
+            -0.8202
+          ],
+          "end": [
+            -5.4323,
+            -0.8255
+          ],
+          "length": {
+            "value": 0.1099,
+            "lo": -1.1483,
+            "hi": 1.368,
+            "coverage": 0.9,
+            "sigma": 0.76488,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W7",
+          "start": [
+            -5.4323,
+            -0.8255
+          ],
+          "end": [
+            -5.3227,
+            -0.8071
+          ],
+          "length": {
+            "value": 0.1111,
+            "lo": -1.1476,
+            "hi": 1.3698,
+            "coverage": 0.9,
+            "sigma": 0.76521,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W8",
+          "start": [
+            -5.3227,
+            -0.8071
+          ],
+          "end": [
+            -5.3319,
+            -0.0642
+          ],
+          "length": {
+            "value": 0.7429,
+            "lo": 0.3892,
+            "hi": 1.0965,
+            "coverage": 0.9,
+            "sigma": 0.215,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W9",
+          "start": [
+            -5.3319,
+            -0.0642
+          ],
+          "end": [
+            -5.5469,
+            -0.0332
+          ],
+          "length": {
+            "value": 0.2172,
+            "lo": -0.1374,
+            "hi": 0.5719,
+            "coverage": 0.9,
+            "sigma": 0.21562,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W10",
+          "start": [
+            -5.5469,
+            -0.0332
+          ],
+          "end": [
+            -5.5993,
+            0.8999
+          ],
+          "length": {
+            "value": 0.9345,
+            "lo": 0.5813,
+            "hi": 1.2878,
+            "coverage": 0.9,
+            "sigma": 0.21476,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_6-W11",
+          "start": [
+            -5.5993,
+            0.8999
+          ],
+          "end": [
+            -6.8426,
+            0.8396
+          ],
+          "length": {
+            "value": 1.2448,
+            "lo": 0.9936,
+            "hi": 1.496,
+            "coverage": 0.9,
+            "sigma": 0.15273,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.28
+        },
+        {
+          "id": "room_6-W12",
+          "start": [
+            -6.8426,
+            0.8396
+          ],
+          "end": [
+            -6.6818,
+            -2.2883
+          ],
+          "length": {
+            "value": 3.1321,
+            "lo": 2.8725,
+            "hi": 3.3917,
+            "coverage": 0.9,
+            "sigma": 0.15782,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.984
+        }
+      ],
+      "openings": [
+        "room_4-D3",
+        "room_6-D1",
+        "room_6-D2",
+        "room_6-WIN1"
+      ],
+      "entered": true,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported"
+      ]
+    }
+  ],
+  "openings": [
+    {
+      "id": "room_1-D1",
+      "kind": "door",
+      "room": "room_1",
+      "wall": "room_1-W4",
+      "connects_to": "room_2",
+      "width": {
+        "value": 0.6882,
+        "lo": 0.6354,
+        "hi": 0.7409,
+        "coverage": 0.9,
+        "sigma": 0.03206,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": -0.0282,
+      "wall_thickness": 0.0,
+      "centre": [
+        -3.6905,
+        -4.1612
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-P1",
+      "kind": "passage",
+      "room": "room_1",
+      "wall": "room_1-W5",
+      "connects_to": null,
+      "width": {
+        "value": 6.06,
+        "lo": 5.895,
+        "hi": 6.225,
+        "coverage": 0.9,
+        "sigma": 0.10033,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0,
+      "wall_thickness": null,
+      "centre": [
+        -0.6517,
+        -4.3117
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-WIN1",
+      "kind": "window",
+      "room": "room_1",
+      "wall": "room_1-W8",
+      "connects_to": null,
+      "width": {
+        "value": 0.84,
+        "lo": 0.7839,
+        "hi": 0.8961,
+        "coverage": 0.9,
+        "sigma": 0.0341,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 1.36,
+        "lo": 1.3213,
+        "hi": 1.3987,
+        "coverage": 0.9,
+        "sigma": 0.0235,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0,
+      "wall_thickness": null,
+      "centre": [
+        0.2917,
+        -3.0611
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-WIN2",
+      "kind": "window",
+      "room": "room_1",
+      "wall": "room_1-W12",
+      "connects_to": null,
+      "width": {
+        "value": 1.1171,
+        "lo": 1.0863,
+        "hi": 1.1478,
+        "coverage": 0.9,
+        "sigma": 0.01872,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 1.32,
+        "lo": 1.2822,
+        "hi": 1.3578,
+        "coverage": 0.9,
+        "sigma": 0.02298,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.62,
+      "position_along_wall": 0.8453,
+      "wall_thickness": null,
+      "centre": [
+        0.5715,
+        -0.1485
+      ],
+      "width_method": "jamb_faces",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-WIN3",
+      "kind": "window",
+      "room": "room_1",
+      "wall": "room_1-W18",
+      "connects_to": null,
+      "width": {
+        "value": 0.3884,
+        "lo": 0.3375,
+        "hi": 0.4392,
+        "coverage": 0.9,
+        "sigma": 0.03091,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 1.68,
+      "position_along_wall": 0.0,
+      "wall_thickness": null,
+      "centre": [
+        -0.3625,
+        -0.9054
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-D2",
+      "kind": "door",
+      "room": "room_1",
+      "wall": "room_1-W22",
+      "connects_to": null,
+      "width": {
+        "value": 0.8711,
+        "lo": 0.8167,
+        "hi": 0.9255,
+        "coverage": 0.9,
+        "sigma": 0.03307,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 2.2076,
+        "lo": 2.1498,
+        "hi": 2.2653,
+        "coverage": 0.9,
+        "sigma": 0.03511,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 1.4489,
+      "wall_thickness": null,
+      "centre": [
+        -2.5363,
+        -0.5706
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-D3",
+      "kind": "door",
+      "room": "room_1",
+      "wall": "room_1-W22",
+      "connects_to": null,
+      "width": {
+        "value": 0.7385,
+        "lo": 0.7092,
+        "hi": 0.7678,
+        "coverage": 0.9,
+        "sigma": 0.01783,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": 1.72,
+        "lo": 1.6734,
+        "hi": 1.7666,
+        "coverage": 0.9,
+        "sigma": 0.02831,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.2615,
+      "wall_thickness": null,
+      "centre": [
+        -1.2956,
+        -0.7507
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_1-D4",
+      "kind": "door",
+      "room": "room_1",
+      "wall": "room_1-W24",
+      "connects_to": null,
+      "width": {
+        "value": 0.5912,
+        "lo": 0.5392,
+        "hi": 0.6432,
+        "coverage": 0.9,
+        "sigma": 0.03161,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0,
+      "wall_thickness": null,
+      "centre": [
+        -3.2222,
+        -0.9074
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_2-D1",
+      "kind": "door",
+      "room": "room_2",
+      "wall": "room_2-W2",
+      "connects_to": "room_3",
+      "width": {
+        "value": 1.1506,
+        "lo": 1.1205,
+        "hi": 1.1808,
+        "coverage": 0.9,
+        "sigma": 0.01832,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.9435,
+      "wall_thickness": 0.0,
+      "centre": [
+        -3.2216,
+        -5.1617
+      ],
+      "width_method": "jamb_faces",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_2-D2",
+      "kind": "door",
+      "room": "room_2",
+      "wall": "room_2-W3",
+      "connects_to": null,
+      "width": {
+        "value": 0.6142,
+        "lo": 0.562,
+        "hi": 0.6663,
+        "coverage": 0.9,
+        "sigma": 0.0317,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0858,
+      "wall_thickness": null,
+      "centre": [
+        -2.669,
+        -4.7207
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_2-D3",
+      "kind": "door",
+      "room": "room_2",
+      "wall": "room_2-W6",
+      "connects_to": "room_4",
+      "width": {
+        "value": 0.9068,
+        "lo": 0.8824,
+        "hi": 0.9312,
+        "coverage": 0.9,
+        "sigma": 0.01484,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0355,
+      "wall_thickness": 0.0379,
+      "centre": [
+        -4.1932,
+        -3.8886
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_3-P1",
+      "kind": "passage",
+      "room": "room_3",
+      "wall": "room_3-W2",
+      "connects_to": null,
+      "width": {
+        "value": 2.924,
+        "lo": 2.836,
+        "hi": 3.0119,
+        "coverage": 0.9,
+        "sigma": 0.05347,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.42,
+      "wall_thickness": null,
+      "centre": [
+        -4.1607,
+        -7.2901
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_3-D1",
+      "kind": "door",
+      "room": "room_3",
+      "wall": "room_3-W9",
+      "connects_to": null,
+      "width": {
+        "value": 0.9272,
+        "lo": 0.8981,
+        "hi": 0.9563,
+        "coverage": 0.9,
+        "sigma": 0.01771,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 1.3128,
+      "wall_thickness": null,
+      "centre": [
+        -2.4996,
+        -7.3625
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_3-P2",
+      "kind": "passage",
+      "room": "room_3",
+      "wall": "room_3-W10",
+      "connects_to": "room_2",
+      "width": {
+        "value": 2.0864,
+        "lo": 2.034,
+        "hi": 2.1388,
+        "coverage": 0.9,
+        "sigma": 0.03187,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": -0.0116,
+      "wall_thickness": 0.0,
+      "centre": [
+        -3.678,
+        -5.2003
+      ],
+      "width_method": "jamb_faces",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_4-D1",
+      "kind": "door",
+      "room": "room_4",
+      "wall": "room_4-W6",
+      "connects_to": null,
+      "width": {
+        "value": 0.68,
+        "lo": 0.6081,
+        "hi": 0.7519,
+        "coverage": 0.9,
+        "sigma": 0.04368,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0,
+      "wall_thickness": null,
+      "centre": [
+        -4.0484,
+        -0.7224
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_4-D2",
+      "kind": "door",
+      "room": "room_4",
+      "wall": "room_4-W7",
+      "connects_to": null,
+      "width": {
+        "value": 0.48,
+        "lo": 0.4091,
+        "hi": 0.5509,
+        "coverage": 0.9,
+        "sigma": 0.04308,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0,
+      "wall_thickness": null,
+      "centre": [
+        -4.3065,
+        -0.3607
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_4-D3",
+      "kind": "door",
+      "room": "room_4",
+      "wall": "room_4-W16",
+      "connects_to": "room_6",
+      "width": {
+        "value": 0.8142,
+        "lo": 0.7735,
+        "hi": 0.8549,
+        "coverage": 0.9,
+        "sigma": 0.02475,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0,
+      "wall_thickness": 0.0692,
+      "centre": [
+        -4.945,
+        -1.6876
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_4-D4",
+      "kind": "door",
+      "room": "room_4",
+      "wall": "room_4-W16",
+      "connects_to": "room_5",
+      "width": {
+        "value": 0.5714,
+        "lo": 0.5333,
+        "hi": 0.6095,
+        "coverage": 0.9,
+        "sigma": 0.02315,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 1.8009,
+      "wall_thickness": 0.0817,
+      "centre": [
+        -4.7377,
+        -3.3622
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_5-WIN1",
+      "kind": "window",
+      "room": "room_5",
+      "wall": "room_5-W1",
+      "connects_to": null,
+      "width": {
+        "value": 0.8983,
+        "lo": 0.8437,
+        "hi": 0.9529,
+        "coverage": 0.9,
+        "sigma": 0.03319,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.4933,
+      "position_along_wall": 0.4217,
+      "wall_thickness": null,
+      "centre": [
+        -5.7066,
+        -4.6003
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_5-D1",
+      "kind": "door",
+      "room": "room_5",
+      "wall": "room_5-W9",
+      "connects_to": null,
+      "width": {
+        "value": 0.92,
+        "lo": 0.8699,
+        "hi": 0.9701,
+        "coverage": 0.9,
+        "sigma": 0.03046,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.24,
+      "wall_thickness": null,
+      "centre": [
+        -6.1207,
+        -3.1196
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_5-WIN2",
+      "kind": "window",
+      "room": "room_5",
+      "wall": "room_5-W10",
+      "connects_to": null,
+      "width": {
+        "value": 0.58,
+        "lo": 0.526,
+        "hi": 0.634,
+        "coverage": 0.9,
+        "sigma": 0.03286,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 1.024,
+      "position_along_wall": 0.0,
+      "wall_thickness": null,
+      "centre": [
+        -6.6342,
+        -3.4389
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_6-D1",
+      "kind": "door",
+      "room": "room_6",
+      "wall": "room_6-W8",
+      "connects_to": "room_4",
+      "width": {
+        "value": 0.76,
+        "lo": 0.6877,
+        "hi": 0.8323,
+        "coverage": 0.9,
+        "sigma": 0.04398,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.0,
+      "wall_thickness": 0.4165,
+      "centre": [
+        -5.3274,
+        -0.4271
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_6-D2",
+      "kind": "door",
+      "room": "room_6",
+      "wall": "room_6-W10",
+      "connects_to": null,
+      "width": {
+        "value": 0.76,
+        "lo": 0.6877,
+        "hi": 0.8323,
+        "coverage": 0.9,
+        "sigma": 0.04398,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.0,
+      "position_along_wall": 0.18,
+      "wall_thickness": null,
+      "centre": [
+        -5.5783,
+        0.5259
+      ],
+      "width_method": "region_edge",
+      "evidence": "seen_through"
+    },
+    {
+      "id": "room_6-WIN1",
+      "kind": "window",
+      "room": "room_6",
+      "wall": "room_6-W11",
+      "connects_to": null,
+      "width": {
+        "value": 0.9157,
+        "lo": 0.8867,
+        "hi": 0.9446,
+        "coverage": 0.9,
+        "sigma": 0.01759,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "sill_height": 0.206,
+      "position_along_wall": 0.02,
+      "wall_thickness": null,
+      "centre": [
+        -6.0766,
+        0.8767
+      ],
+      "width_method": "mixed",
+      "evidence": "seen_through"
+    }
+  ],
+  "adjacency": [
+    {
+      "rooms": [
+        "room_1",
+        "room_2"
+      ],
+      "via": "room_1-D1"
+    },
+    {
+      "rooms": [
+        "room_2",
+        "room_3"
+      ],
+      "via": "room_2-D1"
+    },
+    {
+      "rooms": [
+        "room_2",
+        "room_3"
+      ],
+      "via": "room_3-P2"
+    },
+    {
+      "rooms": [
+        "room_2",
+        "room_4"
+      ],
+      "via": "room_2-D3"
+    },
+    {
+      "rooms": [
+        "room_4",
+        "room_5"
+      ],
+      "via": "room_4-D4"
+    },
+    {
+      "rooms": [
+        "room_4",
+        "room_6"
+      ],
+      "via": "room_4-D3"
+    },
+    {
+      "rooms": [
+        "room_4",
+        "room_6"
+      ],
+      "via": "room_6-D1"
+    }
+  ],
+  "footprint_area": {
+    "value": 41.2819,
+    "lo": 38.0741,
+    "hi": 44.4897,
+    "coverage": 0.9,
+    "sigma": 1.95016,
+    "unit": "m2",
+    "basis": "observed"
+  },
+  "damage_regions": [],
+  "concealed_damage_flags": [],
+  "scope_items": [],
+  "intervals": {
+    "coverage": 0.9,
+    "calibrated": false,
+    "calibration_source": "none: factors default to 1.0"
+  },
+  "warnings": [
+    "no ceiling found: tilt the phone up so the ceiling is captured",
+    "intervals for the lidar tier are not yet calibrated against a benchmark"
+  ]
+}

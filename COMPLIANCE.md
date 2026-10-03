@@ -8,7 +8,7 @@ Status values: **Done** (the artifact exists and regenerates from this repo), **
 says whether the requirement is covered, not whether its gate passes; gate results are
 given as they stand, failures included.
 
-Last updated: 2026-10-03 15:56 IST.
+Last updated: 2026-10-03 23:21 IST.
 
 **Two gaps affect many rows:** no iPhone 15 Pro has been available for capturing our own
 benchmark (rows 17-21, 31-32, 42), and the assessment supplied no Round 1 gate table or JSON
@@ -108,3 +108,4 @@ ground truth (`bench/benchmarks/arkitscenes.yaml`).
 | 45 | Runs without calling our own infrastructure | `src/floorplan/` | No network calls at run time | Done |
 | 46 | Weights and large binaries fetched by script | `scripts/fetch_weights.py`, `configs/weights.json` | Fetch script, SHA-256 checked | Done |
 | 47 | Mirrors, glass, wet-look surfaces and low light covered | `src/floorplan/semantics/run.py`, `src/floorplan/geometry/layout.py` | Handling and failure modes | Partial: mirrors and screens are not taken for openings; space seen through glass is kept out of the room; curtains, wet-look surfaces and low light not yet handled or tested |
+| 48 | Run the code on the supplied sample data (assessment email) | `reports/samples/README.md`, `scripts/fetch_supplied.py` | Plans, run logs and findings for the three Stray Scanner recordings | Done: each runs with one command; no ground truth was supplied, so this shows robustness, not accuracy. Found a false ceiling (2.28 m against 2.95-3.08 m); fixed two false damage detections and a doorway classed as a window; one false crack left and reported |

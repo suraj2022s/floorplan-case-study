@@ -169,3 +169,26 @@ Short, dated notes on what was done and why. Times are IST.
   11.86 m²), because a real step in its outline was straightened away. Kept 12 cm. The
   public-data report is regenerated: it predated the 16:47 change, so three openings
   without a seen top are now doors rather than a passage or windows (gates unchanged).
+- **22:40** No JSON schema came with the assessment, so we publish our own
+  (`schema/plan.schema.json`) and test every plan against it as strict JSON. That caught a
+  photo-tier room without a ceiling writing its height range as `NaN`, which is not JSON;
+  it is now `null`.
+- **22:52** The sample scans were first run without the damage detector; through the public
+  command it found damage in two undamaged homes. One mould region raised two flags, and
+  each flag added its own moisture inspection of the same wall: now one per surface.
+- **23:07** The two damage regions on the sample scans were a pot plant taken for mould and
+  the edge of a shower door frame taken for a floor crack. Damage is part of a surface, so
+  at least half of a box's depth points must now lie on one plane parallel to it: bare
+  walls and floors score 0.9-1.0, the plant 0.06-0.10. The plant is gone; the shower edge
+  passes (0.61, 0.77) and is reported. The score threshold stays at 0.20: real damage
+  photos score 0.34-0.83, but walkthrough frames are blurrier than close-ups.
+- **23:18** Two doorways filmed low from both rooms were merged into "windows" standing on
+  the floor: the merge classed them by a height that was only where the view stopped. Now
+  an opening on the floor whose top was never seen is a door either way. Correction: the
+  messages of 7660e74 and d6c0b8f give 49 and 51 tests passing; the runs show 48 and 50
+  passed, with 1 skipped each time (the sample-plan schema test, before the plans existed).
+- **23:24** The runs on the supplied sample data are in `reports/samples/`, with the
+  findings: a false ceiling found (2.28 m against 2.95-3.08 m, an access hatch visible),
+  ceilings and door heights reported as not measured where they were not captured, a noisy
+  outline on the scan filmed low, one false crack left. No ground truth came with the
+  recordings, so they show robustness, not accuracy.

@@ -1,0 +1,58 @@
+{
+  "floorplan_version": "0.1.0",
+  "arguments": {
+    "tier": "lidar",
+    "drift": true
+  },
+  "tier": "lidar",
+  "stats": {
+    "frames_in": 5251,
+    "scale_sigma": 0.015,
+    "keyframes": 1103,
+    "drift": {
+      "applied": true,
+      "method": "plane-anchored: fragments turned and shifted onto shared wall planes, solved jointly with a smoothness prior; yaw and horizontal position only",
+      "fragments": 46,
+      "iterations": 6,
+      "walls_used": 34,
+      "wall_copies_merged": 4,
+      "wall_residual_rms_before_m": 0.03959,
+      "wall_residual_rms_after_m": 0.03727,
+      "mean_shift_m": 0.0422,
+      "max_shift_m": 0.2006,
+      "max_turn_deg": 1.1344
+    },
+    "cloud_points": 705936,
+    "wall_lines": 44,
+    "semantics": {
+      "detector": {
+        "model": "OWLv2 base patch16 ensemble",
+        "device": null
+      },
+      "images_examined": 40,
+      "boxes_on_surfaces": 22,
+      "mirrors_or_screens_seen": 3
+    }
+  },
+  "timings_s": {
+    "keyframes": 0.027,
+    "fragments": 17.05,
+    "drift": 17.231,
+    "cloud": 0.225,
+    "planes": 6.769,
+    "layout": 0.916,
+    "refine": 0.034,
+    "levels": 0.181,
+    "openings": 6.867,
+    "measure": 0.003,
+    "damage": 8.397
+  },
+  "total_s": 57.7,
+  "inputs_sha256": {
+    "odometry.csv": "2ee32c3f351c5806a1fab7e2eb6736fa7424c9b9d105366be4d99eadec44dc12",
+    "camera_matrix.csv": "ab0ee09a069fce6b3623edaeba6c96f118fdd033367243a17390627d1e99ca61"
+  },
+  "plan_sha256": "0004288a7a1cf397e0d984a422d119fb8116e75c824704bdd08410724831f534",
+  "python": "3.12.13",
+  "platform": "Windows-11-10.0.26200-SP0"
+}

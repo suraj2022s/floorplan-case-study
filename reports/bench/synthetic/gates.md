@@ -10,7 +10,7 @@ Synthetic scenes with exactly known dimensions, rendered as LiDAR captures. This
 | lidar | Ceiling height | **PASS** | 11/11 rooms within 1.5 cm; worst 0.0 cm | <= 1.5 cm in every room | mean signed error -0.00 cm |
 | lidar | Ceiling height, repeat captures | **PASS** | spread 0.00 cm over 1 room pair(s) | spread across captures <= 1 cm | repeatable and unbiased; mean error -0.01 cm |
 | lidar | Repeatability per wall | **PASS** | 4/4 walls agree; worst 0.00 cm | two captures agree within 1 cm or 0.5% per wall | reading 'or' as whichever is larger. Strict reading (whichever is smaller): 4/4 |
-| lidar | Wall lengths | **not evaluated** | median 0.1 cm, worst 4.2 cm (0.7%); 0 wall(s) not found | set by the Round 1 gate table (not yet in spec/) |  |
+| lidar | Wall lengths | **not evaluated** | median 0.1 cm, worst 4.2 cm (0.7%); 0 wall(s) not found | set by the Round 1 gate table, not supplied |  |
 | lidar | Whole-property stitch | **PASS** | flat: footprint -0.0%; flat-drift: footprint +0.0% | one plan, correct adjacency, no overlaps, footprint within +-8%, interval holds |  |
 | lidar | Interval calibration | **PASS** | 88/89 = 99% of 90% intervals contain the truth | >= 84% (90% less two standard errors at n=89) | ceiling_height 11/11; floor_area 11/11; footprint_area 5/5; opening_width 17/18; wall_length 44/44 |
 
@@ -18,11 +18,11 @@ Synthetic scenes with exactly known dimensions, rendered as LiDAR captures. This
 
 | Capture | Tier | Rooms found / measured | Adjacency | Overlap (m²) | Time (s) |
 |---|---|---|---|---|---|
-| box-room-a | lidar | 1 / 1 | correct | 0.000 | 10.3 |
-| box-room-b | lidar | 1 / 1 | correct | 0.000 | 9.7 |
-| furnished-room | lidar | 1 / 1 | correct | 0.000 | 13.8 |
-| flat | lidar | 4 / 4 | correct | 0.000 | 62.5 |
-| flat-drift | lidar | 4 / 4 | correct | 0.000 | 75.3 |
+| box-room-a | lidar | 1 / 1 | correct | 0.000 | 12.6 |
+| box-room-b | lidar | 1 / 1 | correct | 0.000 | 12.9 |
+| furnished-room | lidar | 1 / 1 | correct | 0.000 | 17.6 |
+| flat | lidar | 4 / 4 | correct | 0.000 | 66.6 |
+| flat-drift | lidar | 4 / 4 | correct | 0.000 | 86.1 |
 
 ## Wall lengths
 
@@ -174,8 +174,8 @@ The same capture run with drift correction on and off.
 
 | Capture | cloud | damage | drift | fragments | keyframes | layout | levels | measure | openings | planes | refine | total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| box-room-a | 0.3 | 0.1 | 0.3 | 7.2 | 0.0 | 0.0 | 0.0 | 0.0 | 1.8 | 0.3 | 0.0 | 10.3 |
-| box-room-b | 0.1 | 0.2 | 0.3 | 6.9 | 0.0 | 0.0 | 0.1 | 0.0 | 1.9 | 0.2 | 0.0 | 9.7 |
-| furnished-room | 0.2 | 0.1 | 0.4 | 10.0 | 0.0 | 0.0 | 0.0 | 0.0 | 2.7 | 0.2 | 0.0 | 13.8 |
-| flat | 0.6 | 0.1 | 19.8 | 32.2 | 0.0 | 0.5 | 0.2 | 0.0 | 7.0 | 1.9 | 0.1 | 62.5 |
-| flat-drift | 0.5 | 0.1 | 28.8 | 35.3 | 0.0 | 1.1 | 0.2 | 0.0 | 6.0 | 3.1 | 0.1 | 75.3 |
+| box-room-a | 0.2 | 0.2 | 0.4 | 9.4 | 0.0 | 0.0 | 0.0 | 0.0 | 2.0 | 0.3 | 0.0 | 12.6 |
+| box-room-b | 0.2 | 0.2 | 0.4 | 9.5 | 0.0 | 0.0 | 0.0 | 0.0 | 2.2 | 0.3 | 0.0 | 12.9 |
+| furnished-room | 0.2 | 0.5 | 0.5 | 12.6 | 0.0 | 0.0 | 0.1 | 0.0 | 3.4 | 0.3 | 0.0 | 17.6 |
+| flat | 0.6 | 0.1 | 14.2 | 42.3 | 0.0 | 0.5 | 0.2 | 0.0 | 6.7 | 1.9 | 0.1 | 66.6 |
+| flat-drift | 0.9 | 0.2 | 31.5 | 36.3 | 0.0 | 1.7 | 0.2 | 0.0 | 10.5 | 4.7 | 0.2 | 86.1 |

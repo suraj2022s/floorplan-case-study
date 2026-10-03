@@ -38,7 +38,7 @@
       "tier": "lidar",
       "status": "not evaluated",
       "value": "median 0.1 cm, worst 4.2 cm (0.7%); 0 wall(s) not found",
-      "threshold": "set by the Round 1 gate table (not yet in spec/)",
+      "threshold": "set by the Round 1 gate table, not supplied",
       "detail": ""
     },
     {
@@ -235,17 +235,17 @@
         }
       ],
       "timings_s": {
-        "keyframes": 0.002,
-        "fragments": 7.238,
-        "drift": 0.324,
-        "cloud": 0.287,
-        "planes": 0.322,
-        "layout": 0.047,
-        "refine": 0.018,
-        "levels": 0.048,
-        "openings": 1.836,
+        "keyframes": 0.001,
+        "fragments": 9.389,
+        "drift": 0.407,
+        "cloud": 0.167,
+        "planes": 0.288,
+        "layout": 0.028,
+        "refine": 0.014,
+        "levels": 0.047,
+        "openings": 2.043,
         "measure": 0.001,
-        "damage": 0.136
+        "damage": 0.248
       },
       "warnings": [
         "intervals for the lidar tier are not yet calibrated against a benchmark",
@@ -406,16 +406,16 @@
       ],
       "timings_s": {
         "keyframes": 0.002,
-        "fragments": 6.884,
-        "drift": 0.325,
-        "cloud": 0.131,
-        "planes": 0.22,
-        "layout": 0.025,
-        "refine": 0.021,
-        "levels": 0.052,
-        "openings": 1.855,
-        "measure": 0.001,
-        "damage": 0.176
+        "fragments": 9.463,
+        "drift": 0.406,
+        "cloud": 0.231,
+        "planes": 0.311,
+        "layout": 0.031,
+        "refine": 0.014,
+        "levels": 0.049,
+        "openings": 2.166,
+        "measure": 0.002,
+        "damage": 0.24
       },
       "warnings": [
         "intervals for the lidar tier are not yet calibrated against a benchmark",
@@ -576,16 +576,16 @@
       ],
       "timings_s": {
         "keyframes": 0.002,
-        "fragments": 9.994,
-        "drift": 0.426,
-        "cloud": 0.205,
-        "planes": 0.241,
-        "layout": 0.025,
-        "refine": 0.009,
-        "levels": 0.035,
-        "openings": 2.705,
+        "fragments": 12.568,
+        "drift": 0.514,
+        "cloud": 0.238,
+        "planes": 0.261,
+        "layout": 0.029,
+        "refine": 0.01,
+        "levels": 0.057,
+        "openings": 3.446,
         "measure": 0.001,
-        "damage": 0.149
+        "damage": 0.508
       },
       "warnings": [
         "intervals for the lidar tier are not yet calibrated against a benchmark",
@@ -1093,17 +1093,17 @@
         }
       ],
       "timings_s": {
-        "keyframes": 0.007,
-        "fragments": 32.171,
-        "drift": 19.819,
-        "cloud": 0.591,
-        "planes": 1.935,
-        "layout": 0.53,
-        "refine": 0.073,
-        "levels": 0.178,
-        "openings": 7.044,
+        "keyframes": 0.008,
+        "fragments": 42.307,
+        "drift": 14.187,
+        "cloud": 0.58,
+        "planes": 1.904,
+        "layout": 0.519,
+        "refine": 0.081,
+        "levels": 0.191,
+        "openings": 6.661,
         "measure": 0.001,
-        "damage": 0.14
+        "damage": 0.149
       },
       "warnings": [
         "intervals for the lidar tier are not yet calibrated against a benchmark",
@@ -1611,17 +1611,17 @@
         }
       ],
       "timings_s": {
-        "keyframes": 0.012,
-        "fragments": 35.271,
-        "drift": 28.818,
-        "cloud": 0.522,
-        "planes": 3.09,
-        "layout": 1.112,
-        "refine": 0.137,
-        "levels": 0.203,
-        "openings": 6.001,
+        "keyframes": 0.008,
+        "fragments": 36.286,
+        "drift": 31.526,
+        "cloud": 0.889,
+        "planes": 4.745,
+        "layout": 1.679,
+        "refine": 0.152,
+        "levels": 0.197,
+        "openings": 10.496,
         "measure": 0.001,
-        "damage": 0.132
+        "damage": 0.168
       },
       "warnings": [
         "intervals for the lidar tier are not yet calibrated against a benchmark",

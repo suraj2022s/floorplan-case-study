@@ -390,7 +390,7 @@ def wall_gate(scores: list[CaptureScore], tier: str) -> dict:
     )
     if tier not in WALL_RELATIVE:
         return _gate(
-            "Wall lengths", tier, None, summary, "set by the Round 1 gate table (not yet in spec/)"
+            "Wall lengths", tier, None, summary, "set by the Round 1 gate table, not supplied"
         )
     limit = WALL_RELATIVE[tier]
     passed = int((relative <= limit).sum())

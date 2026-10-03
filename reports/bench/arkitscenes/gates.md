@@ -10,7 +10,7 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | lidar | Ceiling height | **FAIL** | 0/3 rooms within 1.5 cm; worst 3.6 cm | <= 1.5 cm in every room | mean signed error -3.19 cm |
 | lidar | Ceiling height, repeat captures | **PASS** | spread 0.96 cm over 3 room pair(s) | spread across captures <= 1 cm | repeatable but biased; mean error -3.19 cm |
 | lidar | Repeatability per wall | **not evaluated** | no room captured twice at this tier |  |  |
-| lidar | Wall lengths | **not evaluated** | median 8.5 cm, worst 13.2 cm (4.1%); 8 wall(s) not found | set by the Round 1 gate table (not yet in spec/) |  |
+| lidar | Wall lengths | **not evaluated** | median 8.5 cm, worst 13.2 cm (4.1%); 8 wall(s) not found | set by the Round 1 gate table, not supplied |  |
 | lidar | Whole-property stitch | **not evaluated** | no multi-room capture at this tier |  |  |
 | lidar | Interval calibration | **FAIL** | 6/11 = 55% of 90% intervals contain the truth | >= 72% (90% less two standard errors at n=11) | ceiling_height 3/3; floor_area 1/3; opening_width 0/1; wall_length 2/4 |
 | video | Opening widths | **FAIL** | 0/2 = 0% | <= 2 cm on >= 85%; a miss and a phantom each count as a miss | 1 missed, 0 phantom, 1 found but off by more than 2 cm |
@@ -25,10 +25,10 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 
 | Capture | Tier | Rooms found / measured | Adjacency | Overlap (m²) | Time (s) |
 |---|---|---|---|---|---|
-| bedroom-a | lidar | 1 / 1 | correct | 0.000 | 13.0 |
-| bedroom-b | lidar | 1 / 1 | correct | 0.000 | 6.8 |
-| bedroom-c | lidar | 1 / 1 | correct | 0.000 | 10.6 |
-| bedroom-a-video | video | 1 / 1 | correct | 0.000 | 40.0 |
+| bedroom-a | lidar | 1 / 1 | correct | 0.000 | 9.9 |
+| bedroom-b | lidar | 1 / 1 | correct | 0.000 | 5.6 |
+| bedroom-c | lidar | 1 / 1 | correct | 0.000 | 9.1 |
+| bedroom-a-video | video | 1 / 1 | correct | 0.000 | 41.7 |
 
 ## Wall lengths
 
@@ -98,7 +98,7 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 
 | Capture | cloud | damage | drift | fragments | keyframes | layout | levels | measure | openings | planes | poses_and_depth | refine | total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| bedroom-a | 0.1 | 0.2 | 2.7 | 6.7 | 0.0 | 0.3 | 0.1 | 0.0 | 1.9 | 1.0 | 0.0 | 0.0 | 13.0 |
-| bedroom-b | 0.1 | 0.2 | 1.7 | 3.0 | 0.0 | 0.1 | 0.0 | 0.0 | 1.0 | 0.7 | 0.0 | 0.0 | 6.8 |
-| bedroom-c | 0.1 | 0.2 | 2.6 | 4.4 | 0.0 | 0.3 | 0.1 | 0.0 | 1.8 | 1.2 | 0.0 | 0.0 | 10.6 |
-| bedroom-a-video | 0.1 | 0.5 | 0.8 | 4.3 | 0.0 | 0.1 | 0.0 | 0.0 | 1.9 | 0.4 | 31.8 | 0.0 | 40.0 |
+| bedroom-a | 0.1 | 0.3 | 1.7 | 5.8 | 0.0 | 0.2 | 0.0 | 0.0 | 1.2 | 0.6 | 0.0 | 0.0 | 9.9 |
+| bedroom-b | 0.1 | 0.2 | 1.1 | 3.1 | 0.0 | 0.1 | 0.0 | 0.0 | 0.6 | 0.4 | 0.0 | 0.0 | 5.6 |
+| bedroom-c | 0.1 | 0.5 | 1.5 | 3.5 | 0.0 | 0.3 | 0.0 | 0.0 | 2.1 | 1.0 | 0.0 | 0.0 | 9.1 |
+| bedroom-a-video | 0.1 | 0.7 | 0.5 | 4.2 | 0.0 | 0.1 | 0.0 | 0.0 | 2.3 | 0.4 | 33.4 | 0.0 | 41.7 |

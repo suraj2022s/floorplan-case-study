@@ -22,3 +22,8 @@ captures:
     path: .cache/arkitscenes/47333468
     group: bedroom
     truth: bench/ground_truth/arkitscenes-467138.yaml
+  - id: bedroom-a-video
+    path: .cache/arkitscenes/raw/47333462.mov
+    tier: video
+    group: bedroom-video
+    truth: bench/ground_truth/arkitscenes-467138.yaml

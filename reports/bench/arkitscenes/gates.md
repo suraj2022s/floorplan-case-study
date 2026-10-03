@@ -13,6 +13,13 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | lidar | Wall lengths | **not evaluated** | median 8.5 cm, worst 13.2 cm (4.1%); 8 wall(s) not found | set by the Round 1 gate table (not yet in spec/) |  |
 | lidar | Whole-property stitch | **not evaluated** | no multi-room capture at this tier |  |  |
 | lidar | Interval calibration | **FAIL** | 3/11 = 27% of 90% intervals contain the truth | >= 72% (90% less two standard errors at n=11) | ceiling_height 0/3; floor_area 1/3; opening_width 0/1; wall_length 2/4 |
+| video | Opening widths | **FAIL** | 0/2 = 0% | <= 2 cm on >= 85%; a miss and a phantom each count as a miss | 1 missed, 0 phantom, 1 found but off by more than 2 cm |
+| video | Ceiling height | **FAIL** | 0/1 rooms within 1.5 cm; worst 18.7 cm | <= 1.5 cm in every room | mean signed error +18.66 cm |
+| video | Ceiling height, repeat captures | **not evaluated** | no room captured twice at this tier |  |  |
+| video | Repeatability per wall | **not evaluated** | no room captured twice at this tier |  |  |
+| video | Wall lengths | **FAIL** | 2/4 within 3%; median 11.5 cm, worst 16.1 cm (5.0%); 0 wall(s) not found | every wall within +-3% |  |
+| video | Whole-property stitch | **not evaluated** | no multi-room capture at this tier |  |  |
+| video | Interval calibration | **PASS** | 6/7 = 86% of 90% intervals contain the truth | >= 67% (90% less two standard errors at n=7) | ceiling_height 1/1; floor_area 1/1; opening_width 0/1; wall_length 4/4 |
 
 ## Captures
 
@@ -21,6 +28,7 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | bedroom-a | lidar | 1 / 1 | correct | 0.000 | 7.9 |
 | bedroom-b | lidar | 1 / 1 | correct | 0.000 | 4.7 |
 | bedroom-c | lidar | 1 / 1 | correct | 0.000 | 6.8 |
+| bedroom-a-video | video | 1 / 1 | correct | 0.000 | 58.8 |
 
 ## Wall lengths
 
@@ -38,6 +46,10 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | bedroom-c | bedroom-W2 | 3.721 | not found | not found |  |
 | bedroom-c | bedroom-W3 | 3.180 | not found | not found |  |
 | bedroom-c | bedroom-W4 | 3.728 | not found | not found |  |
+| bedroom-a-video | bedroom-W1 | 3.188 | 3.349 [3.070, 3.627] | +16.1 | yes |
+| bedroom-a-video | bedroom-W2 | 3.721 | 3.783 [3.469, 4.098] | +6.2 | yes |
+| bedroom-a-video | bedroom-W3 | 3.180 | 3.314 [3.038, 3.590] | +13.4 | yes |
+| bedroom-a-video | bedroom-W4 | 3.728 | 3.824 [3.506, 4.142] | +9.6 | yes |
 
 ## Ceiling heights
 
@@ -46,12 +58,14 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | bedroom-a | bedroom | 2.640 | 2.607 [2.583, 2.631] | -3.3 | NO |
 | bedroom-b | bedroom | 2.640 | 2.604 [2.580, 2.627] | -3.6 | NO |
 | bedroom-c | bedroom | 2.640 | 2.613 [2.590, 2.637] | -2.6 | NO |
+| bedroom-a-video | bedroom | 2.640 | 2.826 [2.591, 3.062] | +18.7 | yes |
 
 ## Opening widths
 
 | Capture | Item | Truth (m) | Measured [90% interval] | Error (cm) | Truth in interval |
 |---|---|---|---|---|---|
 | bedroom-a | bedroom-WIN1 | 1.326 | 0.831 [0.811, 0.850] | -49.5 | NO |
+| bedroom-a-video | bedroom-WIN1 | 1.326 | 1.492 [1.360, 1.624] | +16.6 | NO |
 
 ## Floor areas
 
@@ -60,6 +74,7 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | bedroom-a | bedroom | 11.859 | 11.155 [10.947, 11.363] | -0.704 | NO |
 | bedroom-b | bedroom | 11.859 | 11.014 [10.827, 11.200] | -0.845 | NO |
 | bedroom-c | bedroom | 11.859 | 12.237 [11.677, 12.798] | +0.378 | yes |
+| bedroom-a-video | bedroom | 11.859 | 12.671 [10.568, 14.775] | +0.812 | yes |
 
 ## Opening detection
 
@@ -76,11 +91,14 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | bedroom-c | room_1-P1 | phantom |  | passage |  |
 | bedroom-c | room_1-WIN1 | phantom |  | window |  |
 | bedroom-c | room_1-D1 | phantom |  | door |  |
+| bedroom-a-video | bedroom-D1 | missed | door |  |  |
+| bedroom-a-video | bedroom-WIN1 | matched | window | window | +16.6 |
 
 ## Timing (seconds)
 
-| Capture | cloud | damage | drift | fragments | keyframes | layout | levels | measure | openings | planes | refine | total |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| bedroom-a | 0.1 | 0.2 | 1.6 | 4.3 | 0.0 | 0.1 | 0.0 | 0.0 | 1.1 | 0.5 | 0.0 | 7.9 |
-| bedroom-b | 0.0 | 0.2 | 1.0 | 2.4 | 0.0 | 0.1 | 0.0 | 0.0 | 0.5 | 0.4 | 0.0 | 4.7 |
-| bedroom-c | 0.1 | 0.2 | 1.4 | 3.3 | 0.0 | 0.1 | 0.0 | 0.0 | 1.0 | 0.7 | 0.0 | 6.8 |
+| Capture | cloud | damage | drift | fragments | keyframes | layout | levels | measure | openings | planes | poses_and_depth | refine | total |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| bedroom-a | 0.1 | 0.2 | 1.6 | 4.3 | 0.0 | 0.1 | 0.0 | 0.0 | 1.1 | 0.5 | 0.0 | 0.0 | 7.9 |
+| bedroom-b | 0.0 | 0.2 | 1.0 | 2.4 | 0.0 | 0.1 | 0.0 | 0.0 | 0.5 | 0.4 | 0.0 | 0.0 | 4.7 |
+| bedroom-c | 0.1 | 0.2 | 1.4 | 3.3 | 0.0 | 0.1 | 0.0 | 0.0 | 1.0 | 0.7 | 0.0 | 0.0 | 6.8 |
+| bedroom-a-video | 0.0 | 33.0 | 0.5 | 3.0 | 0.0 | 0.1 | 0.0 | 0.0 | 1.3 | 0.2 | 20.7 | 0.0 | 58.8 |

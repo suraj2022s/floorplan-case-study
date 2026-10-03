@@ -27,7 +27,8 @@ learned = [
     "pillow-heif>=0.18",
     "moge @ git+https://github.com/microsoft/MoGe.git@74fbce054ebed49800de42d0ad0e83495065719a",
     "transformers>=4.45",
-    "mapanything @ git+https://github.com/facebookresearch/map-anything.git@3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+    # structure from motion for the video tier (BSD-3-Clause; prebuilt for Windows, Linux, macOS)
+    "pycolmap>=4.2,<5",
 ]
 
 [project.scripts]
@@ -55,12 +56,7 @@ packages = ["src/floorplan"]
 # out: the install stays small and works on macOS, where that library has no build.
 exclude-dependencies = [
     "gradio", "starlette", "flex-gemm", "pipeline",
-    # MapAnything and its encoder library also declare a 3D viewer, a training logger and an
-    # object-store client, and an audio library. None is used for inference.
-    "rerun-sdk", "tensorboard", "minio", "torchaudio",
 ]
-# MapAnything pins one exact OpenCV build; any recent one works for what we call.
-override-dependencies = ["opencv-python-headless>=4.9"]
 
 [[tool.uv.index]]
 name = "pytorch-cu130"

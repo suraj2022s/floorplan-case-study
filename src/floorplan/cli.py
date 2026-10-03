@@ -43,7 +43,7 @@ def _build_plan(tier: str, source: Path, config):
         plan.timings["depth_model"] = round(time.perf_counter() - started - spent, 3)
         return plan, model
     if tier == "video":
-        from floorplan.frontend.video import video_capture
+        from floorplan.frontend.sfm import video_capture
         from floorplan.models.depth import DepthModel
 
         started = time.perf_counter()
@@ -53,7 +53,7 @@ def _build_plan(tier: str, source: Path, config):
         plan = run_pipeline(loaded, config)
         plan.stats["depth_model"] = model.describe()
         plan.stats["video"] = loaded.notes
-        plan.timings = {"depth_and_tracking": round(front_end, 3), **plan.timings}
+        plan.timings = {"poses_and_depth": round(front_end, 3), **plan.timings}
         return plan, model
     raise ValueError(f"unknown tier {tier!r}; use lidar, video or photo")
 

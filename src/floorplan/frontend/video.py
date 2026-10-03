@@ -1,15 +1,8 @@
-"""Video tier: a handheld walkthrough clip to a capture of posed depth frames.
+"""Reading walkthrough clips: finding the clip in a capture and sampling sharp frames.
 
-1. Frames are sampled from the clip at about two per second, taking the sharper of two
-   neighbouring frames each time, and capped so a long clip still runs in a few minutes.
-2. The lens does not change during a clip, so its field of view is estimated once, as the
-   median of the depth model's estimate over the first frames, and then held fixed. Letting
-   it float per frame would change the scale of the room from frame to frame.
-3. Each frame gets metric depth from the depth model and is levelled (`views.py`).
-4. The camera path is recovered from the frames themselves (`track.py`).
-
-The result is the same kind of capture the LiDAR tier produces, with larger uncertainties,
-and goes through the same back-end.
+The video tier itself (camera poses from structure from motion, depth from a depth model)
+is in `sfm.py`. An earlier version followed the camera from depth and walls alone; on the
+real clip of a bedroom it was 90 cm off, and it was removed (docs/decisions/0003).
 """
 
 from __future__ import annotations
@@ -19,15 +12,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from floorplan.capture import Capture
-from floorplan.frontend.track import track_capture, track_views
-from floorplan.frontend.views import LevelView, level_view
 from floorplan.io.intake import VIDEO_SUFFIXES, videos_in
-
-VIDEO_SCALE_SIGMA = (
-    0.05  # relative 1-sigma of the scale of a whole clip: the model's bias (measured: +5%)
-)
-TRACKING_WALL_MIN_TOP = 1.0  # metres: lower surfaces still help follow the camera
 
 
 def find_video(capture: Path) -> Path:
@@ -81,36 +66,3 @@ def sample_frames(path: Path, rate: float = 2.0, max_frames: int = 300) -> tuple
 def _sharpness(frame: np.ndarray) -> float:
     small = cv2.resize(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), (320, 240))
     return float(cv2.Laplacian(small, cv2.CV_64F).var())
-
-
-def video_capture(path: Path, model, rate: float = 2.0, max_frames: int = 300) -> Capture:
-    """A capture of posed depth frames for a walkthrough clip. `model` is a `DepthModel`."""
-    path = find_video(path)
-    frames, times = sample_frames(path, rate, max_frames)
-
-    # one lens, one field of view: estimate it from the first frames, then fix it
-    estimates = []
-    for k, frame in enumerate(frames[:8]):
-        view = model.predict(frame, None, name=f"{path.stem}_fov_{k}")
-        estimates.append(np.degrees(2 * np.arctan(view.depth.shape[1] / (2 * view.K[0, 0]))))
-    fov_x = float(np.median(estimates))
-
-    levelled: list[LevelView] = []
-    kept_times: list[float] = []
-    for k, frame in enumerate(frames):
-        view = model.predict(frame, fov_x, name=f"{path.stem}_{k:04d}", source=path)
-        try:
-            levelled.append(level_view(view, wall_min_top=TRACKING_WALL_MIN_TOP))
-            kept_times.append(times[k])
-        except ValueError:
-            continue  # a frame with no usable depth (lens covered, all sky) is skipped
-    track = track_views(levelled)
-    capture = track_capture(levelled, track, path, kept_times, scale_sigma=VIDEO_SCALE_SIGMA)
-    capture.notes.update(
-        {
-            "frames_sampled": len(frames),
-            "field_of_view_deg": round(fov_x, 2),
-            "tracking_notes": track.notes,
-        }
-    )
-    return capture

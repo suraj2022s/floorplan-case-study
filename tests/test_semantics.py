@@ -140,6 +140,31 @@ def test_two_rules_on_one_wall_ask_for_one_inspection(box_room_plan):
     assert inspections[0].damage_ids == [regions[0].id]
 
 
+def test_wall_damage_is_not_looked_for_on_the_floor(box_room_plan):
+    # "mold on the wall" landing on the floor is a bath mat or a rug, not damage
+    corners = np.array([[1.8, 1.4, 0.0], [2.6, 1.4, 0.0], [2.6, 2.0, 0.0], [1.8, 2.0, 0.0]])
+    view = pose(2.1, 0.4, 1.4, np.radians(90.0), np.radians(-50.0))  # looking north and down
+    plan = _plan_with_view(box_room_plan, view)
+    box = _box_of(corners, view)
+    walls_only = {
+        "mould": {
+            "phrases": ["mold on the wall"],
+            "threshold": 0.2,
+            "surfaces": ["wall", "ceiling"],
+        }
+    }
+    anywhere = {"mould": {"phrases": ["mold on the wall"], "threshold": 0.2}}
+    for classes, found in ((anywhere, 1), (walls_only, 0)):
+        sightings = find_sightings(
+            plan,
+            {"view": lambda: (IMAGE, K, None)},
+            lambda image, phrases, threshold: [Detection("mold on the wall", 0.8, box)],
+            classes,
+        )
+        assert len(sightings) == found
+        assert all(s.surface.kind == "floor" for s in sightings)
+
+
 def _east_wall_depth(T_world_cam: np.ndarray) -> np.ndarray:
     """The depth map a sensor would give looking at the east wall (x = 4.20)."""
     v, u = np.mgrid[0:480, 0:640] + 0.5

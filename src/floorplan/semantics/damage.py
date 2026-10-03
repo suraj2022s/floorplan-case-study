@@ -301,6 +301,8 @@ def find_sightings(
             if placed is None:
                 continue
             surface, u0, u1, v0, v1, squareness = placed
+            if surface.kind not in classes[kind].get("surfaces", (surface.kind,)):
+                continue  # e.g. "mold on the wall" landing on the floor: a mat or a rug
             if u1 - u0 < 0.02 or v1 - v0 < 0.02:
                 continue
             if depth is not None:

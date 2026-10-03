@@ -4,23 +4,33 @@
 # score for any of its phrases reaches the threshold. Thresholds are starting values chosen
 # before any benchmark capture existed; they are tuned on benchmark captures only, never on
 # the holdout, and the report says what was changed and why.
+#
+# `surfaces` lists where a class is looked for. Every damage class here is damage to a wall or
+# ceiling finish, as its phrases say; the detector was never asked about floors (tiles, wood,
+# carpet). On the supplied sample scans every box that landed on a floor was a bath mat, a rug,
+# a pet mat or the foot of a shower screen.
 
 damage:
   water_stain:
     phrases: ["water stain", "damp patch on the wall"]
     threshold: 0.20
+    surfaces: [wall, ceiling]
   crack:
     phrases: ["crack in the wall"]
     threshold: 0.20
+    surfaces: [wall, ceiling]
   mould:
     phrases: ["mold on the wall"]
     threshold: 0.20
+    surfaces: [wall, ceiling]
   peeling_paint:
     phrases: ["peeling paint"]
     threshold: 0.20
+    surfaces: [wall, ceiling]
   hole:
     phrases: ["hole in the wall"]
     threshold: 0.20
+    surfaces: [wall, ceiling]
 
 # Things that are not damage but change how the geometry should be read.
 structure:

@@ -1,6 +1,6 @@
 # Capture protocol
 
-> Version 2, 2026-10-03. Built from what failed on real captures (see the notes at the end).
+> Version 3, 2026-10-04 (damage step added). Built from what failed on real captures (see the notes at the end).
 > Not yet walked through on an iPhone 15: that is the first thing the benchmark session does.
 
 One page. Follow it in order. No technical knowledge is needed.
@@ -35,7 +35,9 @@ normal pace. Then:
 3. At every doorway: stop 1.5 m before it, show the whole door frame for 2 seconds, walk
    through slowly, turn round and show it again from the other side.
 4. At every window: face it from 1.5 m for 2 seconds, frame and sill in view.
-5. When every room is done, walk back to the first room's middle and stop recording.
+5. At any damage (a stain, a crack, mould, peeling paint): face it from 1.5 m for 2 seconds,
+   then take one step sideways and face it again for 2 seconds.
+6. When every room is done, walk back to the first room's middle and stop recording.
 
 Avoid: fast turns, walking backwards, filming a bare wall from closer than 1 m, pointing at
 a mirror, a finger over a camera, stopping and restarting.

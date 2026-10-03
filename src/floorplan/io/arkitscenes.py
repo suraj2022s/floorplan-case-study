@@ -31,6 +31,12 @@ from floorplan.io.stray import (
     _read_image,
 )
 
+# The iPad Pro of ARKitScenes reads every distance about 0.9% short: on four rooms with laser
+# truth, every ceiling came out low, more so the higher the room. Fitted by
+# bench/fit_depth_scale.py (fix-loop round 3); each room left out of the fit in turn still lands
+# within 1.5 cm. It applies to this device only: an iPhone's factor needs iPhone data.
+DEPTH_SCALE = 1.00945
+
 
 def is_arkitscenes(path: Path) -> bool:
     path = Path(path)
@@ -77,7 +83,7 @@ def read_arkitscenes(path: Path | str) -> Capture:
             rgb = rgb_dir / file.name
             if not rgb.is_file():
                 return None
-            return _read_image(rgb)[:, :, ::-1], frame.K, _load_depth_file(file)
+            return _read_image(rgb)[:, :, ::-1], frame.K, _load_depth_file(file) * DEPTH_SCALE
 
         return load
 
@@ -85,12 +91,16 @@ def read_arkitscenes(path: Path | str) -> Capture:
         tier="lidar",
         source=path,
         frames=frames,
-        depth_loader=lambda i: _load_depth_file(kept[i]),
+        depth_loader=lambda i: _load_depth_file(kept[i]) * DEPTH_SCALE,
         confidence_loader=None,
         depth_sigma_a=LIDAR_DEPTH_SIGMA_A,
         depth_sigma_b=LIDAR_DEPTH_SIGMA_B,
         scale_sigma=LIDAR_SCALE_SIGMA,
-        notes={"format": "arkitscenes", "frames_without_pose": len(depth_files) - len(frames)},
+        notes={
+            "format": "arkitscenes",
+            "frames_without_pose": len(depth_files) - len(frames),
+            "depth_scale": DEPTH_SCALE,
+        },
         images={
             frame.name: image_loader(file, frame) for frame, file in zip(frames, kept, strict=True)
         },

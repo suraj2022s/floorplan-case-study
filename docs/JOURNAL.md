@@ -145,3 +145,14 @@ Short, dated notes on what was done and why. Times are IST.
   regenerated every measurement identically (only timings differ). Correction: the
   times on this afternoon's entries were first written from estimates and ran up to
   1.5 hours ahead of the clock; they now match the commit times.
+- **16:30** Photo-tier stitching: on the synthetic flat photographed by protocol v2, the
+  stitcher joined the bedroom straight to the living room (their door widths matched; the
+  corridor's doors were not found). A join is now rejected unless what each door shows of
+  the space behind it fits the room placed there (every room door shows about 1.3 m: the
+  corridor). With every pixel's ray cast for photos, the corridor's side doors are found:
+  bedroom and living room join the corridor correctly; the kitchen is left beside the plan,
+  flagged; no wrong join.
+- **17:00** At the user's request, the two public submissions for this case study found
+  earlier were cloned outside this repository and their LiDAR tiers run on the same three
+  real scans of the public benchmark, to see how they perform. Nothing from them is used
+  here. Neither produced a better plan of the room; this does not change any of our numbers.

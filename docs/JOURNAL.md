@@ -76,3 +76,44 @@ Short, dated notes on what was done and why. Times are IST.
   of their code is used. Useful open-source finds: MapAnything (poses and metric depth from a
   set of images) and a crack-segmentation model. Plane-DUSt3R, RoomFormer and several SLAM
   systems were considered and set aside for licence, GPU memory or integration time.
+- **03:20-03:53** Testing without an iPhone, against real files instead of our own:
+  - a public recording made with Stray Scanner on a LiDAR iPhone (CC BY 4.0). Its header is
+    exactly the one derived from the app's source. Its dataset notes say the camera axes must
+    be flipped; with the poses as written, a worktop is level to 3 degrees and two frames 23
+    degrees apart agree to 3 mm, while with the flip the worktop faces the floor. The reader
+    was right. Four frames are now a test fixture. The same recording, a worktop close-up,
+    was being reported as a 0.84 m² room; a capture with no wall and no ceiling is now
+    refused with a reason.
+  - real iPhone 15 Pro photo and video files. Two real bugs: a square photo's field of view
+    came out 15% too wide (the 35 mm focal length in its EXIF describes the full 4:3 frame),
+    and the clip half of a Live Photo made a folder of photos look like a video capture.
+    Portrait HEIC and portrait MOV come out upright; 10-bit HEVC decodes.
+  - the command now takes a .zip, a clip as a file, or a recording inside a wrapper folder,
+    and ignores what a Mac leaves behind.
+- **03:50** The code went to a private GitHub repository at the user's request, full history.
+- **03:55** MapAnything measured on the real scan's own video frames: 25 s per frame on the
+  CPU (the 4 GB GPU cannot hold it), camera positions 0.36 m off, rotations 10 degrees off.
+  Rejected (decision 0003).
+- **04:10-04:30** First real ground truth: Apple published Faro laser scans of some
+  ARKitScenes rooms. The bedroom used so far has one, and two more iPad scans of the same
+  room. `bench/public/laser_truth.py` reads the room off the laser (walls 3.188, 3.721,
+  3.180, 3.728 m; ceiling 2.640 m). The LiDAR tier fails every gate it can be scored on:
+  ceiling 2.7 to 3.8 cm low, walls up to 14 cm short, openings 0 of 10, no interval right.
+  Drawing the scans onto the laser shows why: the room leaks through its window and door;
+  curtains and furniture are taken for walls; and the iPad's points are 1.6% small.
+- **04:36-04:56** Fix loop, two rounds on that benchmark (`fixloop/`). Round 1 was declared
+  from the overlays alone and its prediction was badly wrong: the leaks did not go through
+  the gap in the wall the declaration blamed. The post-mortem drew room finding's own cells,
+  which showed the real mechanism. Round 2 was declared only after measuring that mechanism:
+  the leaks are gone (floor area errors from +3.9 m² to +0.4 m²), but the opening gate did
+  not move, because leftover cells beside the dropped ones keep a notch in two outlines.
+- **05:00-14:40** Paused.
+- **14:47** Video tier rebuilt on COLMAP for the camera path and MoGe-2 for depth and scale.
+  On the real 60 s clip: 85% of the walk placed in one frame, 4.5 cm from ARKit's path; walls
+  +1.7% to +5.3% against the laser, every wall's interval containing the truth. The remaining
+  error is the depth model's +5% scale bias, which only an iPhone benchmark can calibrate.
+- **14:55** Photo tier: on real frames that were not taken by the protocol it reported a
+  1.9 x 1.6 m room for a 3.2 x 3.7 m one, with tight intervals. A room is now measured only
+  if every wall appears in a photo and the floor the photos show fits inside the fitted
+  room; otherwise its size is reported as not measured, with the reason. Protocol photos of
+  the synthetic rooms are still measured.

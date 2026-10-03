@@ -117,27 +117,31 @@ Short, dated notes on what was done and why. Times are IST.
   if every wall appears in a photo and the floor the photos show fits inside the fitted
   room; otherwise its size is reported as not measured, with the reason. Protocol photos of
   the synthetic rooms are still measured.
-- **15:05-15:40** Documents caught up with the code: capture protocol v2 (rules taken from
+- **14:56-15:00** Documents caught up with the code: capture protocol v2 (rules taken from
   what failed on real captures), a one-visit benchmark session plan, README with install
   and run, device matrix, compliance matrix with every gate result as it stands.
-- **15:45** LiDAR intervals: 3 of 11 contained the laser's value. A wall's face had only its
+- **15:05** LiDAR intervals: 3 of 11 contained the laser's value. A wall's face had only its
   plane-fit uncertainty, whatever stood in front of it. Added the surface's own scatter
   (curtains scatter 20-50 mm), a term for hidden wall, and a 1.5% scale term from the iPad's
   measured shortfall: 6 of 11, all ceilings in. Calibration factors fitted on this one room
   would be in-sample, so they wait for the iPhone benchmark.
-- **16:00** The drift ablation showed nothing: the synthetic drift was too small to matter
+- **15:17** The drift ablation showed nothing: the synthetic drift was too small to matter
   (-0.05% footprint with correction on and off). At three times that drift (0.12 degrees and
   1.2% per metre): +0.04% on, -2.55% off, worst wall 4.2 cm against 62.1 cm.
-- **16:15** Technical report, first complete draft.
-- **16:30** Damage detector on seven real damage photos (Wikimedia Commons): the right class
+- **15:17** Technical report, first complete draft.
+- **15:24** Damage detector on seven real damage photos (Wikimedia Commons): the right class
   among those reported in 6 of 7, but classes bleed into each other. One class per patch:
   wrong classes 8 to 6, right class 6/7 to 5/7. Kept for coherent flags and scope; not tuned
   further on seven photos.
-- **16:45-17:15** Tooling the iPhone session needs, so its evening goes fast: calibration
+- **15:27-15:46** Tooling the iPhone session needs, so its evening goes fast: calibration
   factors with leave-one-room-out checking, the head-to-head table, a test that every
   measurement in plan.json has an interval (it caught item counts written with zero width),
   one reproduce command, and the fix-loop bundle with tags and diffs.
-- **17:20** Why the door was missed in all three real scans: drawn from the opening votes,
+- **15:50** Why the door was missed in all three real scans: drawn from the opening votes,
   the doorway was hardly looked at in those captures (mostly unseen, partly blocked by the
   open door leaf). Our protocol asks for each doorway to be shown for 2 seconds from 1.5 m;
   only a protocol capture will tell whether that is enough.
+- **15:56** The one reproduce command ran end to end in 9 min 49 s with caches and
+  regenerated every measurement identically (only timings differ). Correction: the
+  times on this afternoon's entries were first written from estimates and ran up to
+  1.5 hours ahead of the clock; they now match the commit times.

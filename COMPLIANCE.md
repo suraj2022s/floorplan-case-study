@@ -8,7 +8,7 @@ Status values: **Done** (the artifact exists and regenerates from this repo), **
 says whether the requirement is covered, not whether its gate passes; gate results are
 given as they stand, failures included.
 
-Last updated: 2026-10-03 17:25 IST.
+Last updated: 2026-10-03 15:56 IST.
 
 **Two blockers affect many rows:** no iPhone 15 Pro has been available for capturing our own
 benchmark (rows 17-21, 31-32, 42), and the Round 1 brief with its gate table and JSON schema

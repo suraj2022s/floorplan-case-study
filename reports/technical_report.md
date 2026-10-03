@@ -5,8 +5,10 @@ Suraj Kumar · 2026-10-03 · repository `suraj2022s/floorplan-case-study`
 Every number below names what it was measured on. No iPhone 15 Pro was available while this
 was written, so real-data results come from a public-data benchmark: Apple's ARKitScenes
 bedroom 47333462, scanned three times by an iPad Pro's LiDAR, filmed once, and scanned by a
-Faro laser (`bench/benchmarks/arkitscenes.yaml`). Our own iPhone benchmark is planned as one
-two-hour visit (`bench/SESSION.md`); sections 6 and 9 say what it will settle.
+Faro laser (`bench/benchmarks/arkitscenes.yaml`). The assessors' three LiDAR iPhone
+recordings were run as well (section 8); they came without measurements, so they test
+robustness, not accuracy. Our own iPhone benchmark is planned as one two-hour visit
+(`bench/SESSION.md`); sections 6 and 10 say what it will settle.
 
 ## 1. Summary
 
@@ -17,14 +19,16 @@ interval or marked *not measured*.
 
 | Tier | On real data, against the laser | Gate status there |
 |---|---|---|
-| LiDAR | ceiling -2.6 to -3.8 cm on three scans; walls -1 to -13 cm on the scan that can be scored | ceiling FAIL (repeatable but biased), openings FAIL 0/11, intervals 6/11 |
+| LiDAR | ceiling -2.6 to -3.6 cm on three scans; walls -1 to -13 cm on the scan that can be scored | ceiling FAIL (repeatable but biased), openings FAIL 0/11, intervals 6/11 |
 | Video | walls +1.7% to +5.3%, ceiling +7.0%, on one 60 s clip | walls ±3%: 2 of 4; intervals PASS 6/7 |
 | Photos | not measured on real protocol photos yet; within 1-2% on synthetic ones | not evaluated |
 
 The largest errors have identified causes: the iPad's LiDAR is about 1.6% small against the
 laser, the video depth model reads about 5% long, and curtains are taken for a wall. The
 first two are scale biases, which the iPhone benchmark calibrates. The third is a known
-failure mode (section 8).
+failure mode (section 9). On the assessors' iPhone recordings every run completed; they
+exposed three faults, now fixed, and one false damage detection, left and reported
+(section 8).
 
 ## 2. Architecture
 
@@ -90,7 +94,7 @@ reported as not measured. Before that check, real photos taken against the proto
 
 | Tier | Phones | Run time, one room (laptop, RTX 3050 Ti 4 GB) |
 |---|---|---|
-| LiDAR | iPhone 15 Pro and newer Pro; iPad Pro 2020+ | 6-11 s |
+| LiDAR | iPhone 15 Pro and newer Pro; iPad Pro 2020+ | 7-13 s (600 frames); 11-141 s for the assessors' 1,715-9,745 |
 | Video | any iPhone 15+ | about 4 min for a 60 s clip |
 | Photos | any iPhone 15+ (0.5x lens preferred) | about 10 s |
 
@@ -152,7 +156,7 @@ Share of 90% intervals containing the laser's value (target 90%; a small set pas
 | Video (7 items, 1 clip) | 6/7 | 6/7 |
 | Synthetic (89 items) | 89/89 | 89/89 |
 
-The LiDAR ceiling is **repeatable but biased**: -3.3 cm on average with a 0.96 cm spread over
+The LiDAR ceiling is **repeatable but biased**: -3.2 cm on average with a 0.96 cm spread over
 three scans, from the iPad's 1.6% scale shortfall. The video tier is biased the other way by
 the depth model (+5%). Both are what calibration is for. The factors will be fitted on the
 iPhone benchmark with one room left out at a time and checked on the room left out; fitting
@@ -178,7 +182,29 @@ there. Result: the root cause was right and the leaks are gone (floor-area error
 failed: cells next to the dropped ones, where little floor was seen, leave a notch in two
 outlines, and the window's true edges are hidden behind its curtains.
 
-## 8. Known failure modes
+## 8. The assessors' sample data
+
+Three Stray Scanner recordings from a LiDAR iPhone, apparently of one home: one room with its
+bathroom (37 s), a floor filmed with the phone aimed down (115 s), and a floor filmed with the
+ceiling in view (215 s). Plans, logs and findings: `reports/samples/`. What they showed:
+
+- **A false ceiling.** One room measures 2.28 m against 2.95-3.08 m elsewhere; the frames show
+  an access hatch in a lowered ceiling. A room with two ceiling levels gets one height.
+- **No ceiling captured** in two recordings: every ceiling height, and every opening whose top
+  was never seen, is written as not measured, with a warning saying how to recapture.
+- **Filmed low**, walls are seen only at their foot: most are inferred and outlines are
+  jagged (28 walls under 0.3 m). Straightening 25 cm steps instead of 12 cm halved that but
+  made the laser room's area error +0.57 m² instead of +0.38 m², so it was not kept.
+- **Faults found and fixed.** A pot plant was taken for mould on a wall, raising two flags and
+  five scope lines: damage must now lie flat on its surface (at least half the box's depth
+  points within 3 cm of a plane parallel to it; bare surfaces 0.9-1.0, the plant 0.06-0.10).
+  Two flags on one wall asked for two inspections: now one. Doorways filmed low from both
+  sides were merged into "windows" standing on the floor: now doors of unknown height.
+- **Left and reported:** a shower door frame taken for a 0.30 m floor crack. It passes the
+  flatness test; removing it by raising the detector's threshold would be tuned on three
+  undamaged homes and risk real damage in blurrier walkthrough frames.
+
+## 9. Known failure modes
 
 | Situation | What happens | Status |
 |---|---|---|
@@ -192,8 +218,11 @@ outlines, and the window's true edges are hidden behind its curtains.
 | HDR (Dolby Vision) video | 10-bit HEVC decodes; no real iPhone HDR clip tested | partly verified |
 | iPhone 16e (no 0.5x lens) | photos at 1x show less floor and ceiling | protocol fallback |
 | Scale | iPad LiDAR 1.6% short; video depth 5% long | calibration on the iPhone benchmark |
+| Phone aimed at the floor | ceiling, door heights not measured; walls inferred, outline jagged | reported, with the recapture advice |
+| Two ceiling levels in a room | one height reported (the strongest plane) | open |
+| Objects in front of a wall (plants, frames) | detector calls them damage | handled when not flat (section 8); a thin frame on the floor remains |
 
-## 9. What the iPhone session settles
+## 10. What the iPhone session settles
 
 The session (`bench/SESSION.md`) provides our own benchmark as the brief specifies: a
 multi-room property at all three tiers with a repeat of one room per tier, staged damage of

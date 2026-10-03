@@ -84,6 +84,15 @@ def test_stain_at_the_foot_of_a_wall(box_room_plan):
     assert scope[1].quantity.value == pytest.approx(3.35 * 2.74, rel=0.01)
     assert scope[1].quantity.lo < 3.35 * 2.74 < scope[1].quantity.hi
 
+    # and what is written out keeps an interval on every quantity, damage and scope included
+    from floorplan.output.serialize import plan_to_dict
+    from test_output_contract import _check
+
+    written = plan_to_dict(replace(plan, damage=regions, flags=flags, scope=scope), "box_room")
+    paths = [path for path, _ in _check(written)]
+    assert any("damage_regions" in path for path in paths)
+    assert any("scope_items" in path for path in paths)
+
 
 def test_stain_on_the_ceiling(box_room_plan):
     corners = np.array([[1.8, 1.4, 2.74], [2.6, 1.4, 2.74], [2.6, 2.0, 2.74], [1.8, 2.0, 2.74]])

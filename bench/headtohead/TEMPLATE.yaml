@@ -1,0 +1,13 @@
+# The consumer app's numbers for the head-to-head, copied from its export.
+# Copy to <site>.yaml. Keep the app's exports in bench/headtohead/<site>/ next to it.
+# Room and wall ids are the ground truth's (bench/GT_PROTOCOL.md). Leave out anything the
+# app does not report; never fill a gap with our own number.
+app: Polycam
+version: ""                 # from the App Store page or the app's settings
+mode: "LiDAR room mode, free tier"
+exports: []                 # e.g. [<site>/living.pdf]
+rooms:
+  living:
+    walls: {W1: 0.000, W2: 0.000, W3: 0.000, W4: 0.000}
+    ceiling_height: 0.000
+    openings: {D1: 0.000}

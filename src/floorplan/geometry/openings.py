@@ -78,6 +78,9 @@ class Opening:
     other_room: str | None = None
     wall_thickness: float | None = None
     id: str = ""
+    # how far the space seen through the opening reaches behind the wall face (metres), from
+    # the wall surfaces visible through it; None when nothing was seen through
+    depth_beyond: float | None = None
 
 
 @dataclass
@@ -457,6 +460,8 @@ def find_openings(
     for wall in walls:
         openings.extend(_measure(wall, side_points, flat_points, config))
 
+    for opening in openings:
+        opening.depth_beyond = _depth_beyond(opening, rooms, side_points)
     _link_rooms(openings, rooms, config)
     openings = _merge_twins(openings, config)
     counters: dict[tuple[str, str], int] = {}
@@ -466,6 +471,33 @@ def find_openings(
         prefix = {"door": "D", "window": "WIN", "passage": "P"}[opening.kind]
         opening.id = f"{opening.room}-{prefix}{counters[key]}"
     return openings
+
+
+def _depth_beyond(opening: Opening, rooms: list[Room], side_points: Cloud) -> float | None:
+    """How far behind the wall the space seen through an opening reaches.
+
+    The walls seen through a doorway belong to the space on the other side: through a bedroom
+    door, the corridor's far wall 1.3 m behind; through a living-room door, possibly a wall 4
+    m behind. Taken as the median distance, behind the wall face, of the wall points that lie
+    within the opening's width, at least 15 cm behind it. Used when rooms measured separately
+    are joined at their doors: the room joined on the other side must reach that far.
+    """
+    room = next(r for r in rooms if r.name == opening.room)
+    edge = room.edges[opening.edge]
+    direction = edge.direction
+    outward = -edge.inward
+    relative = side_points.xyz[:, :2] - opening.centre
+    across = relative @ direction
+    behind = relative @ outward
+    inside = (
+        (np.abs(across) <= opening.width / 2)
+        & (behind > 0.15)
+        & (behind < 8.0)
+        & (side_points.xyz[:, 2] > opening.sill + 0.2)
+    )
+    if inside.sum() < 30:
+        return None
+    return float(np.median(behind[inside]))
 
 
 def _link_rooms(openings: list[Opening], rooms: list[Room], config: OpeningConfig) -> None:

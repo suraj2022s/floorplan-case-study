@@ -25,7 +25,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
-from shapely.geometry import Polygon
+from shapely.geometry import LineString, Polygon
 
 from floorplan.capture import Frame
 from floorplan.pipeline import OpeningResult, Plan, RoomResult, WallResult
@@ -87,6 +87,41 @@ def _mismatch(a: _Door, b: _Door) -> float:
     return float(width**2 + height**2)
 
 
+def _reach(outline: np.ndarray, start: np.ndarray, direction: np.ndarray) -> float | None:
+    """How far a room's outline extends from `start` along `direction` (first exit)."""
+    ray = LineString([start, start + 30.0 * direction])
+    inside = ray.intersection(Polygon(outline))
+    if inside.is_empty:
+        return None
+    pieces = getattr(inside, "geoms", [inside])
+    ends = [
+        max(float(np.linalg.norm(np.asarray(c) - start)) for c in piece.coords)
+        for piece in pieces
+        if piece.length > 0
+    ]
+    return min(ends) if ends else None
+
+
+def _sees_through(door: _Door, door_place: Placement, room_outline: np.ndarray) -> bool:
+    """Whether what was seen through a door agrees with the room placed behind it.
+
+    Through a bedroom door one sees the corridor's far wall about 1.3 m behind it. Joining the
+    bedroom straight to the living room would put a wall 4.5 m behind that door instead. The
+    distance seen through the door must match how far the joined room reaches behind it,
+    within 0.6 m or 40% (depth from images is loose, and the wall seen through a door may be
+    furniture standing in front of the far wall).
+    """
+    seen = door.opening.depth_beyond
+    if seen is None:
+        return True
+    start = door_place.apply(door.centre)[0]
+    outward = door_place.turn(door.outward)
+    reach = _reach(room_outline, start + 0.02 * outward, outward)
+    if reach is None:
+        return False
+    return abs(seen - reach) <= max(0.6, 0.4 * reach)
+
+
 def _join(placed: Placement, a: _Door, b: _Door, thickness: float) -> Placement:
     """Placement of b's room so that door b meets door a (whose room is at `placed`)."""
     out_a = placed.turn(a.outward)
@@ -141,6 +176,15 @@ def place_rooms(
                     )
                     placement = _join(placements[a.room], a, b, thickness)
                     if overlap(index, placement, placements):
+                        continue
+                    # what each door shows of the space behind it must fit the other room
+                    outline_b = placement.apply(np.asarray(polygons[index].exterior.coords))
+                    outline_a = placements[a.room].apply(
+                        np.asarray(polygons[a.room].exterior.coords)
+                    )
+                    if not _sees_through(a, placements[a.room], outline_b) or not _sees_through(
+                        b, placement, outline_a
+                    ):
                         continue
                     extended = True
                     search(

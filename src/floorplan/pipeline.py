@@ -100,6 +100,9 @@ def config_for(tier: str, correct_drift: bool = True) -> PipelineConfig:
         wall_band=0.08,
         beyond=0.20,
         max_range=9.0,
+        # a room has only a few photos, so every pixel's ray is cast: seen at a slant (a
+        # corridor's side doors from its end), every second pixel leaves the doorway striped
+        pixel_stride=1 if tier == "photo" else 2,
         min_width=0.50,
         jamb_search=0.15,
         max_thickness=0.50,
@@ -158,6 +161,7 @@ class OpeningResult:
     centre: np.ndarray
     method: str
     evidence: str
+    depth_beyond: float | None = None  # metres the space seen through it reaches behind it
 
 
 @dataclass
@@ -343,6 +347,7 @@ def _measure_opening(
         centre=opening.centre,
         method=opening.method,
         evidence=opening.evidence,
+        depth_beyond=opening.depth_beyond,
     )
 
 

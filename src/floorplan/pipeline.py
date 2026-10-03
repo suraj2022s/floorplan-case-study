@@ -208,7 +208,8 @@ def _room_levels(
     )
     if ceiling is None:
         ceiling = global_ceiling
-        notes.append("ceiling not seen in this room; the level of the whole capture is used")
+        if ceiling is not None:  # with no ceiling anywhere, the room says so when measured
+            notes.append("ceiling not seen in this room; the level of the whole capture is used")
     return floor, ceiling, notes
 
 

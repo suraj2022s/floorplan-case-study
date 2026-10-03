@@ -36,6 +36,7 @@ floorplan = "floorplan.cli:app"
 
 [dependency-groups]
 dev = [
+    "jsonschema>=4.26.0",
     "pytest>=8.0",
     "ruff>=0.6",
 ]

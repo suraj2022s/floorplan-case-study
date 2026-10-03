@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/suraj2022s/floorplan-case-study/schema/plan.schema.json",
+  "title": "Floor plan",
+  "description": "The plan.json that `floorplan run` writes for one capture. No schema was supplied with the brief, so this one is ours; it describes src/floorplan/output/serialize.py and tests/test_schema.py checks every plan against it. Lengths are in metres, areas in square metres. Every measurement carries a 90% interval, or says that it was not measured.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "capture",
+    "units",
+    "frame",
+    "rooms",
+    "openings",
+    "adjacency",
+    "footprint_area",
+    "damage_regions",
+    "concealed_damage_flags",
+    "scope_items",
+    "intervals",
+    "warnings"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "capture": {
+      "type": "object",
+      "required": ["name", "tier"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "tier": {"enum": ["lidar", "video", "photo"]}
+      }
+    },
+    "units": {
+      "type": "object",
+      "required": ["length", "area"],
+      "additionalProperties": false,
+      "properties": {
+        "length": {"const": "m"},
+        "area": {"const": "m2"}
+      }
+    },
+    "frame": {
+      "type": "string",
+      "description": "The coordinate frame of every point: metric, gravity-aligned, z up; x and y shared by all rooms."
+    },
+    "rooms": {"type": "array", "items": {"$ref": "#/$defs/room"}},
+    "openings": {"type": "array", "items": {"$ref": "#/$defs/opening"}},
+    "adjacency": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rooms", "via"],
+        "additionalProperties": false,
+        "properties": {
+          "rooms": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2},
+          "via": {"type": "string", "description": "id of the opening that connects the two rooms"}
+        }
+      }
+    },
+    "footprint_area": {"$ref": "#/$defs/measurement"},
+    "damage_regions": {"type": "array", "items": {"$ref": "#/$defs/damage_region"}},
+    "concealed_damage_flags": {"type": "array", "items": {"$ref": "#/$defs/flag"}},
+    "scope_items": {"type": "array", "items": {"$ref": "#/$defs/scope_item"}},
+    "intervals": {
+      "type": "object",
+      "required": ["coverage", "calibrated", "calibration_source"],
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {"const": 0.9},
+        "calibrated": {"type": "boolean"},
+        "calibration_source": {"type": "string"}
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "What could not be measured and why, in words a capturer can act on."
+    }
+  },
+  "$defs": {
+    "point": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "x, y in metres in the plan's frame"
+    },
+    "measurement": {
+      "description": "A value with its 90% interval [lo, hi] and 1-sigma. `basis` says whether it was observed, inferred (e.g. a wall that was hardly seen), or not measured, in which case value, lo, hi and sigma are null.",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["value", "lo", "hi", "coverage", "sigma", "unit", "basis"],
+          "additionalProperties": false,
+          "properties": {
+            "value": {"type": "number"},
+            "lo": {"type": "number"},
+            "hi": {"type": "number"},
+            "coverage": {"const": 0.9},
+            "sigma": {"type": "number", "minimum": 0},
+            "unit": {"enum": ["m", "m2", "each"]},
+            "basis": {"enum": ["observed", "inferred"]}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["value", "lo", "hi", "coverage", "sigma", "unit", "basis"],
+          "additionalProperties": false,
+          "properties": {
+            "value": {"type": "null"},
+            "lo": {"type": "null"},
+            "hi": {"type": "null"},
+            "coverage": {"const": 0.9},
+            "sigma": {"type": "null"},
+            "unit": {"enum": ["m", "m2", "each"]},
+            "basis": {"const": "not_measured"}
+          }
+        }
+      ]
+    },
+    "wall": {
+      "type": "object",
+      "required": ["id", "start", "end", "length", "observed_share"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "start": {"$ref": "#/$defs/point"},
+        "end": {"$ref": "#/$defs/point"},
+        "length": {"$ref": "#/$defs/measurement"},
+        "observed_share": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "share of the wall's length that the sensor actually saw"
+        }
+      }
+    },
+    "room": {
+      "type": "object",
+      "required": [
+        "id",
+        "polygon",
+        "floor_area",
+        "ceiling_height",
+        "ceiling_height_range",
+        "walls",
+        "openings",
+        "entered",
+        "notes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "polygon": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/point"},
+          "minItems": 3,
+          "description": "corners, counter-clockwise, not closed"
+        },
+        "floor_area": {"$ref": "#/$defs/measurement"},
+        "ceiling_height": {"$ref": "#/$defs/measurement"},
+        "ceiling_height_range": {
+          "description": "lowest and highest floor-to-ceiling gap at the room's corners; null when the ceiling height was not measured",
+          "oneOf": [
+            {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2},
+            {"type": "null"}
+          ]
+        },
+        "walls": {"type": "array", "items": {"$ref": "#/$defs/wall"}},
+        "openings": {"type": "array", "items": {"type": "string"}},
+        "entered": {
+          "type": "boolean",
+          "description": "false when the room was only seen through an opening"
+        },
+        "notes": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "opening": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "room",
+        "wall",
+        "connects_to",
+        "width",
+        "height",
+        "sill_height",
+        "position_along_wall",
+        "wall_thickness",
+        "centre",
+        "width_method",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "kind": {"enum": ["door", "window", "passage"]},
+        "room": {"type": "string"},
+        "wall": {"type": "string"},
+        "connects_to": {"type": ["string", "null"]},
+        "width": {"$ref": "#/$defs/measurement"},
+        "height": {"$ref": "#/$defs/measurement"},
+        "sill_height": {"type": "number"},
+        "position_along_wall": {
+          "type": "number",
+          "description": "metres from the wall's start to the opening's near jamb"
+        },
+        "wall_thickness": {"type": ["number", "null"]},
+        "centre": {"$ref": "#/$defs/point"},
+        "width_method": {
+          "enum": ["jamb_faces", "mixed", "region_edge"],
+          "description": "jamb_faces: both jambs measured as surfaces; region_edge: from the edge of the open area only"
+        },
+        "evidence": {
+          "enum": ["seen_through", "no_return"],
+          "description": "seen_through: space was seen behind it; no_return: the sensor got nothing back (weaker)"
+        }
+      }
+    },
+    "damage_region": {
+      "type": "object",
+      "required": [
+        "id",
+        "class",
+        "room",
+        "surface",
+        "surface_kind",
+        "extent",
+        "position",
+        "detector_score",
+        "views",
+        "frames"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "class": {"type": "string"},
+        "room": {"type": "string"},
+        "surface": {"type": "string"},
+        "surface_kind": {"type": "string"},
+        "extent": {
+          "type": "object",
+          "required": ["width", "height", "bounding_area"],
+          "additionalProperties": false,
+          "properties": {
+            "width": {"$ref": "#/$defs/measurement"},
+            "height": {"$ref": "#/$defs/measurement"},
+            "bounding_area": {"$ref": "#/$defs/measurement"}
+          }
+        },
+        "position": {
+          "type": "object",
+          "required": ["along_surface", "above_floor", "centre"],
+          "additionalProperties": false,
+          "properties": {
+            "along_surface": {"type": "number"},
+            "above_floor": {"type": "number"},
+            "centre": {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3}
+          }
+        },
+        "detector_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "views": {"type": "integer", "minimum": 1},
+        "frames": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "flag": {
+      "type": "object",
+      "required": ["id", "rule_id", "room", "surface", "damage_regions", "message", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "rule_id": {"type": "string", "description": "the rule in configs/rules.yaml that fired"},
+        "room": {"type": "string"},
+        "surface": {"type": "string"},
+        "damage_regions": {"type": "array", "items": {"type": "string"}},
+        "message": {"type": "string"},
+        "evidence": {"type": "object", "description": "the measured values the rule fired on"}
+      }
+    },
+    "scope_item": {
+      "type": "object",
+      "required": [
+        "id",
+        "code",
+        "description",
+        "unit",
+        "quantity",
+        "room",
+        "surface",
+        "damage_regions",
+        "rule_id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "code": {"type": "string", "description": "item in configs/scope_catalog.yaml"},
+        "description": {"type": "string"},
+        "unit": {"enum": ["m", "m2", "each"]},
+        "quantity": {"$ref": "#/$defs/measurement"},
+        "room": {"type": "string"},
+        "surface": {"type": "string"},
+        "damage_regions": {"type": "array", "items": {"type": "string"}},
+        "rule_id": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

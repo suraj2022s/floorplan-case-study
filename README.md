@@ -39,7 +39,7 @@ is detected from the files; `--tier` forces it. Results go to `out/<capture name
 | File | Contents |
 |---|---|
 | `plan.png`, `plan.svg` | the stitched floor plan, dimensioned, with intervals |
-| `plan.json` | every room, wall, opening, damage region, flag and scope item, each measurement with its 90% interval and whether it was observed or inferred |
+| `plan.json` | every room, wall, opening, damage region, flag and scope item, each measurement with its 90% interval and whether it was observed or inferred; format: [schema/plan.schema.json](schema/plan.schema.json) |
 | `run_log.json` | timings, input hashes, versions |
 
 Warnings printed at the end say what could not be measured and why. A capture the pipeline
@@ -79,6 +79,7 @@ result and post-mortem for each round, with before and after regenerable at tagg
 | `fixloop/` | the fix loop |
 | `docs/` | capture protocol, device matrix, design decisions, journal |
 | `configs/` | model weights and sample files (pinned), damage rules, scope catalogue |
+| `schema/` | the JSON Schema `plan.json` follows (none was supplied, so this one is ours) |
 | `tests/` | unit and end-to-end tests (`uv run pytest`) |
 
 ## Models, data and licences

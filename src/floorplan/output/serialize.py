@@ -18,7 +18,9 @@ import numpy as np
 from floorplan import __version__
 from floorplan.pipeline import Plan
 
-SCHEMA_VERSION = "draft-1"  # replaced by the published Round 1 schema once it is in spec/
+# No schema was supplied with the brief; ours is schema/plan.schema.json and
+# tests/test_schema.py checks every plan against it. Bump this when the format changes.
+SCHEMA_VERSION = "1.0"
 
 
 def _point(xy: np.ndarray) -> list[float]:
@@ -34,7 +36,11 @@ def plan_to_dict(plan: Plan, capture_name: str) -> dict:
                 "polygon": [_point(p) for p in room.polygon],
                 "floor_area": room.floor_area.to_dict(),
                 "ceiling_height": room.ceiling_height.to_dict(),
-                "ceiling_height_range": [round(v, 4) for v in room.ceiling_height_range],
+                "ceiling_height_range": (
+                    [round(v, 4) for v in room.ceiling_height_range]
+                    if room.ceiling_height.available
+                    else None  # no ceiling: not [0, 0], and never NaN, which is not JSON
+                ),
                 "walls": [
                     {
                         "id": wall.id,

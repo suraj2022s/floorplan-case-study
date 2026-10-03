@@ -10,9 +10,10 @@ given as they stand, failures included.
 
 Last updated: 2026-10-03 15:56 IST.
 
-**Two blockers affect many rows:** no iPhone 15 Pro has been available for capturing our own
-benchmark (rows 17-21, 31-32, 42), and the Round 1 brief with its gate table and JSON schema
-is not yet in `spec/` (rows 15, 22). Until the iPhone session (`bench/SESSION.md`), real-data
+**Two gaps affect many rows:** no iPhone 15 Pro has been available for capturing our own
+benchmark (rows 17-21, 31-32, 42), and the assessment supplied no Round 1 gate table or JSON
+schema ([spec/assessment_email.md](spec/assessment_email.md)), so we publish our own schema
+(row 15) and state the gates we apply (row 22). Until the iPhone session (`bench/SESSION.md`), real-data
 results come from a public-data benchmark: three iPad Pro LiDAR scans of one bedroom with laser
 ground truth (`bench/benchmarks/arkitscenes.yaml`).
 
@@ -39,7 +40,7 @@ ground truth (`bench/benchmarks/arkitscenes.yaml`).
 | 12 | Scope line items keyed to surfaces | `src/floorplan/semantics/scope.py`, `configs/scope_catalog.yaml` | `scope` in `plan.json` | Done (tests) |
 | 13 | A confidence interval on every measurement | `src/floorplan/uncertainty/budget.py`, `src/floorplan/output/serialize.py`, `tests/test_output_contract.py` | Every measurement has a 90% interval or is marked not measured | Done: enforced by a test over the whole written plan, damage and scope included |
 | 14 | One command per capture | `src/floorplan/cli.py` | `floorplan run <capture>` | Done |
-| 15 | JSON to the published schema | `src/floorplan/output/serialize.py` | `plan.json` (`schema: draft-1`) | Blocked: the published Round 1 schema is not in the repo |
+| 15 | JSON to the published schema | `schema/plan.schema.json`, `src/floorplan/output/serialize.py`, `tests/test_schema.py` | `plan.json` (`schema_version: 1.0`) | Done: no schema was supplied with the assessment, so we publish our own (JSON Schema 2020-12); a test checks every plan the tests produce, and the three sample plans, against it and as strict JSON |
 | 16 | Rendered plan | `src/floorplan/output/render.py` | `plan.svg`, `plan.png` | Done |
 
 ## Part 2 — Benchmark composition

@@ -217,7 +217,7 @@ Short, dated notes on what was done and why. Times are IST.
   was tried also confirmed false regions scoring above it, so it stays missed and the
   protocol asks for damage to be shown for 2 s, twice.
 - **00:58** The samples deliverable is updated with these runs and the corrected findings.
-- **01:47-02:14** Fix-loop round 3 on the LiDAR ceiling. The public-data benchmark grew from one
+- **01:55-02:14** Fix-loop round 3 on the LiDAR ceiling. The public-data benchmark grew from one
   room to four (three more ARKitScenes rooms with laser ceiling truth, chosen from Apple's
   metadata by a stated rule; two rooms left out by it and reported). Before: 2 of 12 scans
   within 1.5 cm, all low. Declared before the fix: the iPad reads depth about 1% short;

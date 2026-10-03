@@ -152,9 +152,9 @@ Share of 90% intervals containing the laser's value (target 90%; a small set pas
 
 | Tier | Before the measured terms | After |
 |---|---|---|
-| LiDAR (11 items, 3 scans) | 3/11 | 6/11: all ceilings in; out: two walls set by a curtain line, a window measured between curtains, one area |
+| LiDAR (11 items, 3 scans) | 3/11 | 6/11: all ceilings in; out: two walls set by a curtain line, a window measured between curtains, two areas |
 | Video (7 items, 1 clip) | 6/7 | 6/7 |
-| Synthetic (89 items) | 89/89 | 89/89 |
+| Synthetic (89 items) | 89/89 | 88/89: one door on the flat with tripled drift, 3.1 cm off |
 
 The LiDAR ceiling is **repeatable but biased**: -3.2 cm on average with a 0.96 cm spread over
 three scans, from the iPad's 1.6% scale shortfall. The video tier is biased the other way by

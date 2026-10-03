@@ -54,7 +54,7 @@ fitted on the iPhone benchmark with each room left out in turn (`bench/calibrate
 them on the single public room would only tune to it.
 
 **Your LiDAR ceiling fails the gate. Biased or unrepeatable?**
-Repeatable but biased: -3.3 cm on average, 0.96 cm spread over three scans. The bias matches
+Repeatable but biased: -3.2 cm on average, 0.96 cm spread over three scans. The bias matches
 the iPad's scale shortfall; calibration removes a consistent bias, and the iPhone benchmark
 measures the iPhone's own.
 
@@ -83,7 +83,9 @@ seconds from 1.5 m.
 **How good is damage detection?**
 OWLv2 with phrases per class. On seven real damage photos the right class is reported in 5
 of 7 after keeping one class per patch; the classes are confused with each other (a crack can
-score as a water stain). It has not yet seen the benchmark's staged damage.
+score as a water stain). On the assessors' three undamaged homes it left two false regions:
+a pot plant as mould, removed by requiring damage to lie flat on its surface, and a shower
+door edge as a crack, still reported. It has not yet seen the benchmark's staged damage.
 
 **How do flags and scope items work?**
 Rules in `configs/rules.yaml` fire on a damage region's class and position: for example
@@ -100,8 +102,9 @@ taken by the protocol (reported as not measured). Mirrors are not taken for open
 longer lets the room leak. Low light and wet-look surfaces are untested.
 
 **Does it run offline, and how long does it take?**
-Yes: weights are fetched by script beforehand; nothing calls a service at run time. One room on
-the development laptop: LiDAR 6-11 s, photos about 10 s, a 60 s video about 4 min.
+Yes: weights are fetched by script beforehand; nothing calls a service at run time. On the
+development laptop: LiDAR 7-13 s for one room, 11-141 s for the assessors' recordings (up to a
+floor of a home); photos about 10 s a room; a 60 s video about 4 min.
 
 **What would you do next?**
 Capture the iPhone benchmark; fit calibration factors on it; make the opening detector use the

@@ -192,3 +192,9 @@ Short, dated notes on what was done and why. Times are IST.
   ceilings and door heights reported as not measured where they were not captured, a noisy
   outline on the scan filmed low, one false crack left. No ground truth came with the
   recordings, so they show robustness, not accuracy.
+- **23:34** Defense notes in `docs/defense/`: one plain-language page per part of the pipeline
+  (what it does, how, the numbers, why this way, weak spots, likely questions), an index
+  with the two-minute version, and the hard questions. Writing them against the code caught
+  stale figures elsewhere: the technical report gave the synthetic interval coverage as
+  89/89 (88/89 since the drift was tripled at 15:17: one door 3.1 cm off) and one LiDAR area
+  out (two are); the design Q&A gave the old ceiling mean and run times.

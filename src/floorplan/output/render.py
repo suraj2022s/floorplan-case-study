@@ -49,6 +49,13 @@ def _half_width(measurement) -> float:
     return (measurement.hi - measurement.lo) / 2
 
 
+def _with_interval(measurement, digits: int = 2, unit: str = "") -> str:
+    """'3.21 ±0.04' (plus unit), or 'not measured' when there is no value."""
+    if not measurement.available:
+        return "not measured"
+    return f"{measurement.value:.{digits}f} ±{_half_width(measurement):.{digits}f}{unit}"
+
+
 def _reading_angle(direction: np.ndarray) -> float:
     angle = np.degrees(np.arctan2(direction[1], direction[0]))
     if angle > 90 or angle <= -90:
@@ -60,7 +67,7 @@ def draw_plan(plan: Plan, title: str, out_stem: Path) -> list[Path]:
     """Write `<out_stem>.svg` and `<out_stem>.png`; return the paths."""
     # turn the plan so its longest wall is horizontal
     walls = [wall for room in plan.rooms for wall in room.walls]
-    longest = max(walls, key=lambda wall: wall.length.value)
+    longest = max(walls, key=lambda wall: float(np.linalg.norm(wall.end - wall.start)))
     heading = np.arctan2(*(longest.end - longest.start)[::-1])
     c, s = np.cos(-heading), np.sin(-heading)
     turn = np.array([[c, -s], [s, c]])
@@ -238,7 +245,7 @@ def draw_plan(plan: Plan, title: str, out_stem: Path) -> list[Path]:
             axis.text(
                 anchor[0],
                 anchor[1],
-                f"{wall.length.value:.2f} ±{_half_width(wall.length):.2f}",
+                _with_interval(wall.length),
                 fontsize=7.5,
                 color=INK_SECONDARY,
                 ha="center",
@@ -253,7 +260,8 @@ def draw_plan(plan: Plan, title: str, out_stem: Path) -> list[Path]:
             if height.available
             else "ceiling not captured"
         )
-        area_text = f"{room.floor_area.value:.1f} ±{_half_width(room.floor_area):.1f} m²"
+        area_text = _with_interval(room.floor_area, 1, " m²")
+        area_text = area_text if room.floor_area.available else "area not measured"
         centroid = outline.mean(axis=0)
         if narrow:
             long_axis = np.array([1.0, 0.0]) if extent[0] >= extent[1] else np.array([0.0, 1.0])

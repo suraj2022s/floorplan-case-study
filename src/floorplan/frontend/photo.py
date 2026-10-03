@@ -21,7 +21,7 @@ from pathlib import Path
 
 import numpy as np
 
-from floorplan.frontend.room import RoomFit, fit_room, room_capture
+from floorplan.frontend.room import RoomFit, _turn, fit_room, room_capture
 from floorplan.frontend.views import LevelView, View, level_view
 from floorplan.io.intake import IMAGE_SUFFIXES, room_folders
 from floorplan.pipeline import (
@@ -37,6 +37,11 @@ from floorplan.stitch import stitch
 from floorplan.uncertainty.budget import BUDGETS, Measurement, load_calibration, quadrature
 
 PHOTO_SCALE_SIGMA = 0.06  # relative 1-sigma of the depth model's metric scale indoors (measured)
+# Floor seen in the photos must land inside the room fitted to them. When more than this
+# share lands more than FLOOR_MARGIN outside it, the photos do not fit the protocol and the
+# room's size is not measured.
+FLOOR_OUTSIDE_LIMIT = 0.15
+FLOOR_MARGIN = 0.30  # metres
 
 
 def _rename(plan: Plan, old: str, new: str) -> None:
@@ -50,11 +55,77 @@ def _rename(plan: Plan, old: str, new: str) -> None:
         opening.wall = opening.wall.replace(old, new, 1)
 
 
+def floor_outside(fit: RoomFit, views: list[LevelView]) -> float:
+    """Share of the floor the photos show that the fitted room cannot contain.
+
+    The rectangle fit places each photo where the protocol says it was taken (back to the
+    middle of a wall). If the photos were taken some other way, the fit still returns a
+    rectangle, but the floor each photo shows, placed by that fit, spills outside it. That is
+    the check: it needs no ground truth, and it catches photos taken from the middle of the
+    room, close-ups, and a wrong walking order.
+    """
+    total = outside = 0
+    used = getattr(fit, "used", list(range(len(fit.quarters))))
+    for k, index in enumerate(used):
+        if views[index].floor is None:
+            continue  # no floor in this photo: its height is assumed, not seen
+        points = views[index].points
+        floor = points[np.abs(points[:, 2]) < 0.06] if len(points) else points
+        # floor beyond a wall this photo sees was seen through a door or window: not this room
+        for wall in views[index].walls:
+            floor = floor[wall.distance(floor[:, :2]) > -0.10] if len(floor) else floor
+        if not len(floor):
+            continue
+        xy = fit.positions[k] + fit.scales[k] * (floor[:, :2] @ _turn(fit.quarters[k]).T)
+        beyond = (
+            (xy[:, 0] < -FLOOR_MARGIN)
+            | (xy[:, 0] > fit.width + FLOOR_MARGIN)
+            | (xy[:, 1] < -FLOOR_MARGIN)
+            | (xy[:, 1] > fit.depth + FLOOR_MARGIN)
+        )
+        total += len(floor)
+        outside += int(beyond.sum())
+    return outside / total if total else 0.0
+
+
+def sides_seen(fit: RoomFit, views: list[LevelView]) -> set[int]:
+    """Which sides of the fitted rectangle (0 S, 1 N, 2 W, 3 E) some photo saw directly.
+
+    A side no photo saw is placed by the protocol's assumption alone (the photographer's
+    back against it), so the room's size along that direction was not measured.
+    """
+    seen: set[int] = set()
+    used = getattr(fit, "used", list(range(len(fit.quarters))))
+    directions = [
+        np.array([0.0, 1.0]),
+        np.array([0.0, -1.0]),
+        np.array([1.0, 0.0]),
+        np.array([-1.0, 0.0]),
+    ]
+    for k, index in enumerate(used):
+        turn = _turn(fit.quarters[k])
+        for wall in views[index].walls:
+            normal = turn @ wall.normal
+            side = max(range(4), key=lambda i: float(directions[i] @ normal))
+            if directions[side] @ normal >= np.cos(np.radians(25.0)):
+                seen.add(side)
+    return seen
+
+
 def _rectangle_plan(
-    name: str, fit: RoomFit, views: list[LevelView], notes: list[str], capture=None
+    name: str,
+    fit: RoomFit,
+    views: list[LevelView],
+    notes: list[str],
+    capture=None,
+    measured: bool = True,
 ) -> Plan:
     """The fallback when the back-end cannot close a room from the photos: the rectangle the
-    views were fitted to, with every wall marked as inferred and wide intervals."""
+    views were fitted to, with every wall marked as inferred and wide intervals.
+
+    With `measured=False` the photos did not fit the protocol (see `floor_outside`): the room
+    is drawn so the plan still shows it, but its walls and area are reported as not measured.
+    """
     budget = BUDGETS["photo"]
     calibration = load_calibration("photo")
     corners = np.array([[0, 0], [fit.width, 0], [fit.width, fit.depth], [0, fit.depth]], float)
@@ -74,6 +145,10 @@ def _rectangle_plan(
     heights = [v.ceiling_height for v in views if v.ceiling_height is not None]
     height = float(np.median(heights)) if heights else float("nan")
     area = fit.width * fit.depth
+    if not measured:
+        for wall in walls:
+            wall.length = Measurement(float("nan"), float("nan"), "inferred")
+        area = float("nan")
     room = RoomResult(
         id=name,
         polygon=corners,
@@ -91,6 +166,9 @@ def _rectangle_plan(
         + [
             "walls could not be traced from the photos; the room is drawn as the "
             "rectangle that best fits the walls that were seen"
+            if measured
+            else "the photos do not fit one room taken by the protocol, so its size was not "
+            "measured; the outline is only a sketch"
         ],
     )
     return Plan(
@@ -99,7 +177,13 @@ def _rectangle_plan(
         openings=[],
         footprint_area=Measurement(area, room.floor_area.sigma, "inferred", unit="m2"),
         adjacency=[],
-        warnings=[f"{name}: rectangle fallback used"],
+        warnings=[
+            f"{name}: rectangle fallback used"
+            if measured
+            else f"{name}: the photos do not show the room the way the capture protocol "
+            "asks (" + "; ".join(notes[-2:]) + "), so its walls and area were not measured. "
+            "Retake them: back against the middle of each wall, photographing the opposite wall."
+        ],
         timings={},
         stats={"fallback": "rectangle", "scale_sigma": PHOTO_SCALE_SIGMA},
         calibration=calibration,
@@ -123,6 +207,17 @@ def room_plan(name: str, views: list[View], config: PipelineConfig | None = None
     fit = fit_room(levelled)
     notes += fit.notes + [note for view in levelled for note in view.notes]
     capture = room_capture(levelled, fit, name, scale_sigma=PHOTO_SCALE_SIGMA)
+    spill = floor_outside(fit, levelled)
+    seen = sides_seen(fit, levelled)
+    if spill > FLOOR_OUTSIDE_LIMIT or len(seen) < 4:
+        if spill > FLOOR_OUTSIDE_LIMIT:
+            notes.append(f"{spill:.0%} of the floor the photos show lies outside the fitted room")
+        if len(seen) < 4:
+            notes.append(f"only {len(seen)} of the room's 4 walls appear in the photos")
+        plan = _rectangle_plan(name, fit, levelled, notes, capture, measured=False)
+        plan.stats["floor_outside"] = round(spill, 3)
+        plan.stats["walls_seen"] = len(seen)
+        return plan
 
     try:
         plan = run(capture, config)
@@ -150,6 +245,7 @@ def room_plan(name: str, views: list[View], config: PipelineConfig | None = None
         plan, rooms=[main], openings=kept_openings, adjacency=[], footprint_area=main.floor_area
     )
     main.notes = list(main.notes) + notes
+    plan.stats["floor_outside"] = round(spill, 3)
     plan.stats["room_fit"] = {
         "width_m": round(fit.width, 3),
         "depth_m": round(fit.depth, 3),

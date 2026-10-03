@@ -81,6 +81,8 @@ def _mismatch(a: _Door, b: _Door) -> float:
     width = (a.opening.width.value - b.opening.width.value) / quadrature(
         a.opening.width.sigma, b.opening.width.sigma, 0.02
     )
+    if not (a.opening.height.available and b.opening.height.available):
+        return float(width**2)  # a door whose top was not seen is matched on width alone
     height = (a.opening.height.value - b.opening.height.value) / quadrature(
         a.opening.height.sigma, b.opening.height.sigma, 0.03
     )

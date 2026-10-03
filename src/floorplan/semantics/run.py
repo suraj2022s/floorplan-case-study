@@ -22,6 +22,8 @@ from floorplan.semantics.damage import (
 from floorplan.semantics.rules import raise_flags
 from floorplan.semantics.scope import build_scope
 
+DOOR_HEIGHT = 2.0  # metres, assumed when an opening's top was not seen
+
 
 def _spread(names: list[str], limit: int) -> list[str]:
     if len(names) <= limit:
@@ -40,7 +42,9 @@ def _reject_openings_on_reflectors(plan: Plan, sightings: list[Sighting]) -> lis
     kept = []
     for opening in plan.openings:
         u0 = opening.position_along_wall
-        u1, v0, v1 = u0 + opening.width.value, opening.sill, opening.sill + opening.height.value
+        # an opening whose top was never seen is taken as door height for this test
+        height = opening.height.value if opening.height.available else DOOR_HEIGHT
+        u1, v0, v1 = u0 + opening.width.value, opening.sill, opening.sill + height
         culprit = None
         for sighting in sightings:
             if sighting.surface.id != opening.wall or sighting.kind not in ("mirror", "television"):

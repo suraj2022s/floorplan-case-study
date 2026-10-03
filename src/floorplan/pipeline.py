@@ -340,7 +340,11 @@ def _measure_opening(
         wall=room.walls[opening.edge].id,
         other_room=opening.other_room,
         width=Measurement(opening.width, width_sigma * calibration.factor("opening_width")),
-        height=Measurement(opening.height, height_sigma * calibration.factor("opening_height")),
+        height=(
+            Measurement(opening.height, height_sigma * calibration.factor("opening_height"))
+            if opening.top_seen
+            else Measurement(float("nan"), float("nan"), "inferred")  # its top was never seen
+        ),
         sill=opening.sill,
         position_along_wall=opening.u0,
         wall_thickness=opening.wall_thickness,

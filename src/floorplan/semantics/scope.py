@@ -46,6 +46,13 @@ class ScopeItem:
         }
 
 
+def _height(opening) -> Measurement:
+    """An opening's height; door height, loosely, when its top was never seen."""
+    if opening.height.available:
+        return opening.height
+    return Measurement(2.0, 0.2, "inferred")
+
+
 def load_catalogue(path: Path | None = None) -> dict:
     return yaml.safe_load((path or ROOT / "configs" / "scope_catalog.yaml").read_text())
 
@@ -64,11 +71,13 @@ def surface_area(plan: Plan, surface: str) -> Measurement:
             gross = wall.length.value * height.value
             sigma = quadrature(height.value * wall.length.sigma, wall.length.value * height.sigma)
             openings = [o for o in plan.openings if o.wall == surface]
-            cut = sum(o.width.value * o.height.value for o in openings)
+            cut = sum(o.width.value * _height(o).value for o in openings)
             cut_sigma = (
                 quadrature(
                     *[
-                        quadrature(o.height.value * o.width.sigma, o.width.value * o.height.sigma)
+                        quadrature(
+                            _height(o).value * o.width.sigma, o.width.value * _height(o).sigma
+                        )
                         for o in openings
                     ]
                 )

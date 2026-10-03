@@ -78,6 +78,7 @@ class Opening:
     other_room: str | None = None
     wall_thickness: float | None = None
     id: str = ""
+    top_seen: bool = True  # False when the wall above the opening was never in view
     # how far the space seen through the opening reaches behind the wall face (metres), from
     # the wall surfaces visible through it; None when nothing was seen through
     depth_beyond: float | None = None
@@ -370,7 +371,18 @@ def _measure(
                 v0 = 0.0
             else:
                 sill = _level_face(wall, flat_points, u0, u1, v0, +1.0, config) or v0
-        kind = _kind(sill, v1 - sill, v1, wall.height, config)
+        # Was the top of the opening seen? Only if the wall right above it was observed: a
+        # capture aimed low (at the floor and the foot of the walls) never shows the head of
+        # a doorway, and the region of see-through rays then simply stops where the view
+        # stopped. Such an opening's height is not measured, and standing on the floor it is
+        # a door or a passage, not a window.
+        above = slice(r1 + 1, min(wall.hit.shape[0], r1 + 1 + max(3, int(0.3 / config.cell))))
+        seen_above = (wall.hit + wall.open + wall.blocked + wall.void)[above, c0 : c1 + 1] > 0
+        top_seen = bool(seen_above.size) and float(seen_above.mean()) >= 0.5
+        if top_seen or sill > config.door_max_sill:
+            kind = _kind(sill, v1 - sill, v1, wall.height, config)
+        else:
+            kind = "passage" if (u1 - u0) > PASSAGE_MIN_WIDTH else "door"
 
         middle_u = (u0 + u1) / 2
         openings.append(
@@ -388,9 +400,13 @@ def _measure(
                 centre=wall.p0 + middle_u * wall.direction,
                 open_share=open_share,
                 evidence=evidence,
+                top_seen=top_seen,
             )
         )
     return openings
+
+
+PASSAGE_MIN_WIDTH = 1.6  # metres; a floor-standing opening wider than a double door
 
 
 def _kind(

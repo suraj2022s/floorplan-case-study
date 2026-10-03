@@ -196,11 +196,27 @@ def main() -> int:
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--preview", type=Path)
     parser.add_argument("--source", default="")
+    parser.add_argument(
+        "--ceiling-only",
+        action="store_true",
+        help="read off only the ceiling height, for a room that is not a four-walled rectangle",
+    )
     arguments = parser.parse_args()
 
     xyz = read_scan(arguments.scan)
     ceiling, floor, layers = levels(xyz)
     room_height = float(ceiling[2] - floor[2])  # at the scanner, which stands in the room
+    if arguments.ceiling_only:
+        print(
+            f"ceiling height {room_height:.4f} m; floor layers below the ceiling: "
+            + ", ".join(f"{a:.3f}-{b:.3f} m ({n} pts)" for a, b, n in layers)
+        )
+        truth = _truth(arguments, [], room_height)
+        truth["rooms"][0]["note"] = "ceiling only: the room is not a four-walled rectangle"
+        arguments.out.parent.mkdir(parents=True, exist_ok=True)
+        arguments.out.write_text(yaml.safe_dump(truth, sort_keys=False))
+        print(f"wrote {arguments.out}")
+        return 0
     height = xyz[:, 2] - (floor[0] * xyz[:, 0] + floor[1] * xyz[:, 1] + floor[2])
     band = xyz[(height > room_height - 0.40) & (height < room_height - 0.08)][:, :2]
     lines = lines_in(band)
@@ -266,7 +282,22 @@ def main() -> int:
     if arguments.preview:
         _preview(xyz, height, room_height, by_angle, corners, arguments.preview)
 
-    truth = {
+    walls = [
+        {
+            "id": f"W{i + 1}",
+            "length": round(float(np.linalg.norm(corners[(i + 1) % 4] - corners[i])), 4),
+        }
+        for i in range(4)
+    ]
+    truth = _truth(arguments, walls, room_height)
+    arguments.out.parent.mkdir(parents=True, exist_ok=True)
+    arguments.out.write_text(yaml.safe_dump(truth, sort_keys=False))
+    print(f"wrote {arguments.out} (openings are listed above; add the ones that are real by hand)")
+    return 0
+
+
+def _truth(arguments, walls: list[dict], room_height: float) -> dict:
+    return {
         "site": arguments.site,
         "source": arguments.source,
         "instrument": {
@@ -278,25 +309,13 @@ def main() -> int:
         "rooms": [
             {
                 "id": "room",
-                "walls": [
-                    {
-                        "id": f"W{i + 1}",
-                        "length": round(
-                            float(np.linalg.norm(corners[(i + 1) % 4] - corners[i])), 4
-                        ),
-                    }
-                    for i in range(4)
-                ],
+                "walls": walls,
                 "ceiling_height": {"middle": round(room_height, 4)},
                 "openings": [],
             }
         ],
         "adjacency": [],
     }
-    arguments.out.parent.mkdir(parents=True, exist_ok=True)
-    arguments.out.write_text(yaml.safe_dump(truth, sort_keys=False))
-    print(f"wrote {arguments.out} (openings are listed above; add the ones that are real by hand)")
-    return 0
 
 
 def _preview(xyz, height, room_height, walls, corners, path: Path) -> None:

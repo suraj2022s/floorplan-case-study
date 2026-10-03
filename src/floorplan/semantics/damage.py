@@ -5,7 +5,9 @@
 2. The middle of each box is followed along its camera ray to the first surface of the plan
    it meets. That decides which wall, ceiling or floor the damage is on. If the sensor's own
    depth says the pixel is well in front of that surface, the box is on furniture or on
-   something hanging in the room, not on the surface, and it is left out.
+   something hanging in the room, not on the surface, and it is left out. Damage is also
+   part of the surface, so it is as flat as the surface: if most of what the box shows is
+   not on one plane parallel to it (a plant, a mat, a door frame), it is left out too.
 3. The box's corners are pushed along their rays onto that surface. Their spread on the
    surface is the damage's extent: width, height and bounding area.
 4. The same patch is usually seen in several images. Boxes of the same class on the same
@@ -91,6 +93,42 @@ class DamageRegion:
             "views": self.views,
             "frames": self.frames,
         }
+
+
+FLAT_TOLERANCE = 0.03  # metres from the box's plane that still count as on it
+FLAT_SHARE = 0.5  # share of the box's depth points that must be on one plane
+
+
+def flat_share(
+    box: tuple[float, float, float, float],
+    image_shape: tuple,
+    depth: np.ndarray,
+    K: np.ndarray,
+    normal_cam: np.ndarray,
+) -> float | None:
+    """Share of the depth points inside a box that lie on one plane facing `normal_cam`.
+
+    The plane is parallel to the surface the box was placed on; its offset is the median of
+    the points' offsets along the normal. Only this frame's own depth and the surface's
+    direction enter, so an error in where the frame was placed does not. On the supplied
+    sample scans, boxes on bare walls and floors score 0.9 to 1.0; a plant taken for mould
+    scored 0.06 and 0.10. None when the box holds too few depth points to say.
+    """
+    x0, y0, x1, y1 = box
+    sy, sx = depth.shape[0] / image_shape[0], depth.shape[1] / image_shape[1]
+    r0, r1 = int(max(0, np.floor(y0 * sy))), int(min(depth.shape[0], np.ceil(y1 * sy)))
+    c0, c1 = int(max(0, np.floor(x0 * sx))), int(min(depth.shape[1], np.ceil(x1 * sx)))
+    rows, columns = np.mgrid[r0:r1, c0:c1]
+    z = depth[r0:r1, c0:c1]
+    valid = np.isfinite(z) & (z > 0)
+    if valid.sum() < 4:
+        return None
+    u, v = (columns[valid] + 0.5) / sx, (rows[valid] + 0.5) / sy  # pixels of the image
+    points = np.stack(
+        [(u - K[0, 2]) / K[0, 0] * z[valid], (v - K[1, 2]) / K[1, 1] * z[valid], z[valid]], axis=1
+    )
+    offsets = points @ normal_cam
+    return float(np.mean(np.abs(offsets - np.median(offsets)) < FLAT_TOLERANCE))
 
 
 def place_box(
@@ -265,6 +303,11 @@ def find_sightings(
             surface, u0, u1, v0, v1, squareness = placed
             if u1 - u0 < 0.02 or v1 - v0 < 0.02:
                 continue
+            if depth is not None:
+                normal_cam = poses[name][:3, :3].T @ surface.normal
+                share = flat_share(detection.box, image.shape, depth, K, normal_cam)
+                if share is not None and share < FLAT_SHARE:
+                    continue  # not flat on the surface: something standing in front of it
             sightings.append(
                 Sighting(kind, surface, u0, u1, v0, v1, detection.score, squareness, name)
             )

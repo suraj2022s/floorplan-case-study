@@ -140,6 +140,36 @@ def test_two_rules_on_one_wall_ask_for_one_inspection(box_room_plan):
     assert inspections[0].damage_ids == [regions[0].id]
 
 
+def _east_wall_depth(T_world_cam: np.ndarray) -> np.ndarray:
+    """The depth map a sensor would give looking at the east wall (x = 4.20)."""
+    v, u = np.mgrid[0:480, 0:640] + 0.5
+    rays = np.stack([(u - K[0, 2]) / K[0, 0], (v - K[1, 2]) / K[1, 1], np.ones_like(u)], axis=-1)
+    world = rays @ T_world_cam[:3, :3].T
+    return ((4.2 - T_world_cam[0, 3]) / world[..., 0]).astype(np.float32)  # rays have z = 1
+
+
+def test_a_plant_in_front_of_the_wall_is_not_mould(box_room_plan):
+    # the detector reports mould in the same box twice; once the depth there is the bare wall,
+    # once it is leaves up to 25 cm in front of it (too little for the centre-depth check)
+    corners = np.array([[4.2, 1.0, 0.6], [4.2, 1.6, 0.6], [4.2, 1.6, 1.0], [4.2, 1.0, 1.0]])
+    view = pose(2.1, 1.3, 1.4, 0.0, np.radians(-10.0))
+    plan = _plan_with_view(box_room_plan, view)
+    box = _box_of(corners, view)
+    wall = _east_wall_depth(view)
+    leaves = wall.copy()
+    x0, y0, x1, y1 = (int(round(b)) for b in box)
+    leaves[y0:y1, x0:x1] -= np.random.default_rng(0).uniform(0.0, 0.25, (y1 - y0, x1 - x0))
+
+    for depth, found in ((wall, 1), (leaves, 0)):
+        sightings = find_sightings(
+            plan,
+            {"view": lambda depth=depth: (IMAGE, K, depth)},
+            lambda image, phrases, threshold: [Detection("mold on the wall", 0.8, box)],
+            CLASSES,
+        )
+        assert len(sightings) == found
+
+
 def test_a_box_on_furniture_is_not_wall_damage(box_room_plan):
     corners = np.array([[4.2, 1.0, 0.8], [4.2, 1.6, 0.8], [4.2, 1.6, 1.2], [4.2, 1.0, 1.2]])
     view = pose(2.1, 1.3, 1.4, 0.0, np.radians(-10.0))

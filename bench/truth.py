@@ -367,6 +367,10 @@ class RoomMatch:
 def _best_shift(truth: TruthRoom, predicted: PredictedRoom, openings: list[PredictedOpening]):
     """Rotation of the predicted walls that best fits the measured ones, and its cost."""
     count = len(truth.walls)
+    if count == 0:
+        # a room read off for its ceiling only: no walls to compare, so the largest predicted
+        # room (where the walk went) is the room the scanner stood in
+        return 0, -float(predicted.floor_area.get("value") or 0.0)
     measured = np.array(truth.walls)
     lengths = np.array([wall["value"] for wall in predicted.walls])
     if len(lengths) != count:
@@ -450,6 +454,10 @@ def match_openings(matches: list[RoomMatch], prediction: Prediction) -> list[Ope
             if best is not None:
                 used.add(best.id)
             results.append(OpeningMatch(item, best))
+    if not any(match.truth.walls for match in matches):
+        # rooms read off for their ceiling only: walls and openings were not surveyed, so an
+        # opening found there can be neither matched nor called a phantom
+        return results
     for opening in prediction.openings:
         if opening.id not in used:
             results.append(OpeningMatch(None, opening))

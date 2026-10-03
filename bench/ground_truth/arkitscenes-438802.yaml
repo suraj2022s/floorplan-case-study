@@ -1,0 +1,21 @@
+# Ground truth for a bathroom of Apple's ARKitScenes dataset (visit 438802), read off the Faro
+# laser scan Apple published for it (scan 176283) by bench/public/laser_truth.py --ceiling-only.
+# The scanner stands inside the room under one ceiling level; the floor is the lowest level
+# under it (the levels 0.46 and 0.54 m higher are the bath and the vanity top). Only the
+# ceiling height is used: the four-wall read-off does not fit this room. Not a tape
+# measurement by us.
+site: arkitscenes-438802
+source: ARKitScenes raw, laser_scanner_point_clouds/438802/176283.ply
+instrument:
+  type: laser
+  model: Faro Focus S70 (scan published by Apple)
+  stated_accuracy_mm: 2
+read_off_by: bench/public/laser_truth.py
+rooms:
+- id: bathroom
+  walls: []
+  ceiling_height:
+    middle: 2.4018
+  openings: []
+  note: 'ceiling only: the wall read-off does not fit this room'
+adjacency: []

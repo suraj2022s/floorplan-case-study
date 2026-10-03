@@ -1,0 +1,20 @@
+# Ground truth for a kitchen of Apple's ARKitScenes dataset (visit 482863), read off the Faro
+# laser scan Apple published for it (scan 191800) by bench/public/laser_truth.py --ceiling-only.
+# The scanner stands inside the room under one ceiling level, with one floor level under it.
+# Only the ceiling height is used: the room has a cut corner and units along its walls.
+# Not a tape measurement by us.
+site: arkitscenes-482863
+source: ARKitScenes raw, laser_scanner_point_clouds/482863/191800.ply
+instrument:
+  type: laser
+  model: Faro Focus S70 (scan published by Apple)
+  stated_accuracy_mm: 2
+read_off_by: bench/public/laser_truth.py
+rooms:
+- id: kitchen
+  walls: []
+  ceiling_height:
+    middle: 2.5734
+  openings: []
+  note: 'ceiling only: the room has a cut corner'
+adjacency: []

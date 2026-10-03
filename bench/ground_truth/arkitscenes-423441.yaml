@@ -1,0 +1,20 @@
+# Ground truth for a bedroom of Apple's ARKitScenes dataset (visit 423441, validation split),
+# read off the Faro laser scan Apple published for it (scan 179157) by bench/public/laser_truth.py
+# --ceiling-only. The scanner stands inside the room and there is one floor level under it.
+# Only the ceiling height is used: the room has a stepped corner (eight walls), and the wall
+# read-off handles four-walled rooms only. Not a tape measurement by us.
+site: arkitscenes-423441
+source: ARKitScenes raw, laser_scanner_point_clouds/423441/179157.ply
+instrument:
+  type: laser
+  model: Faro Focus S70 (scan published by Apple)
+  stated_accuracy_mm: 2
+read_off_by: bench/public/laser_truth.py
+rooms:
+- id: bedroom
+  walls: []
+  ceiling_height:
+    middle: 2.3343
+  openings: []
+  note: 'ceiling only: the room has eight walls (a stepped corner)'
+adjacency: []

@@ -1,12 +1,16 @@
 name: arkitscenes
 description: >
-  Public data, used while no iPhone is available: one bedroom from Apple's ARKitScenes
-  dataset, captured three times with the LiDAR of an iPad Pro (ARKit poses and depth) and
-  scanned with a Faro laser. Ground truth is read off the laser scan
-  (bench/ground_truth/arkitscenes-467138.yaml). This is real sensor data with laser ground
-  truth, but it is not the benchmark set the brief specifies: one room only, no multi-room
-  capture, no staged damage, an iPad rather than an iPhone, and captures made by Apple's
-  operators rather than by following our protocol. Fetch with
+  Public data, used while no iPhone is available: rooms from Apple's ARKitScenes dataset,
+  each captured three times with the LiDAR of an iPad Pro (ARKit poses and depth) and scanned
+  with a Faro laser. Ground truth is read off the laser scans by bench/public/laser_truth.py.
+  The bedroom 467138 has walls, ceiling, area and openings; the bedroom 423441, the bathroom
+  438802 and the kitchen 482863 have their ceiling height only (their walls do not fit the
+  four-wall read-off). Rooms were chosen from Apple's metadata as visits with one laser scan
+  and several videos, then kept only if the scanner stands inside the room under one ceiling
+  level; 422009 (scanner in a doorway) and 483605 (two ceiling levels) were left out. This is
+  real sensor data with laser ground truth, but not the benchmark set the brief specifies:
+  no multi-room capture, no staged damage, an iPad rather than an iPhone, and captures made
+  by Apple's operators rather than by our protocol. Fetch with
   python scripts/fetch_arkitscenes.py.
 
 captures:
@@ -22,6 +26,42 @@ captures:
     path: .cache/arkitscenes/47333468
     group: bedroom
     truth: bench/ground_truth/arkitscenes-467138.yaml
+  - id: bedroom2-a
+    path: .cache/arkitscenes/42897672
+    group: bedroom2
+    truth: bench/ground_truth/arkitscenes-423441.yaml
+  - id: bedroom2-b
+    path: .cache/arkitscenes/42897678
+    group: bedroom2
+    truth: bench/ground_truth/arkitscenes-423441.yaml
+  - id: bedroom2-c
+    path: .cache/arkitscenes/42897688
+    group: bedroom2
+    truth: bench/ground_truth/arkitscenes-423441.yaml
+  - id: bathroom-a
+    path: .cache/arkitscenes/44358256
+    group: bathroom
+    truth: bench/ground_truth/arkitscenes-438802.yaml
+  - id: bathroom-b
+    path: .cache/arkitscenes/44358257
+    group: bathroom
+    truth: bench/ground_truth/arkitscenes-438802.yaml
+  - id: bathroom-c
+    path: .cache/arkitscenes/44358258
+    group: bathroom
+    truth: bench/ground_truth/arkitscenes-438802.yaml
+  - id: kitchen-a
+    path: .cache/arkitscenes/48017890
+    group: kitchen
+    truth: bench/ground_truth/arkitscenes-482863.yaml
+  - id: kitchen-b
+    path: .cache/arkitscenes/48017892
+    group: kitchen
+    truth: bench/ground_truth/arkitscenes-482863.yaml
+  - id: kitchen-c
+    path: .cache/arkitscenes/48017893
+    group: kitchen
+    truth: bench/ground_truth/arkitscenes-482863.yaml
   - id: bedroom-a-video
     path: .cache/arkitscenes/raw/47333462.mov
     tier: video

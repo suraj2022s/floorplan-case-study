@@ -1,18 +1,18 @@
 # Benchmark report: arkitscenes
 
-Public data, used while no iPhone is available: one bedroom from Apple's ARKitScenes dataset, captured three times with the LiDAR of an iPad Pro (ARKit poses and depth) and scanned with a Faro laser. Ground truth is read off the laser scan (bench/ground_truth/arkitscenes-467138.yaml). This is real sensor data with laser ground truth, but it is not the benchmark set the brief specifies: one room only, no multi-room capture, no staged damage, an iPad rather than an iPhone, and captures made by Apple's operators rather than by following our protocol. Fetch with python scripts/fetch_arkitscenes.py.
+Public data, used while no iPhone is available: rooms from Apple's ARKitScenes dataset, each captured three times with the LiDAR of an iPad Pro (ARKit poses and depth) and scanned with a Faro laser. Ground truth is read off the laser scans by bench/public/laser_truth.py. The bedroom 467138 has walls, ceiling, area and openings; the bedroom 423441, the bathroom 438802 and the kitchen 482863 have their ceiling height only (their walls do not fit the four-wall read-off). Rooms were chosen from Apple's metadata as visits with one laser scan and several videos, then kept only if the scanner stands inside the room under one ceiling level; 422009 (scanner in a doorway) and 483605 (two ceiling levels) were left out. This is real sensor data with laser ground truth, but not the benchmark set the brief specifies: no multi-room capture, no staged damage, an iPad rather than an iPhone, and captures made by Apple's operators rather than by our protocol. Fetch with python scripts/fetch_arkitscenes.py.
 
 ## Gates
 
 | Tier | Gate | Status | Result | Threshold | Notes |
 |---|---|---|---|---|---|
 | lidar | Opening widths | **FAIL** | 0/11 = 0% | <= 2 cm on >= 85%; a miss and a phantom each count as a miss | 5 missed, 5 phantom, 1 found but off by more than 2 cm |
-| lidar | Ceiling height | **FAIL** | 0/3 rooms within 1.5 cm; worst 3.6 cm | <= 1.5 cm in every room | mean signed error -3.19 cm |
-| lidar | Ceiling height, repeat captures | **PASS** | spread 0.96 cm over 3 room pair(s) | spread across captures <= 1 cm | repeatable but biased; mean error -3.19 cm |
+| lidar | Ceiling height | **FAIL** | 2/12 rooms within 1.5 cm; worst 3.6 cm | <= 1.5 cm in every room | mean signed error -2.35 cm |
+| lidar | Ceiling height, repeat captures | **FAIL** | spread 1.72 cm over 12 room pair(s) | spread across captures <= 1 cm | unrepeatable; mean error -2.35 cm |
 | lidar | Repeatability per wall | **not evaluated** | no room captured twice at this tier |  |  |
 | lidar | Wall lengths | **not evaluated** | median 8.5 cm, worst 13.2 cm (4.1%); 8 wall(s) not found | set by the Round 1 gate table, not supplied |  |
 | lidar | Whole-property stitch | **not evaluated** | no multi-room capture at this tier |  |  |
-| lidar | Interval calibration | **FAIL** | 6/11 = 55% of 90% intervals contain the truth | >= 72% (90% less two standard errors at n=11) | ceiling_height 3/3; floor_area 1/3; opening_width 0/1; wall_length 2/4 |
+| lidar | Interval calibration | **FAIL** | 15/20 = 75% of 90% intervals contain the truth | >= 77% (90% less two standard errors at n=20) | ceiling_height 12/12; floor_area 1/3; opening_width 0/1; wall_length 2/4 |
 | video | Opening widths | **FAIL** | 0/2 = 0% | <= 2 cm on >= 85%; a miss and a phantom each count as a miss | 1 missed, 0 phantom, 1 found but off by more than 2 cm |
 | video | Ceiling height | **FAIL** | 0/1 rooms within 1.5 cm; worst 18.7 cm | <= 1.5 cm in every room | mean signed error +18.66 cm |
 | video | Ceiling height, repeat captures | **not evaluated** | no room captured twice at this tier |  |  |
@@ -25,10 +25,19 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 
 | Capture | Tier | Rooms found / measured | Adjacency | Overlap (m²) | Time (s) |
 |---|---|---|---|---|---|
-| bedroom-a | lidar | 1 / 1 | correct | 0.000 | 9.9 |
-| bedroom-b | lidar | 1 / 1 | correct | 0.000 | 5.6 |
-| bedroom-c | lidar | 1 / 1 | correct | 0.000 | 9.1 |
-| bedroom-a-video | video | 1 / 1 | correct | 0.000 | 41.7 |
+| bedroom-a | lidar | 1 / 1 | correct | 0.000 | 11.4 |
+| bedroom-b | lidar | 1 / 1 | correct | 0.000 | 7.9 |
+| bedroom-c | lidar | 1 / 1 | correct | 0.000 | 11.0 |
+| bedroom2-a | lidar | 1 / 1 | correct | 0.000 | 95.3 |
+| bedroom2-b | lidar | 2 / 1 | WRONG | 0.000 | 103.1 |
+| bedroom2-c | lidar | 1 / 1 | correct | 0.000 | 69.6 |
+| bathroom-a | lidar | 1 / 1 | correct | 0.000 | 23.0 |
+| bathroom-b | lidar | 2 / 1 | WRONG | 0.000 | 31.1 |
+| bathroom-c | lidar | 1 / 1 | correct | 0.000 | 22.8 |
+| kitchen-a | lidar | 2 / 1 | WRONG | 0.000 | 48.4 |
+| kitchen-b | lidar | 1 / 1 | correct | 0.000 | 15.7 |
+| kitchen-c | lidar | 2 / 1 | WRONG | 0.000 | 55.4 |
+| bedroom-a-video | video | 1 / 1 | correct | 0.000 | 40.9 |
 
 ## Wall lengths
 
@@ -58,6 +67,15 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | bedroom-a | bedroom | 2.640 | 2.607 [2.542, 2.672] | -3.3 | yes |
 | bedroom-b | bedroom | 2.640 | 2.604 [2.539, 2.669] | -3.6 | yes |
 | bedroom-c | bedroom | 2.640 | 2.613 [2.548, 2.679] | -2.6 | yes |
+| bedroom2-a | bedroom | 2.334 | 2.322 [2.264, 2.380] | -1.2 | yes |
+| bedroom2-b | bedroom | 2.334 | 2.315 [2.257, 2.373] | -1.9 | yes |
+| bedroom2-c | bedroom | 2.334 | 2.315 [2.257, 2.373] | -1.9 | yes |
+| bathroom-a | bathroom | 2.402 | 2.393 [2.333, 2.453] | -0.9 | yes |
+| bathroom-b | bathroom | 2.402 | 2.382 [2.322, 2.441] | -2.0 | yes |
+| bathroom-c | bathroom | 2.402 | 2.376 [2.316, 2.435] | -2.6 | yes |
+| kitchen-a | kitchen | 2.573 | 2.544 [2.480, 2.607] | -3.0 | yes |
+| kitchen-b | kitchen | 2.573 | 2.542 [2.478, 2.605] | -3.2 | yes |
+| kitchen-c | kitchen | 2.573 | 2.554 [2.491, 2.618] | -1.9 | yes |
 | bedroom-a-video | bedroom | 2.640 | 2.826 [2.591, 3.062] | +18.7 | yes |
 
 ## Opening widths
@@ -98,7 +116,16 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 
 | Capture | cloud | damage | drift | fragments | keyframes | layout | levels | measure | openings | planes | poses_and_depth | refine | total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| bedroom-a | 0.1 | 0.3 | 1.7 | 5.8 | 0.0 | 0.2 | 0.0 | 0.0 | 1.2 | 0.6 | 0.0 | 0.0 | 9.9 |
-| bedroom-b | 0.1 | 0.2 | 1.1 | 3.1 | 0.0 | 0.1 | 0.0 | 0.0 | 0.6 | 0.4 | 0.0 | 0.0 | 5.6 |
-| bedroom-c | 0.1 | 0.5 | 1.5 | 3.5 | 0.0 | 0.3 | 0.0 | 0.0 | 2.1 | 1.0 | 0.0 | 0.0 | 9.1 |
-| bedroom-a-video | 0.1 | 0.7 | 0.5 | 4.2 | 0.0 | 0.1 | 0.0 | 0.0 | 2.3 | 0.4 | 33.4 | 0.0 | 41.7 |
+| bedroom-a | 0.1 | 0.3 | 2.4 | 5.4 | 0.0 | 0.3 | 0.0 | 0.0 | 1.9 | 0.9 | 0.0 | 0.0 | 11.4 |
+| bedroom-b | 0.1 | 0.4 | 1.3 | 4.0 | 0.0 | 0.1 | 0.0 | 0.0 | 1.0 | 0.8 | 0.0 | 0.0 | 7.9 |
+| bedroom-c | 0.1 | 0.3 | 2.2 | 5.6 | 0.0 | 0.2 | 0.1 | 0.0 | 1.5 | 1.0 | 0.0 | 0.0 | 11.0 |
+| bedroom2-a | 0.5 | 39.8 | 19.5 | 19.2 | 0.0 | 0.6 | 0.2 | 0.0 | 10.1 | 5.3 | 0.0 | 0.0 | 95.3 |
+| bedroom2-b | 0.5 | 18.3 | 27.2 | 39.3 | 0.1 | 0.4 | 0.1 | 0.0 | 11.4 | 5.8 | 0.0 | 0.0 | 103.1 |
+| bedroom2-c | 0.5 | 16.1 | 18.2 | 20.7 | 0.0 | 0.7 | 0.2 | 0.0 | 6.8 | 6.4 | 0.0 | 0.0 | 69.6 |
+| bathroom-a | 0.0 | 18.1 | 0.8 | 3.0 | 0.0 | 0.1 | 0.0 | 0.0 | 0.6 | 0.3 | 0.0 | 0.0 | 23.0 |
+| bathroom-b | 0.1 | 15.2 | 2.4 | 11.1 | 0.0 | 0.1 | 0.0 | 0.0 | 1.6 | 0.5 | 0.0 | 0.0 | 31.1 |
+| bathroom-c | 0.1 | 15.8 | 1.4 | 4.2 | 0.0 | 0.1 | 0.0 | 0.0 | 0.8 | 0.5 | 0.0 | 0.0 | 22.8 |
+| kitchen-a | 0.3 | 21.9 | 8.3 | 11.2 | 0.0 | 0.4 | 0.1 | 0.0 | 4.0 | 2.2 | 0.0 | 0.0 | 48.4 |
+| kitchen-b | 0.0 | 14.8 | 0.0 | 0.5 | 0.0 | 0.2 | 0.0 | 0.0 | 0.0 | 0.1 | 0.0 | 0.0 | 15.7 |
+| kitchen-c | 0.3 | 24.7 | 11.5 | 11.6 | 0.0 | 0.4 | 0.1 | 0.0 | 3.6 | 3.2 | 0.0 | 0.0 | 55.4 |
+| bedroom-a-video | 0.1 | 0.6 | 0.8 | 4.2 | 0.0 | 0.1 | 0.0 | 0.0 | 1.9 | 0.4 | 32.9 | 0.0 | 40.9 |

@@ -10,7 +10,7 @@ This is a submission for the Applied AI Engineer case study; the brief is in
 [spec/case_study.md](spec/case_study.md). [COMPLIANCE.md](COMPLIANCE.md) maps every
 requirement to where it is met and how honestly.
 
-## Install (about 10 minutes on a clean machine)
+## Install (about 5 GB of downloads; not yet timed on a clean machine)
 
 Needs [uv](https://docs.astral.sh/uv/) and Git. Developed and tested on Windows 11 (Python
 3.12, NVIDIA RTX 3050 Ti with 4 GB); the dependencies have builds for Linux and macOS, but

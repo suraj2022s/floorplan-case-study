@@ -54,7 +54,7 @@ def _ensure_synthetic(entry: dict, capture: Path) -> None:
         str(spec.get("seed", 0)),
     ]
     if spec.get("drift"):
-        command.append("--drift")
+        command += ["--drift", "--drift-scale", str(spec.get("drift_scale", 1.0))]
     subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
 
 

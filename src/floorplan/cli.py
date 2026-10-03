@@ -167,6 +167,9 @@ def synth(
     out: Path = typer.Argument(..., help="Folder to write the synthetic capture to."),
     seed: int = typer.Option(0, help="Random seed for sensor noise."),
     drift: bool = typer.Option(False, "--drift/--no-drift", help="Add pose drift to the walk."),
+    drift_scale: float = typer.Option(
+        1.0, help="Multiply the drift (1: 0.04 deg and 0.4% per metre walked, plus noise)."
+    ),
 ) -> None:
     """Write a synthetic capture with exactly known dimensions, in Stray Scanner layout."""
     from floorplan.synth.render import DriftModel, make_capture
@@ -176,10 +179,10 @@ def synth(
         raise typer.BadParameter(f"unknown scene {scene!r}; choose from {sorted(SCENES)}")
     drift_model = (
         DriftModel(
-            yaw_bias_deg_per_m=0.04,
-            yaw_sigma_deg_per_sqrt_m=0.05,
-            translation_bias_per_m=0.004,
-            translation_sigma_per_sqrt_m=0.004,
+            yaw_bias_deg_per_m=0.04 * drift_scale,
+            yaw_sigma_deg_per_sqrt_m=0.05 * drift_scale,
+            translation_bias_per_m=0.004 * drift_scale,
+            translation_sigma_per_sqrt_m=0.004 * drift_scale,
         )
         if drift
         else None

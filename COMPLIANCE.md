@@ -60,7 +60,7 @@ ground truth (`bench/benchmarks/arkitscenes.yaml`).
 | 23 | Opening widths ≤ 2 cm on ≥ 85%; misses and phantoms count | `bench/gates.py` | Gate row | Reported: **FAIL**, LiDAR 0/11, video 0/2 |
 | 24 | Ceiling ≤ 1.5 cm per room; repeat spread ≤ 1 cm; say biased or unrepeatable | `bench/gates.py` | Gate rows | Reported: LiDAR **FAIL** (-2.6 to -3.8 cm), spread 0.96 cm **PASS**: repeatable but biased (the iPad's 1.6% scale) |
 | 25 | Repeatability: same room, same tier, within 1 cm or 0.5% per wall | `bench/gates.py` | Repeatability table | Partial: implemented; not evaluable yet (two of the three scans' walls cannot be matched) |
-| 26 | Drift accountability: method stated, footprint with it on and off | `src/floorplan/geometry/drift.py`, `docs/decisions/0002-drift-correction.md` | Ablation table | Partial: plane-anchored correction; ablation on the synthetic drifting flat (`reports/bench/synthetic`); real multi-room pending |
+| 26 | Drift accountability: method stated, footprint with it on and off | `src/floorplan/geometry/drift.py`, `docs/decisions/0002-drift-correction.md` | Ablation table | Partial: plane-anchored correction; ablation on the synthetic drifting flat: footprint +0.04% with it, -2.55% without, worst wall 4.2 vs 62.1 cm (`reports/bench/synthetic`); real multi-room pending |
 | 27 | Photo-tier whole-property stitch: adjacency, no overlaps, footprint ±8% | `src/floorplan/stitch.py`, `bench/gates.py` | Gate row | Partial: gate implemented; no real photo set yet |
 | 28 | Photo tier: walls ±8% with calibrated intervals | `bench/gates.py` | Gate row | Partial: met on synthetic protocol photos; no real photo set yet |
 | 29 | Video tier: walls ±3% | `bench/gates.py` | Gate row | Reported: **FAIL**, 2 of 4 walls within 3% (worst +5.0%) |

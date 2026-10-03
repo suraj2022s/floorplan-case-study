@@ -21,7 +21,7 @@ captures:
     synth: {scene: flat, seed: 0}
   - id: flat-drift
     path: .cache/bench/synthetic/flat-drift
-    synth: {scene: flat, seed: 2, drift: true}
+    synth: {scene: flat, seed: 2, drift: true, drift_scale: 3}
 
 ablations:
   drift: [flat-drift]

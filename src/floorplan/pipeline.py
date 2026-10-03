@@ -208,11 +208,26 @@ def _room_levels(
     return floor, ceiling, notes
 
 
+HIDDEN_SIGMA = 0.06  # metres, for a wall seen over only part of its length (see below)
+
+
 def _position_sigma(edge, plane_sigma: float, inferred_sigma: float) -> tuple[float, bool]:
-    """1-sigma on where a wall face sits, and whether the wall was actually observed."""
+    """1-sigma on where a wall face sits, and whether the wall was actually observed.
+
+    Three terms beyond the fit itself, each found on real scans against a laser:
+    - the surface's own scatter (`rms`). A wall's points scatter by 7-9 mm; a curtain hung
+      in front of a wall by 20-50 mm, and which of its folds is "the wall" is not known. The
+      scatter is a bound on how far off the face can be, so it enters whole, not divided by
+      the number of points;
+    - the share of the wall that was hidden. Where furniture or a curtain stands in front of
+      a wall, the face found may be theirs; on the benchmark scans such walls were up to
+      12 cm in front of the laser's. A wall seen over its whole length carries none of this;
+    - the tier's plane term, as before.
+    """
     if edge.line is None or edge.coverage < OBSERVED_SHARE:
         return inferred_sigma, False
-    return quadrature(edge.line.sigma_offset, plane_sigma), True
+    hidden = HIDDEN_SIGMA * (1.0 - min(1.0, edge.coverage))
+    return quadrature(edge.line.sigma_offset, edge.line.rms, plane_sigma, hidden), True
 
 
 def _measure_room(

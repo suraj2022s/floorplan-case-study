@@ -48,11 +48,13 @@ ODOMETRY_HEADER = (
     "distortion_center_x, distortion_center_y"
 )
 
-# Starting noise model for ARKit scene depth; replaced by measured values once a real
-# device has been characterised against a laser.
+# Noise model for ARKit scene depth. The scale term is measured: three iPad Pro scans of
+# one room came out 0.9%, 1.5% and 1.6% small against a laser scan (ARKitScenes benchmark,
+# bench/public/overlay.py). An iPhone's figure is not known until it is calibrated against
+# its own benchmark, so the interval carries 1.5% until then.
 LIDAR_DEPTH_SIGMA_A = 0.002
 LIDAR_DEPTH_SIGMA_B = 0.0025
-LIDAR_SCALE_SIGMA = 0.005
+LIDAR_SCALE_SIGMA = 0.015
 
 
 def is_stray_capture(path: Path) -> bool:

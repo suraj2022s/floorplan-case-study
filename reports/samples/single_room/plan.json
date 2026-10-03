@@ -436,83 +436,9 @@
     "unit": "m2",
     "basis": "observed"
   },
-  "damage_regions": [
-    {
-      "id": "room_2-DMG1",
-      "class": "crack",
-      "room": "room_2",
-      "surface": "room_2-floor",
-      "surface_kind": "floor",
-      "extent": {
-        "width": {
-          "value": 0.0948,
-          "lo": 0.0454,
-          "hi": 0.1443,
-          "coverage": 0.9,
-          "sigma": 0.03007,
-          "unit": "m",
-          "basis": "observed"
-        },
-        "height": {
-          "value": 0.2977,
-          "lo": 0.2476,
-          "hi": 0.3478,
-          "coverage": 0.9,
-          "sigma": 0.03046,
-          "unit": "m",
-          "basis": "observed"
-        },
-        "bounding_area": {
-          "value": 0.0282,
-          "lo": 0.0128,
-          "hi": 0.0437,
-          "coverage": 0.9,
-          "sigma": 0.0094,
-          "unit": "m2",
-          "basis": "observed"
-        }
-      },
-      "position": {
-        "along_surface": 0.143,
-        "above_floor": 0.0,
-        "centre": [
-          0.308,
-          -4.85,
-          -1.476
-        ]
-      },
-      "detector_score": 0.231,
-      "views": 2,
-      "frames": [
-        "000888",
-        "000950"
-      ]
-    }
-  ],
+  "damage_regions": [],
   "concealed_damage_flags": [],
-  "scope_items": [
-    {
-      "id": "S1",
-      "code": "CRACK_FILL",
-      "description": "Rake out, fill and tape the crack",
-      "unit": "m",
-      "quantity": {
-        "value": 0.2977,
-        "lo": 0.2476,
-        "hi": 0.3478,
-        "coverage": 0.9,
-        "sigma": 0.03046,
-        "unit": "m",
-        "basis": "observed"
-      },
-      "room": "room_2",
-      "surface": "room_2-floor",
-      "damage_regions": [
-        "room_2-DMG1"
-      ],
-      "rule_id": null
-    }
-  ],
+  "scope_items": [],
   "intervals": {
     "coverage": 0.9,
     "calibrated": false,

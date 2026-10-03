@@ -30,29 +30,29 @@
         "device": null
       },
       "images_examined": 40,
-      "boxes_on_surfaces": 15,
+      "boxes_on_surfaces": 12,
       "mirrors_or_screens_seen": 4
     }
   },
   "timings_s": {
-    "keyframes": 0.05,
-    "fragments": 40.739,
-    "drift": 43.392,
-    "cloud": 1.012,
-    "planes": 21.797,
-    "layout": 2.006,
-    "refine": 0.059,
-    "levels": 0.542,
-    "openings": 10.623,
-    "measure": 0.002,
-    "damage": 20.818
+    "keyframes": 0.143,
+    "fragments": 66.138,
+    "drift": 55.501,
+    "cloud": 0.631,
+    "planes": 15.226,
+    "layout": 0.816,
+    "refine": 0.042,
+    "levels": 0.292,
+    "openings": 6.814,
+    "measure": 0.001,
+    "damage": 17.222
   },
-  "total_s": 141.04,
+  "total_s": 162.826,
   "inputs_sha256": {
     "odometry.csv": "27fff9796d5bb0a73c96c923588ff8e3ce0b3a33abe7e6a1164e3324021d0843",
     "camera_matrix.csv": "ff897e412bb279920a98d6257554334a7df6b36abc4a053c782a0c403b06e108"
   },
-  "plan_sha256": "e4b51f55162be4a1503398fa34f450bcacf0384f020412ad111c3c2c237dceb3",
+  "plan_sha256": "b6df63e0edd22254e587fb3734a95bfc4d61f731aeb5b142c097ad7f2237e891",
   "python": "3.12.13",
   "platform": "Windows-11-10.0.26200-SP0"
 }

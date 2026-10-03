@@ -198,3 +198,22 @@ Short, dated notes on what was done and why. Times are IST.
   stale figures elsewhere: the technical report gave the synthetic interval coverage as
   89/89 (88/89 since the drift was tripled at 15:17: one door 3.1 cm off) and one LiDAR area
   out (two are); the design Q&A gave the old ceiling mean and run times.
+
+## 2026-10-04 (Sun)
+
+- **00:05-00:30** Surveyed 55 public repositories of other candidates for this brief (GitHub
+  API, read-only, nothing used) to compare. Three things came back that concern our own work:
+  their whole-flat runs of the sample scan 1a8384c3f6 report 48-51 m² where we report 41.3;
+  one write-up points at a real hairline crack in the sample single_room bathroom, which we
+  had missed and called undamaged; and several calibrated the iPad depth bias on more
+  ARKitScenes rooms, where we stopped at one room.
+- **01:08** A room walked into was dropped: space behind a seen wall was kept as a room only if
+  20% of the whole walk was in it, a share set on one-bedroom scans. Now 1.5 m of walk inside
+  it (a real room had 2.8 m, the bedroom's hall seen from its door 0.8 m). 1a8384c3f6: 41.3
+  to 46.4 m². Layout notes (spaces left out) now reach plan.json; they never did.
+- **01:08** Damage: every box that landed on a floor was a mat, a rug or a shower foot; the
+  classes are wall damage by their own phrases, so floors are no longer searched. The real
+  crack is in view 1.1 s and in one of the 40 frames examined; every way of finding it that
+  was tried also confirmed false regions scoring above it, so it stays missed and the
+  protocol asks for damage to be shown for 2 s, twice.
+- **00:58** The samples deliverable is updated with these runs and the corrected findings.

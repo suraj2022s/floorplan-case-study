@@ -514,7 +514,9 @@
         "room_3-D2"
       ],
       "entered": true,
-      "notes": []
+      "notes": [
+        "2 space(s) seen through an opening were not walked into and are not measured"
+      ]
     },
     {
       "id": "room_4",

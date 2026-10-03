@@ -1,80 +1,82 @@
 # Capture protocol
 
-> Status: draft. Written 2026-10-02 from the apps' documentation; not yet tested on a phone.
+> Version 2, 2026-10-03. Built from what failed on real captures (see the notes at the end).
+> Not yet walked through on an iPhone 15: that is the first thing the benchmark session does.
 
 One page. Follow it in order. No technical knowledge is needed.
 
 ## 1. Pick the tier
 
-| Tier | Phone | App | Time on site |
+| Tier | Phone | App | Time |
 |---|---|---|---|
-| LiDAR | iPhone 15 Pro or newer Pro model | **Stray Scanner** (free, App Store, by Kenneth Blomqvist; needs iOS 18.6 or later) | about 1 minute per room |
-| Video | any iPhone 15 or newer | built-in **Camera** | about 1 minute per room |
-| Photos | any iPhone 15 or newer | built-in **Camera** | about 1 minute per room |
+| LiDAR | iPhone 15 Pro, 15 Pro Max, or any newer **Pro** model | **Stray Scanner** (free on the App Store, by Kenneth Blomqvist; iOS 18.6 or later) | about 1 minute per room |
+| Video | any iPhone 15 or newer | the built-in **Camera** | about 1 minute per room |
+| Photos | any iPhone 15 or newer | the built-in **Camera** | about 1 minute per room |
 
-## 2. Prepare the property (all tiers)
+## 2. Prepare the property (every tier)
 
-1. Open every interior door fully and leave it open.
-2. Switch on all the lights. Open curtains and blinds so the windows are visible.
-3. Wipe the camera lenses.
-4. Nothing moves during the capture: no people or pets in view, no doors or furniture moved.
+1. Open every interior door fully. Switch on all the lights.
+2. Open curtains and blinds as far as they go.
+3. Wipe the camera lenses. No people or pets in view; nothing moves during the capture.
 
 ## 3a. LiDAR or video: one continuous recording of the whole property
 
-**LiDAR:** open Stray Scanner and start a new recording.
-**Video:** open Camera, choose **Video**, lens **1x**. Not Cinematic, not Slo-mo, not Action mode.
+**LiDAR:** open Stray Scanner, tap the record button. **Video:** open Camera, **Video**, lens
+**0.5x** (or **1x** if your phone has no 0.5x), normal video (not Cinematic, Slo-mo or Action).
 
-Hold the phone upright (portrait) at chest height with both hands. Then:
+Hold the phone in front of you at chest height, screen facing you. Walk **slowly**: half your
+normal pace. Then:
 
-1. Start just inside the entrance, facing into the property. Start recording.
-2. **In every room**, walk to the middle and do two slow full turns on the spot:
-   - first turn with the phone tilted **up**, so the line where the walls meet the ceiling
-     stays in view;
-   - second turn with the phone tilted **down**, so the line where the walls meet the floor
-     stays in view.
-   Each turn takes about 20 seconds (30 seconds for video). Slow is better than fast.
-3. **At every doorway**, stop 1.5 m in front of it. Point at the left side of the frame, the
-   top of the frame and the wall above it, then the right side: 2 seconds each. Walk through
-   slowly. Turn around and do the same from the other side.
-4. **At every window**, face it from 1.5 m and hold for 2 seconds.
-5. In a large room or a room with big furniture, repeat step 2 from a second spot.
-6. When every room is done, walk back to where you started, face the way you first faced,
-   and stop recording.
+1. Start **in the middle of the first room**, facing a wall. Start recording.
+2. In every room: walk once around the room about 1 m from the walls, keeping the wall you
+   pass in view, then stand in the middle and turn once slowly with the phone tilted **up**
+   (the line where walls meet the ceiling in view), once with it tilted **down** (where
+   walls meet the floor). About 20 seconds per turn.
+3. At every doorway: stop 1.5 m before it, show the whole door frame for 2 seconds, walk
+   through slowly, turn round and show it again from the other side.
+4. At every window: face it from 1.5 m for 2 seconds, frame and sill in view.
+5. When every room is done, walk back to the first room's middle and stop recording.
 
-Avoid: fast turns; walking backwards; pointing at a mirror or a window from closer than 1 m;
-covering the cameras with a finger; stopping and restarting the recording.
+Avoid: fast turns, walking backwards, filming a bare wall from closer than 1 m, pointing at
+a mirror, a finger over a camera, stopping and restarting.
 
 ## 3b. Photos: one folder per room, 2 to 8 photos in each
 
-Open Camera, choose **Photo**, lens **1x**, flash off. Not Portrait mode.
+Camera, **Photo**, lens **0.5x** (or **1x**), flash off, not Portrait mode, phone sideways
+(landscape) and level.
 
-1. **Corner shots (up to 4).** Stand with your back in a corner. Hold the phone sideways
-   (landscape) and level, at chest height. Aim at the opposite corner so that some floor and
-   some ceiling are both in the picture. Take one photo. Repeat from each corner you can
-   reach. Two opposite corners is the minimum.
-2. **Doorway shots (1 per door).** Stand inside the room, 1.5 to 2 m from the open door,
-   facing it straight on. The whole door frame and some of the next room must be in the
-   picture.
-3. **Damage shots (as needed, within the 8).** One photo from about 1.5 m, straight on, with
-   the damage in the middle and the nearest corner or the floor line also in the picture.
+1. **One photo per wall.** Stand with your back against the **middle of a wall** and
+   photograph the **opposite wall**. The picture must show the line where that wall meets the
+   floor and the line where it meets the ceiling; with 1x, step sideways rather than tilt.
+   Go round the room **clockwise**: four photos for a rectangular room, one per wall for an
+   L-shaped room.
+2. **Corridors:** one photo from each end, looking along it.
+3. **Damage (within the 8):** from 1.5 m, straight on, with a corner or the floor line also
+   in the picture.
 
 ## 4. Hand the files over
 
-Make one folder per capture on the computer, named after the property.
+Make one folder on the computer for the capture, named after the property.
 
-- **LiDAR:** on the phone open **Files → Browse → On My iPhone → Stray Scanner**. Each
-  recording is a folder. Copy the newest folder to a USB-C drive plugged into the phone, or
-  share it to a cloud drive. Put that folder on the computer as it is.
-- **Video:** copy the clip (`.MOV`) into the capture folder. If you transfer by cable, first
-  set **Settings → Photos → Transfer to Mac or PC → Keep Originals**.
-- **Photos:** inside the capture folder make one folder per room (`kitchen`, `bedroom1`, …)
-  and put that room's photos in it, originals, unedited.
+- **LiDAR:** in Stray Scanner, open the recording and share it (AirDrop, or Save to Files on
+  a USB-C drive). Put the folder (or the .zip) in the capture folder as it is.
+- **Video:** AirDrop the clip, or copy it by cable after setting **Settings → Photos →
+  Transfer to Mac or PC → Keep Originals**.
+- **Photos:** one sub-folder per room (`kitchen`, `bedroom1`, ...), originals, unedited.
+  Live Photo clips and .AAE files can stay; they are ignored.
 
 Then run one command:
 
 ```
-uv run floorplan run <path to the capture folder>
+uv run floorplan run <the capture folder, .zip or clip>
 ```
 
-The results appear in `out/<capture name>/`: `plan.png` (the drawing), `plan.json` (every
-measurement with its 90% interval) and `run_log.json` (timings).
+Results appear in `out/<capture name>/`: `plan.png` (the drawing), `plan.json` (every
+measurement with its 90% interval) and `run_log.json`. **Read the warnings it prints before
+you leave**: if it says a room could not be measured, retake that room while you are there.
+
+---
+
+Why the rules, from real captures (`docs/JOURNAL.md`): a scan started in the hall glued the hall
+to the bedroom; fast walking past bare walls broke the video's camera track into pieces;
+close-up photos taken anywhere but against a wall cannot be turned into a room.

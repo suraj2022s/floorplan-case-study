@@ -320,7 +320,10 @@ def _measure_room(
         ),
         ceiling_height_range=height_range,
         entered=room.entered,
-        notes=notes + ([] if room.entered else ["seen through an opening but not walked into"]),
+        # the layout's own notes (spaces left out, a fallback outline) come first
+        notes=list(room.notes)
+        + notes
+        + ([] if room.entered else ["seen through an opening but not walked into"]),
         floor_z=float(floor.z_at(centre)[0]),
     )
 

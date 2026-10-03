@@ -55,7 +55,10 @@ class LayoutConfig:
     opaque_rms: float = 0.015  # metres; and its scatter must be below this (not a curtain)
     opaque_span: float = 0.6  # share of the room's extent along it the wall must span
     through_share: float = 0.25  # floor seen in a cell behind a wall: it was seen through it
-    entered_share: float = 0.2  # share of the path that makes a space behind a wall a room
+    # metres walked inside a space seen behind a wall that make it a room of its own. On the
+    # supplied scan 1a8384c3f6 a real room had 2.8 m of walk in it; on the public bedroom the
+    # hall seen through the door had 0.8 m (the phone at the doorway).
+    entered_path: float = 1.5
     margin: float = 0.6  # metres added around the wall points for the working area
     ceiling_min_height: float = 1.9
     floor_max_height: float = 1.2
@@ -320,7 +323,7 @@ def find_rooms(
             break
 
     # 5b. a wall that was clearly seen is opaque: floor beyond it was seen through an opening
-    groups_of_cells = _split_behind_walls(
+    groups_of_cells, not_entered = _split_behind_walls(
         list(members_of().values()), cells, lines, share, camera_xy, config
     )
 
@@ -342,6 +345,11 @@ def find_rooms(
                 entered=entered(cell_ids),
                 cells=len(cell_ids),
             )
+        )
+
+    if rooms and not_entered >= config.min_room_area:
+        rooms[0].notes.append(
+            f"{not_entered:.1f} m2 seen through openings but not walked into is not measured"
         )
 
     # A space glimpsed through a doorway but never walked into has walls that were mostly
@@ -373,16 +381,18 @@ def _split_behind_walls(
     share: np.ndarray,
     camera_xy: np.ndarray,
     config: LayoutConfig,
-) -> list[list[int]]:
+) -> tuple[list[list[int]], float]:
     """Take out of each room the space it saw through an opening in one of its walls.
 
     A wall seen to full height over a good length, with little scatter, is opaque. Floor
     behind it, within its length, was seen through an opening in it: the hall through the
     door, the bay and the garden through a window. Cells there do not belong to the room in
-    front. If the phone spent a real share of the walk there, they are a room of their own;
-    otherwise they are dropped. Cells behind the wall where no floor was seen (the footprint
-    of a wardrobe against it) stay. A line that spans only a small part of the room, like a
-    free-standing bookcase, is not treated as a wall here.
+    front. If the phone walked at least `entered_path` inside them, they are a room of their
+    own; otherwise they are dropped, and their area is returned so the plan can say so.
+    (This was first a share of the whole walk, 20%; in a walk through six rooms each room
+    gets less than that, and a real room was dropped.) Cells behind the wall where no floor
+    was seen (the footprint of a wardrobe against it) stay. A line that spans only a small
+    part of the room, like a free-standing bookcase, is not treated as a wall here.
     """
     strong = [
         line
@@ -390,11 +400,21 @@ def _split_behind_walls(
         if line.supported_length >= config.opaque_seen and line.rms <= config.opaque_rms
     ]
     if not strong or len(camera_xy) == 0:
-        return groups
+        return groups, 0.0
     centres = np.array([cell.representative_point().coords[0] for cell in cells])
     path = shapely.points(camera_xy)
-    walked = np.array([int(shapely.contains(cell, path).sum()) for cell in cells])
-    total = len(camera_xy)
+    owner = np.full(len(camera_xy), -1)  # the cell each camera position is in
+    for k, cell in enumerate(cells):
+        owner[shapely.contains(cell, path)] = k
+    walked = np.bincount(owner[owner >= 0], minlength=len(cells))
+    steps = np.linalg.norm(np.diff(camera_xy, axis=0), axis=1)
+
+    def walked_inside(cell_ids: list[int]) -> float:
+        """Metres of the walk spent inside these cells (steps that start and end in them)."""
+        inside = np.isin(owner, cell_ids)
+        return float(steps[inside[:-1] & inside[1:]].sum())
+
+    dropped = 0.0
 
     done: list[list[int]] = []
     queue = [list(group) for group in groups]
@@ -422,12 +442,14 @@ def _split_behind_walls(
             if not behind:
                 continue
             queue.append([k for k in group if k not in behind])
-            if walked[behind].sum() >= config.entered_share * total:
+            if walked_inside(behind) >= config.entered_path:
                 queue.append(behind)  # a space of its own, walked into
+            else:
+                dropped += sum(cells[k].area for k in behind)
             break
         else:
             done.append(group)
-    return done
+    return done, dropped
 
 
 def _remove_jogs(polygon: Polygon, max_jog: float) -> Polygon:

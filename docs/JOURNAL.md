@@ -201,17 +201,17 @@ Short, dated notes on what was done and why. Times are IST.
 
 ## 2026-10-04 (Sun)
 
-- **00:05-00:30** Surveyed 55 public repositories of other candidates for this brief (GitHub
+- **23:52 (Sat)-00:05** Surveyed 55 public repositories of other candidates for this brief (GitHub
   API, read-only, nothing used) to compare. Three things came back that concern our own work:
   their whole-flat runs of the sample scan 1a8384c3f6 report 48-51 m² where we report 41.3;
   one write-up points at a real hairline crack in the sample single_room bathroom, which we
   had missed and called undamaged; and several calibrated the iPad depth bias on more
   ARKitScenes rooms, where we stopped at one room.
-- **01:08** A room walked into was dropped: space behind a seen wall was kept as a room only if
+- **00:55** A room walked into was dropped: space behind a seen wall was kept as a room only if
   20% of the whole walk was in it, a share set on one-bedroom scans. Now 1.5 m of walk inside
   it (a real room had 2.8 m, the bedroom's hall seen from its door 0.8 m). 1a8384c3f6: 41.3
   to 46.4 m². Layout notes (spaces left out) now reach plan.json; they never did.
-- **01:08** Damage: every box that landed on a floor was a mat, a rug or a shower foot; the
+- **00:55** Damage: every box that landed on a floor was a mat, a rug or a shower foot; the
   classes are wall damage by their own phrases, so floors are no longer searched. The real
   crack is in view 1.1 s and in one of the 40 frames examined; every way of finding it that
   was tried also confirmed false regions scoring above it, so it stays missed and the

@@ -156,3 +156,16 @@ Short, dated notes on what was done and why. Times are IST.
   earlier were cloned outside this repository and their LiDAR tiers run on the same three
   real scans of the public benchmark, to see how they perform. Nothing from them is used
   here. Neither produced a better plan of the room; this does not change any of our numbers.
+- **16:47** The assessors' sample scans were filmed aimed at the floor and the foot of the
+  walls, so doorways came out as "windows" standing on the floor, and one stretch of open
+  floor as a 6 m window. An opening's top now counts as seen only if the wall above it was
+  observed; if not, an opening on the floor is a door (a passage if wider than 1.6 m) with
+  its height reported as not measured.
+- **22:19** The three sample recordings are fetched by script and checked by SHA-256
+  (`scripts/fetch_supplied.py`); the recordings themselves stay out of git.
+- **22:36** Outline clean-up, `max_jog` 12 cm against 25 cm. On the noisiest sample scan,
+  25 cm cut the walls shorter than 0.3 m from 28 to 15. On the benchmarks: synthetic
+  unchanged; on the real bedroom-c the floor-area error grew from +0.38 to +0.57 m² (laser
+  11.86 m²), because a real step in its outline was straightened away. Kept 12 cm. The
+  public-data report is regenerated: it predated the 16:47 change, so three openings
+  without a seen top are now doors rather than a passage or windows (gates unchanged).

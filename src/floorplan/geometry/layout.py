@@ -46,7 +46,9 @@ class LayoutConfig:
     opening_reach: float = 3.0  # metres; wall within this on both sides makes a gap an opening
     min_shared: float = 0.05  # metres; shorter borders between cells are ignored
     min_room_area: float = 1.0  # m2
-    max_jog: float = 0.12  # metres; a shorter step between two parallel walls is noise
+    # metres; a shorter step between two parallel walls is noise. 0.25 was tried: fewer
+    # micro-walls on the supplied scans, but a real bedroom's area error grew by half.
+    max_jog: float = 0.12
     keep_unentered: bool = False  # report rooms that were only seen through a doorway
     furniture_area: float = 2.5  # m2; smaller regions nobody walked into are furniture
     opaque_seen: float = 1.0  # metres of full-height wall that make a wall line opaque

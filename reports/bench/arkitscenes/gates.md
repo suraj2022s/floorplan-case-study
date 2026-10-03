@@ -25,10 +25,10 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 
 | Capture | Tier | Rooms found / measured | Adjacency | Overlap (m²) | Time (s) |
 |---|---|---|---|---|---|
-| bedroom-a | lidar | 1 / 1 | correct | 0.000 | 11.0 |
-| bedroom-b | lidar | 1 / 1 | correct | 0.000 | 5.8 |
-| bedroom-c | lidar | 1 / 1 | correct | 0.000 | 7.9 |
-| bedroom-a-video | video | 1 / 1 | correct | 0.000 | 27.7 |
+| bedroom-a | lidar | 1 / 1 | correct | 0.000 | 13.0 |
+| bedroom-b | lidar | 1 / 1 | correct | 0.000 | 6.8 |
+| bedroom-c | lidar | 1 / 1 | correct | 0.000 | 10.6 |
+| bedroom-a-video | video | 1 / 1 | correct | 0.000 | 40.0 |
 
 ## Wall lengths
 
@@ -81,11 +81,11 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 | Capture | Opening | Outcome | Measured kind | Found kind | Width error (cm) |
 |---|---|---|---|---|---|
 | bedroom-a | bedroom-D1 | missed | door |  |  |
-| bedroom-a | bedroom-WIN1 | matched | window | passage | -49.5 |
+| bedroom-a | bedroom-WIN1 | matched | window | door | -49.5 |
 | bedroom-b | bedroom-D1 | missed | door |  |  |
 | bedroom-b | bedroom-WIN1 | missed | window |  |  |
 | bedroom-b | room_1-P1 | phantom |  | passage |  |
-| bedroom-b | room_1-WIN1 | phantom |  | window |  |
+| bedroom-b | room_1-D1 | phantom |  | door |  |
 | bedroom-c | bedroom-D1 | missed | door |  |  |
 | bedroom-c | bedroom-WIN1 | missed | window |  |  |
 | bedroom-c | room_1-P1 | phantom |  | passage |  |
@@ -98,7 +98,7 @@ Public data, used while no iPhone is available: one bedroom from Apple's ARKitSc
 
 | Capture | cloud | damage | drift | fragments | keyframes | layout | levels | measure | openings | planes | poses_and_depth | refine | total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| bedroom-a | 0.1 | 0.2 | 1.6 | 7.2 | 0.0 | 0.1 | 0.0 | 0.0 | 1.1 | 0.6 | 0.0 | 0.0 | 11.0 |
-| bedroom-b | 0.0 | 0.3 | 1.0 | 3.4 | 0.0 | 0.1 | 0.0 | 0.0 | 0.6 | 0.4 | 0.0 | 0.0 | 5.8 |
-| bedroom-c | 0.1 | 0.2 | 1.4 | 4.4 | 0.0 | 0.1 | 0.0 | 0.0 | 1.0 | 0.6 | 0.0 | 0.0 | 7.9 |
-| bedroom-a-video | 0.0 | 0.4 | 0.5 | 2.9 | 0.0 | 0.1 | 0.0 | 0.0 | 1.3 | 0.2 | 22.3 | 0.0 | 27.7 |
+| bedroom-a | 0.1 | 0.2 | 2.7 | 6.7 | 0.0 | 0.3 | 0.1 | 0.0 | 1.9 | 1.0 | 0.0 | 0.0 | 13.0 |
+| bedroom-b | 0.1 | 0.2 | 1.7 | 3.0 | 0.0 | 0.1 | 0.0 | 0.0 | 1.0 | 0.7 | 0.0 | 0.0 | 6.8 |
+| bedroom-c | 0.1 | 0.2 | 2.6 | 4.4 | 0.0 | 0.3 | 0.1 | 0.0 | 1.8 | 1.2 | 0.0 | 0.0 | 10.6 |
+| bedroom-a-video | 0.1 | 0.5 | 0.8 | 4.3 | 0.0 | 0.1 | 0.0 | 0.0 | 1.9 | 0.4 | 31.8 | 0.0 | 40.0 |

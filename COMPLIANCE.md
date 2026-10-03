@@ -8,7 +8,7 @@ Status values: **Done** (the artifact exists and regenerates from this repo), **
 says whether the requirement is covered, not whether its gate passes; gate results are
 given as they stand, failures included.
 
-Last updated: 2026-10-03 15:30 IST.
+Last updated: 2026-10-03 17:25 IST.
 
 **Two blockers affect many rows:** no iPhone 15 Pro has been available for capturing our own
 benchmark (rows 17-21, 31-32, 42), and the Round 1 brief with its gate table and JSON schema
@@ -37,7 +37,7 @@ ground truth (`bench/benchmarks/arkitscenes.yaml`).
 | 10 | Per-surface damage regions with class and metric extent | `src/floorplan/semantics/damage.py`, `configs/semantics.yaml` | `damage` in `plan.json`, marked on `plan.png` | Partial: placed on surfaces with metric extent; tested with a stand-in detector; OWLv2 not yet tried on real damage |
 | 11 | Concealed-damage flags with the rule that fired | `src/floorplan/semantics/rules.py`, `configs/rules.yaml` | `flags` with `rule_id` | Done (tests); real damage pending |
 | 12 | Scope line items keyed to surfaces | `src/floorplan/semantics/scope.py`, `configs/scope_catalog.yaml` | `scope` in `plan.json` | Done (tests) |
-| 13 | A confidence interval on every measurement | `src/floorplan/uncertainty/budget.py`, `src/floorplan/output/serialize.py` | Every measurement has a 90% interval or is marked not measured | Partial: holds by construction; no schema test enforces it yet |
+| 13 | A confidence interval on every measurement | `src/floorplan/uncertainty/budget.py`, `src/floorplan/output/serialize.py`, `tests/test_output_contract.py` | Every measurement has a 90% interval or is marked not measured | Done: enforced by a test over the whole written plan, damage and scope included |
 | 14 | One command per capture | `src/floorplan/cli.py` | `floorplan run <capture>` | Done |
 | 15 | JSON to the published schema | `src/floorplan/output/serialize.py` | `plan.json` (`schema: draft-1`) | Blocked: the published Round 1 schema is not in the repo |
 | 16 | Rendered plan | `src/floorplan/output/render.py` | `plan.svg`, `plan.png` | Done |
@@ -64,14 +64,14 @@ ground truth (`bench/benchmarks/arkitscenes.yaml`).
 | 27 | Photo-tier whole-property stitch: adjacency, no overlaps, footprint ±8% | `src/floorplan/stitch.py`, `bench/gates.py` | Gate row | Partial: gate implemented; no real photo set yet |
 | 28 | Photo tier: walls ±8% with calibrated intervals | `bench/gates.py` | Gate row | Partial: met on synthetic protocol photos; no real photo set yet |
 | 29 | Video tier: walls ±3% | `bench/gates.py` | Gate row | Reported: **FAIL**, 2 of 4 walls within 3% (worst +5.0%) |
-| 30 | Calibration scored at every tier | `bench/gates.py`, `src/floorplan/uncertainty/budget.py` | Coverage per tier | Partial: LiDAR **FAIL** 3/11, video **PASS** 6/7, photo not yet; calibration factors not yet fitted |
+| 30 | Calibration scored at every tier | `bench/gates.py`, `bench/calibrate.py`, `src/floorplan/uncertainty/budget.py` | Coverage per tier; factors with leave-one-room-out | Partial: LiDAR **FAIL** 6/11, video **PASS** 6/7, photo not yet; factors to be fitted on the iPhone benchmark (one public room cannot be checked out of sample) |
 
 ## Part 3 — Head-to-head
 
 | # | Requirement | File path | Artifact | Status |
 |---|---|---|---|---|
-| 31 | LiDAR tier vs a consumer app on 2 rooms; app and version named; export submitted | `bench/SESSION.md` step 6 | App exports | Blocked: no Pro iPhone yet |
-| 32 | One table, our error and theirs; beat or tie on ≥ 70% | `bench/headtohead/` | Table | Blocked: same |
+| 31 | LiDAR tier vs a consumer app on 2 rooms; app and version named; export submitted | `bench/SESSION.md` step 6, `bench/headtohead/TEMPLATE.yaml` | App exports | Blocked: no Pro iPhone yet (the table tool is ready) |
+| 32 | One table, our error and theirs; beat or tie on ≥ 70% | `bench/headtohead.py` | Table | Blocked: same (tool written and checked) |
 
 ## Part 4 — Fix loop
 
@@ -92,10 +92,10 @@ ground truth (`bench/benchmarks/arkitscenes.yaml`).
 |---|---|---|---|---|
 | 36 | Compliance matrix | `COMPLIANCE.md` | This file | In progress |
 | 37 | README to running on a fresh capture in under 15 minutes on a clean machine | `README.md` | Install, run, try without a phone | Partial: written; the clean-machine timing is still to be done |
-| 38 | Reproduction bundle; caches replay, live path runs | `scripts/fetch_*.py`, `bench/run_bench.py`, `configs/*.json` | Fetch and rerun commands | Partial: weights, samples and public data fetched by script with checksums; depth and COLMAP results cached and replayed; no single reproduce-everything command yet |
+| 38 | Reproduction bundle; caches replay, live path runs | `scripts/reproduce.py`, `scripts/fetch_*.py`, `bench/run_bench.py`, `configs/*.json` | One command: fetch, test, both benchmarks, calibration report | Done for the public and synthetic data (depth and COLMAP results replay from cache; deleting `.cache` runs live); own benchmark pending |
 | 39 | Benchmark report: gates at all three tiers, repeatability, head-to-head, timing | `reports/bench/` | `gates.md`, `gates.json` | Partial: LiDAR and video tiers on public data, timing included; photo tier, own benchmark and head-to-head pending |
-| 40 | Fix loop bundle | `fixloop/` | Rows 33-34 | Done |
-| 41 | Technical report, max 6 pages | `reports/technical_report.md` | Report | Not started |
+| 40 | Fix loop bundle | `fixloop/README.md` | Declarations, results, tags before/after, `round1.diff`, `round2.diff` | Done |
+| 41 | Technical report, max 6 pages | `reports/technical_report.md` | Report | Partial: complete draft; iPhone results to add |
 | 42 | Raw benchmark data: sensor logs, ground truth, app exports | `scripts/fetch_arkitscenes.py` (public data) | Data bundle | Blocked: no own captures yet |
 
 ## Walk-in test and constraints

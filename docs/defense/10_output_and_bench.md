@@ -56,8 +56,17 @@ Result: the root cause was right and the leaks are gone (floor-area errors +3.9 
 but the gate still failed: notches next to the dropped cells, and curtains hiding the window's
 edges.
 
-Lesson to say out loud: measure the mechanism before declaring the cause. Round 2 did, round 1
-did not.
+**Round 3.** The benchmark grew to four rooms (Apple's laser truth for the ceiling of three
+more). Ceilings: 2/12 within 1.5 cm, all low, more so in higher rooms. Declared cause: the
+iPad's depth reads about 1% short; fix: one depth-scale factor for that device, fitted on the
+four rooms; predicted 12/12. Result: 11/12, mean error -2.4 to -0.3 cm, one scan 1 mm outside;
+the interval calibration gate went from FAIL to PASS. The wall prediction was wrong: the
+outlines changed, and a check showed the walls are not thinner, so room finding sits close to
+its thresholds on these curtained scans.
+
+Lessons to say out loud: measure the mechanism before declaring the cause (round 2 did, round
+1 did not); and predict by rerunning on a copy, not by arithmetic on the answers (round 3's
+12/12 was arithmetic; the run gave 11/12).
 
 ## Likely questions
 

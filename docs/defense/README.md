@@ -65,6 +65,6 @@ gates are reported as they stand.
 | Wall not seen | sigma 15 cm (LiDAR), 25 cm (video), 40 cm (photos) | `BUDGETS` |
 | Observed wall | seen over at least 30% of its length | `OBSERVED_SHARE` |
 | Damage flat | half the box's depth points within 3 cm of a plane parallel to the surface | `damage.flat_share` |
-| LiDAR on real scans | ceiling -2.6 to -3.6 cm, spread 0.96 cm; intervals 6/11 | `reports/bench/arkitscenes` |
+| LiDAR on real scans (4 rooms, 12 scans) | ceiling -1.6 to +1.3 cm, mean -0.3 (after the iPad factor 1.00945); spread 2.1 cm; intervals 21/25 | `reports/bench/arkitscenes`, `fixloop/ROUND3_RESULT.md` |
 | Video on real clip | walls +1.7% to +5.3%; intervals 6/7 | same |
 | Drift ablation (synthetic) | footprint +0.04% on, -2.55% off; worst wall 4.2 vs 62.1 cm | `reports/bench/synthetic` |

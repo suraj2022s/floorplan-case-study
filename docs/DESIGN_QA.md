@@ -54,9 +54,11 @@ fitted on the iPhone benchmark with each room left out in turn (`bench/calibrate
 them on the single public room would only tune to it.
 
 **Your LiDAR ceiling fails the gate. Biased or unrepeatable?**
-Repeatable but biased: -3.2 cm on average, 0.96 cm spread over three scans. The bias matches
-the iPad's scale shortfall; calibration removes a consistent bias, and the iPhone benchmark
-measures the iPhone's own.
+On one room it was repeatable but biased (-3.2 cm, 0.96 cm spread). On four rooms every
+ceiling was low, more so the higher the room: the iPad reads depth about 0.9% short. Fix-loop
+round 3 corrects that for the iPad (factor 1.00945; each room left out of the fit, 11 of 12
+scans land within 1.5 cm). Now it is unbiased (mean -0.3 cm) but not repeatable to 1 cm: scans
+of one room scatter by up to 2.1 cm. The iPhone's own factor needs iPhone data.
 
 **What if the photos are not taken as the protocol says?**
 Then the room's size is reported as not measured, with the reason, instead of a number.

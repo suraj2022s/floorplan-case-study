@@ -50,7 +50,8 @@ never below 0.75, and a type with fewer than 4 points keeps 1.0. Until fitted, e
 
 | Tier | 90% intervals containing the laser's value |
 |---|---|
-| LiDAR, 3 real scans | 3/11 before the scatter, hidden and scale terms; **6/11** after (all 3 ceilings in) |
+| LiDAR, 3 real scans of one room | 3/11 before the scatter, hidden and scale terms; 6/11 after |
+| LiDAR, 12 real scans of four rooms, after round 3 | **21/25**: passes the calibration gate |
 | Video, 1 real clip | 6/7 |
 | Synthetic | 88/89 |
 
@@ -64,8 +65,9 @@ never below 0.75, and a type with fewer than 4 points keeps 1.0. Until fitted, e
 ## Likely questions
 
 - *Why quadrature?* The sources are independent; independent errors add as variances.
-- *Biased or unrepeatable ceiling?* Repeatable but biased: -3.2 cm on average, 0.96 cm spread
-  over three scans. It matches the iPad's scale shortfall; calibration removes a consistent
-  bias.
+- *Biased or unrepeatable ceiling?* Before round 3: repeatable but biased (all twelve scans
+  low). The iPad reads depth 0.9% short; a factor for that device (1.00945) removed the bias.
+  Now unbiased (mean -0.3 cm, 11/12 within 1.5 cm) but not repeatable to 1 cm (scans of one
+  room scatter up to 2.1 cm). One factor cannot remove scatter.
 - *Why not just widen everything until 90% pass?* That is what calibration does, but per type
   and checked out of sample; widening by hand on the same data would only prove the arithmetic.

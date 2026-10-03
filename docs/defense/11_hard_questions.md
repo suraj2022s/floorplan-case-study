@@ -5,10 +5,10 @@ Short, honest answers. Lead with the fact, then the evidence, then what would ch
 **Most of your gates fail. Why is this not mediocre?**
 They fail on public data from an iPad, scored exactly as the brief words them, misses and
 phantoms included; nothing was hidden or re-worded. Each failure has a measured cause: the
-ceiling is repeatable (0.96 cm spread) but biased by the iPad's 1.6% scale, which is what
-calibration fixes; openings fail because the doorway was hardly looked at in those captures;
-curtains are taken for walls. Two fix-loop rounds are documented, including the one whose
-prediction was wrong. And the pipeline refuses confident garbage: unmeasured things are
+ceiling was biased by the iPad's depth reading 0.9% short, which round 3 corrected (2/12 to
+11/12 within 1.5 cm; what is left is scatter between scans); openings fail because the doorway
+was hardly looked at in those captures; curtains are taken for walls. Three fix-loop rounds are
+documented, including the predictions that were wrong. And the pipeline refuses confident garbage: unmeasured things are
 `null`, photos taken against the protocol are "not measured", every plan says when intervals
 are uncalibrated.
 

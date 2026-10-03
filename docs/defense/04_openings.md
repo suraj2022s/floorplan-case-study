@@ -42,7 +42,7 @@ between its jamb faces.
 - Jamb faces give centimetre widths from a fit; the depth image edge is a few centimetres
   ragged at 256 x 192.
 
-## Weak spots (the gate fails: 0 of 11 on the public scans)
+## Weak spots (the gate fails: 1 of 10 on the public scans)
 
 - The public scans' doorway was hardly looked at (mostly unseen, partly blocked by the open
   leaf), so it was missed in all three. The protocol now asks to show each doorway for 2 s

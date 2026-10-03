@@ -1,0 +1,103 @@
+diff --git a/src/floorplan/geometry/layout.py b/src/floorplan/geometry/layout.py
+index 57e1ea8..397655b 100644
+--- a/src/floorplan/geometry/layout.py
++++ b/src/floorplan/geometry/layout.py
+@@ -49,6 +49,11 @@ class LayoutConfig:
+     max_jog: float = 0.12  # metres; a shorter step between two parallel walls is noise
+     keep_unentered: bool = False  # report rooms that were only seen through a doorway
+     furniture_area: float = 2.5  # m2; smaller regions nobody walked into are furniture
++    opaque_seen: float = 1.0  # metres of full-height wall that make a wall line opaque
++    opaque_rms: float = 0.015  # metres; and its scatter must be below this (not a curtain)
++    opaque_span: float = 0.6  # share of the room's extent along it the wall must span
++    through_share: float = 0.25  # floor seen in a cell behind a wall: it was seen through it
++    entered_share: float = 0.2  # share of the path that makes a space behind a wall a room
+     margin: float = 0.6  # metres added around the wall points for the working area
+     ceiling_min_height: float = 1.9
+     floor_max_height: float = 1.2
+@@ -312,9 +317,14 @@ def find_rooms(
+         if not merged_any:
+             break
+ 
++    # 5b. a wall that was clearly seen is opaque: floor beyond it was seen through an opening
++    groups_of_cells = _split_behind_walls(
++        list(members_of().values()), cells, lines, share, camera_xy, config
++    )
++
+     # 6. one polygon per room
+     rooms: list[Room] = []
+-    for cell_ids in members_of().values():
++    for cell_ids in groups_of_cells:
+         region = unary_union([cells[k] for k in cell_ids])
+         if region.geom_type == "MultiPolygon":
+             region = max(region.geoms, key=lambda g: g.area)
+@@ -354,6 +364,70 @@ def find_rooms(
+     return rooms
+ 
+ 
++def _split_behind_walls(
++    groups: list[list[int]],
++    cells: list[Polygon],
++    lines: list[WallLine],
++    share: np.ndarray,
++    camera_xy: np.ndarray,
++    config: LayoutConfig,
++) -> list[list[int]]:
++    """Take out of each room the space it saw through an opening in one of its walls.
++
++    A wall seen to full height over a good length, with little scatter, is opaque. Floor
++    behind it, within its length, was seen through an opening in it: the hall through the
++    door, the bay and the garden through a window. Cells there do not belong to the room in
++    front. If the phone spent a real share of the walk there, they are a room of their own;
++    otherwise they are dropped. Cells behind the wall where no floor was seen (the footprint
++    of a wardrobe against it) stay. A line that spans only a small part of the room, like a
++    free-standing bookcase, is not treated as a wall here.
++    """
++    strong = [
++        line
++        for line in lines
++        if line.supported_length >= config.opaque_seen and line.rms <= config.opaque_rms
++    ]
++    if not strong or len(camera_xy) == 0:
++        return groups
++    centres = np.array([cell.representative_point().coords[0] for cell in cells])
++    path = shapely.points(camera_xy)
++    walked = np.array([int(shapely.contains(cell, path).sum()) for cell in cells])
++    total = len(camera_xy)
++
++    done: list[list[int]] = []
++    queue = [list(group) for group in groups]
++    while queue:
++        group = queue.pop()
++        corners = np.concatenate([np.asarray(cells[k].exterior.coords) for k in group])
++        for line in strong:
++            seen = (line.supported_bins + 0.5) * SUPPORT_BIN
++            span = float(np.ptp(line.along(corners)))
++            if line.supported_length < config.opaque_span * span:
++                continue
++            along = line.along(centres[group])
++            depth = line.distance(centres[group])
++            # only a wall of this room counts: one seen from cells of it the phone walked in
++            in_front = [k for k, d in zip(group, depth, strict=True) if d > 0]
++            if walked[in_front].sum() == 0:
++                continue
++            behind = [
++                k
++                for k, a, d in zip(group, along, depth, strict=True)
++                if d < 0
++                and seen.min() - 0.3 <= a <= seen.max() + 0.3
++                and share[k] >= config.through_share
++            ]
++            if not behind:
++                continue
++            queue.append([k for k in group if k not in behind])
++            if walked[behind].sum() >= config.entered_share * total:
++                queue.append(behind)  # a space of its own, walked into
++            break
++        else:
++            done.append(group)
++    return done
++
++
+ def _remove_jogs(polygon: Polygon, max_jog: float) -> Polygon:
+     """Straighten a wall that is drawn as two parallel pieces joined by a tiny step.
+ 

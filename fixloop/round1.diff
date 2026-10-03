@@ -1,0 +1,96 @@
+diff --git a/src/floorplan/geometry/layout.py b/src/floorplan/geometry/layout.py
+index 0467734..57e1ea8 100644
+--- a/src/floorplan/geometry/layout.py
++++ b/src/floorplan/geometry/layout.py
+@@ -34,7 +34,7 @@ from shapely.ops import polygonize, unary_union
+ from shapely.strtree import STRtree
+ 
+ from floorplan.geometry.cloud import Cloud
+-from floorplan.geometry.planes import Level, WallLine, refit_stretch
++from floorplan.geometry.planes import SUPPORT_BIN, Level, WallLine, refit_stretch
+ 
+ 
+ @dataclass(frozen=True)
+@@ -43,6 +43,7 @@ class LayoutConfig:
+     inside_share: float = 0.5  # share of a cell that must show evidence of being inside
+     facing_length: float = 0.30  # metres of wall looking into a cell that make it inside
+     wall_share: float = 0.15  # share of a border that must be wall to separate two rooms
++    opening_reach: float = 3.0  # metres; wall within this on both sides makes a gap an opening
+     min_shared: float = 0.05  # metres; shorter borders between cells are ignored
+     min_room_area: float = 1.0  # m2
+     max_jog: float = 0.12  # metres; a shorter step between two parallel walls is noise
+@@ -160,6 +161,23 @@ def _coverage(a: np.ndarray, b: np.ndarray, line: WallLine | None) -> float:
+     return line.coverage(float(line.along(a)[0]), float(line.along(b)[0]))
+ 
+ 
++def _gap_in_wall(a: np.ndarray, b: np.ndarray, line: WallLine | None, reach: float) -> bool:
++    """Whether the stretch a-b of a wall line is a gap in a wall: an opening.
++
++    It is when real wall was seen on the line on both sides of the stretch, within `reach`:
++    a doorway, a window or a passage has wall to its left and to its right. The extension
++    of a line beyond the end of its wall (across the open floor of an L-shaped room, say)
++    has wall on one side only, and is not a gap.
++    """
++    if line is None or len(line.supported_bins) == 0:
++        return False
++    t0, t1 = sorted((float(line.along(a)[0]), float(line.along(b)[0])))
++    seen = (line.supported_bins + 0.5) * SUPPORT_BIN
++    before = np.any((seen <= t0 + SUPPORT_BIN) & (seen >= t0 - reach))
++    after = np.any((seen >= t1 - SUPPORT_BIN) & (seen <= t1 + reach))
++    return bool(before and after)
++
++
+ def _segments(geometry) -> list[tuple[np.ndarray, np.ndarray]]:
+     """Straight pieces of a (multi)line geometry as endpoint pairs."""
+     if geometry.is_empty:
+@@ -219,9 +237,11 @@ def find_rooms(
+             cutters.append(clipped)
+     cells = [cell for cell in polygonize(unary_union(cutters)) if cell.area > 1e-6]
+ 
+-    # 2. borders between neighbouring cells, each with the wall line it lies on
++    # 2. borders between neighbouring cells, each with the wall line it lies on, and whether
++    #    it is a gap in a wall (an opening) rather than open floor
+     tree = STRtree(cells)
+     borders: list[tuple[int, int, float, float, int | None]] = []  # i, j, length, coverage, line
++    gaps: list[bool] = []
+     faced = np.zeros(len(cells))  # metres of wall face looking into each cell
+     for i, cell in enumerate(cells):
+         for j in tree.query(cell, predicate="touches"):
+@@ -233,8 +253,10 @@ def find_rooms(
+                 if length < config.min_shared:
+                     continue
+                 index = _line_of(a, b, lines)
+-                coverage = _coverage(a, b, None if index is None else lines[index])
++                line = None if index is None else lines[index]
++                coverage = _coverage(a, b, line)
+                 borders.append((i, j, length, coverage, index))
++                gaps.append(_gap_in_wall(a, b, line, config.opening_reach))
+                 if index is not None and coverage > 0:
+                     line = lines[index]
+                     side_i = line.distance(np.array(cells[i].representative_point().coords[0]))[0]
+@@ -246,10 +268,11 @@ def find_rooms(
+     on_border = np.array([cell.boundary.intersects(border.exterior) for cell in cells])
+     inside = ((share >= config.inside_share) | (faced >= config.facing_length)) & ~on_border
+ 
+-    # 4. glue inside cells across borders that carry no wall
++    # 4. glue inside cells across borders that carry no wall. A gap in a wall is not such a
++    #    border: it is an opening, and the space seen through it is another space
+     groups = _UnionFind([i for i in range(len(cells)) if inside[i]])
+-    for i, j, _, coverage, _ in borders:
+-        if inside[i] and inside[j] and coverage < config.wall_share:
++    for (i, j, _, coverage, _), gap in zip(borders, gaps, strict=True):
++        if inside[i] and inside[j] and coverage < config.wall_share and not gap:
+             groups.union(i, j)
+ 
+     def members_of() -> dict[int, list[int]]:
+@@ -274,8 +297,8 @@ def find_rooms(
+             if area >= config.furniture_area or entered(cell_ids):
+                 continue
+             shared: dict[int, float] = {}
+-            for i, j, length, _, _ in borders:
+-                if not (inside[i] and inside[j]):
++            for (i, j, length, _, _), gap in zip(borders, gaps, strict=True):
++                if not (inside[i] and inside[j]) or gap:
+                     continue
+                 ri, rj = groups.find(i), groups.find(j)
+                 if ri == root and rj != root:

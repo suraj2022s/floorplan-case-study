@@ -250,18 +250,30 @@ def _own_walls(walls: list[WallLine]) -> list[WallLine]:
 
     Through an open door a photo also shows walls of the next room. Seen from this room
     they are behind one of its own walls: behind the side wall the door is in, or behind
-    the far wall. A wall most of whose points are behind another wall's plane is therefore
-    not a wall of this room.
+    the far wall. A wall most of whose points are behind another wall is therefore not a
+    wall of this room.
+
+    Two details matter, both found on a corridor photographed from its end: a wall hides
+    only what lies behind its own extent, not behind the whole infinite line through it; and
+    only a wall of this room can hide another. Walls are taken nearest first, so a stretch of
+    the next room's wall seen through a side door is dropped before it can "hide" the
+    corridor's far end wall.
     """
-    kept = []
-    for wall in walls:
-        hidden = any(
-            other is not wall and np.mean(other.distance(wall.points_xy) < -0.08) > 0.7
-            for other in walls
-        )
-        if not hidden:
+
+    def behind(wall: WallLine, other: WallLine) -> bool:
+        along = other.along(wall.points_xy)
+        span = other.points_t
+        inside = (along >= span.min() - 0.10) & (along <= span.max() + 0.10)
+        return float(np.mean(inside & (other.distance(wall.points_xy) < -0.08))) > 0.7
+
+    nearest_first = sorted(
+        walls, key=lambda wall: float(np.median(np.linalg.norm(wall.points_xy, axis=1)))
+    )
+    kept: list[WallLine] = []
+    for wall in nearest_first:
+        if not any(behind(wall, other) for other in kept):
             kept.append(wall)
-    return kept
+    return [wall for wall in walls if any(wall is k for k in kept)]
 
 
 def _turn_wall(wall: WallLine, R: np.ndarray) -> WallLine:

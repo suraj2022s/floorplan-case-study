@@ -379,10 +379,7 @@ def _measure(
         above = slice(r1 + 1, min(wall.hit.shape[0], r1 + 1 + max(3, int(0.3 / config.cell))))
         seen_above = (wall.hit + wall.open + wall.blocked + wall.void)[above, c0 : c1 + 1] > 0
         top_seen = bool(seen_above.size) and float(seen_above.mean()) >= 0.5
-        if top_seen or sill > config.door_max_sill:
-            kind = _kind(sill, v1 - sill, v1, wall.height, config)
-        else:
-            kind = "passage" if (u1 - u0) > PASSAGE_MIN_WIDTH else "door"
+        kind = _kind(sill, v1 - sill, v1, wall.height, config, top_seen, u1 - u0)
 
         middle_u = (u0 + u1) / 2
         openings.append(
@@ -410,9 +407,21 @@ PASSAGE_MIN_WIDTH = 1.6  # metres; a floor-standing opening wider than a double 
 
 
 def _kind(
-    sill: float, height: float, top: float, wall_height: float | None, config: OpeningConfig
+    sill: float,
+    height: float,
+    top: float,
+    wall_height: float | None,
+    config: OpeningConfig,
+    top_seen: bool = True,
+    width: float = 0.0,
 ) -> str:
-    """Door, window or passage, from where the opening sits in the wall."""
+    """Door, window or passage, from where the opening sits in the wall.
+
+    An opening standing on the floor whose top was never seen has no known height, so its
+    height cannot make it a window: it is a door, or a passage if wider than a double door.
+    """
+    if not top_seen and sill <= config.door_max_sill:
+        return "passage" if width > PASSAGE_MIN_WIDTH else "door"
     if sill > config.door_max_sill or height < config.door_min_height:
         return "window"  # includes a low hole that reaches the floor: reported, not as a door
     if wall_height is not None and top >= wall_height - 0.10:
@@ -560,7 +569,8 @@ def _merge_twins(openings: list[Opening], config: OpeningConfig) -> list[Opening
             top = max(a.sill + a.height, b.sill + b.height)
             a.sill = min(a.sill, b.sill)
             a.height = float(top - a.sill)
-            a.kind = _kind(a.sill, a.height, top, None, config)
+            a.top_seen = a.top_seen or b.top_seen
+            a.kind = _kind(a.sill, a.height, top, None, config, a.top_seen, a.width)
             a.method = a.method if a.method == b.method else "mixed"
             if "seen_through" in (a.evidence, b.evidence):
                 a.evidence = "seen_through"

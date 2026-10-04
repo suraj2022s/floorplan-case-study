@@ -1,8 +1,8 @@
-# Head-to-head stand-in: Pointorama on a public bedroom
+# Head-to-head stand-in: Pointorama on two public bedrooms
 
 **This is not the brief's head-to-head.** The brief asks for a consumer scanning app on two of
 our own benchmark rooms. Those apps (magicplan, Polycam) scan live on a phone, and no Pro
-iPhone was available. What was done instead, on 4 October 2026, between 15:20 and 15:45 IST:
+iPhone was available. What was done instead, on 4 October 2026, between 15:20 and 16:52 IST:
 
 1. `bench/headtohead/export_cloud.py` wrote the raw point clouds of ARKitScenes scans 47333462
    (bedroom 467138) and 42897672 (bedroom 423441): the iPad's own depth on its own poses, no

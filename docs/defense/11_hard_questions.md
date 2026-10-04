@@ -57,11 +57,6 @@ doorways the depth missed; when a curtain-like surface is in front of a seen wal
 behind it; report a second ceiling level per room; solve photo positions from overlap instead
 of the protocol.
 
-**Did you look at other candidates' public submissions?**
-Yes, after our pipeline existed, to compare: two were run on the same public scans outside
-this repository. Neither produced a better plan; nothing of theirs is used here. The journal
-records it.
-
 ## Walk-in checklist
 
 1. `uv sync --extra learned` done, weights fetched (`scripts/fetch_weights.py`), GPU free.

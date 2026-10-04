@@ -24,7 +24,7 @@ failures included.
 | Video tier | walls +1.7% to +5.1% (gate ±3%: 2 of 4); intervals 6 of 7 | same |
 | Openings | 1 of 10 within 2 cm (FAIL: curtains, an unseen doorway) | same |
 | Drift (synthetic flat) | footprint +0.04% with correction, -2.55% without | [reports/bench/synthetic/gates.md](reports/bench/synthetic/gates.md) |
-| Assessors' sample data | all three run; a false ceiling found; five faults found and fixed; one real crack missed | [reports/samples/](reports/samples/README.md) |
+| Assessors' sample data | LiDAR: all three run, a false ceiling found, five faults found and fixed, one real crack missed. Video tier on their videos: fails (6-23% of frames tracked on fast turns) and says so | [reports/samples/](reports/samples/README.md) |
 | Fix loop | three rounds, each declared before its fix; round 3 removed the iPad's depth bias | [fixloop/](fixloop/README.md) |
 | Head-to-head (stand-in) | against Pointorama's automatic room on two public bedrooms: 4 of 5 dimensions beaten or tied (80%; 60% with our depth correction off); not a phone app | [bench/headtohead/pointorama/](bench/headtohead/pointorama/README.md) |
 | Not done | own iPhone benchmark, and the head-to-head against a phone app on our own rooms (no iPhone) | [COMPLIANCE.md](COMPLIANCE.md) |

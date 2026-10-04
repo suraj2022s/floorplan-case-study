@@ -100,7 +100,7 @@ There is no tape truth, so each video plan is compared with the LiDAR plan of th
 video alone the camera tracker (COLMAP) loses the camera on the turns and splits the walk into
 pieces it cannot join, and only the largest piece is measured. The plans now say so in their
 first warning ("the camera could be followed for only 23% of the clip ... the plan covers
-only that part of the walk"); before that check was added (commit after `9fa65d4`), the
+only that part of the walk"); before that check was added (commit `7889c22`), the
 floor-only plan reported a 1.25 m² room for a whole floor without saying why. On the
 benchmark's real clip, walked slowly, the tracker placed 200 of 241 frames (83%). Our capture
 protocol asks for a slow walk and smooth turns for this reason; whether that is enough on an

@@ -20,7 +20,7 @@ interval or marked *not measured*.
 | Tier | On real data, against the laser | Gate status there |
 |---|---|---|
 | LiDAR | ceiling -1.6 to +1.3 cm on twelve scans of four rooms (mean -0.3 cm); walls of the scored bedroom -20 to +2 cm | ceiling FAIL 11/12 (unbiased, spread 2.1 cm), openings FAIL 1/10, intervals PASS 21/25 |
-| Video | walls +1.7% to +5.3%, ceiling +7.0%, on one 60 s clip | walls ±3%: 2 of 4; intervals PASS 6/7 |
+| Video | walls +1.7% to +5.1%, ceiling +7.0%, on one 60 s clip | walls ±3%: 2 of 4; intervals PASS 6/7 |
 | Photos | not measured on real protocol photos yet; within 1-2% on synthetic ones | not evaluated |
 
 The largest errors have identified causes: the iPad's LiDAR read depth about 0.9% short

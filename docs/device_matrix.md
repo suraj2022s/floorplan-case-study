@@ -43,7 +43,7 @@ the iPhone numbers come from the benchmark session.
 
 | | LiDAR | Video | Photos |
 |---|---|---|---|
-| Wall length error | -20 to +2 cm on the bedroom's two scans that can be scored (curtains taken for a wall; outlines change from scan to scan) | +1.7% to +5.3% on one clip (the depth model's scale bias) | within 1-2% on synthetic protocol photos; real photos: not measured yet |
+| Wall length error | -20 to +2 cm on the bedroom's two scans that can be scored (curtains taken for a wall; outlines change from scan to scan) | +1.7% to +5.1% on one clip (the depth model's scale bias) | within 1-2% on synthetic protocol photos; real photos: not measured yet |
 | Ceiling height error | -1.6 to +1.3 cm on twelve scans of four rooms (mean -0.3), after correcting the iPad's 0.9% depth shortfall; repeat spread up to 2.1 cm | +18.7 cm (+7%) | within 4 cm on synthetic photos |
 | Openings within 2 cm | 1 of 10 (curtains hide a window's edges; leftover notches) | 0 of 2 | not measured |
 | 90% intervals that contain the truth | 21 of 25 (passes the calibration gate) | 6 of 7 | not measured |

@@ -38,7 +38,7 @@ replays the same poses.
 
 ## Evidence
 
-On that clip against the laser: walls +1.7% to +5.3% (2 of 4 within the 3% gate), ceiling
+On that clip against the laser: walls +1.7% to +5.1% (2 of 4 within the 3% gate), ceiling
 +18.7 cm (+7%), intervals 6/7 contain the truth. Run time about 4 min for 60 s of video.
 
 ## Weak spots

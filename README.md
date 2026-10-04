@@ -10,6 +10,24 @@ This is a submission for the Applied AI Engineer case study; the brief is in
 [spec/case_study.md](spec/case_study.md). [COMPLIANCE.md](COMPLIANCE.md) maps every
 requirement to where it is met and how honestly.
 
+## Results at a glance
+
+No iPhone was available, so accuracy is measured on public data with laser ground truth
+(Apple's ARKitScenes: four rooms, twelve iPad LiDAR scans, one video) and robustness on the
+assessors' three iPhone recordings. Gates are reported exactly as the brief words them,
+failures included.
+
+| | Result | Where |
+|---|---|---|
+| LiDAR ceiling | 11 of 12 scans within 1.5 cm, mean -0.3 cm (gate needs all: FAIL by 1 mm on one) | [fixloop/ROUND3_RESULT.md](fixloop/ROUND3_RESULT.md) |
+| LiDAR intervals | 21 of 25 contain the laser's value (calibration gate PASS) | [reports/bench/arkitscenes/gates.md](reports/bench/arkitscenes/gates.md) |
+| Video tier | walls +1.7% to +5.1% (gate ±3%: 2 of 4); intervals 6 of 7 | same |
+| Openings | 1 of 10 within 2 cm (FAIL: curtains, an unseen doorway) | same |
+| Drift (synthetic flat) | footprint +0.04% with correction, -2.55% without | [reports/bench/synthetic/gates.md](reports/bench/synthetic/gates.md) |
+| Assessors' sample data | all three run; a false ceiling found; five faults found and fixed; one real crack missed | [reports/samples/](reports/samples/README.md) |
+| Fix loop | three rounds, each declared before its fix; round 3 removed the iPad's depth bias | [fixloop/](fixloop/README.md) |
+| Not done | own iPhone benchmark and consumer-app head-to-head (no iPhone) | [COMPLIANCE.md](COMPLIANCE.md) |
+
 ## Install (about 5 GB of downloads; not yet timed on a clean machine)
 
 Needs [uv](https://docs.astral.sh/uv/) and Git. Developed and tested on Windows 11 (Python

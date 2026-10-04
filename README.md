@@ -26,7 +26,7 @@ failures included.
 | Drift (synthetic flat) | footprint +0.04% with correction, -2.55% without | [reports/bench/synthetic/gates.md](reports/bench/synthetic/gates.md) |
 | Assessors' sample data | all three run; a false ceiling found; five faults found and fixed; one real crack missed | [reports/samples/](reports/samples/README.md) |
 | Fix loop | three rounds, each declared before its fix; round 3 removed the iPad's depth bias | [fixloop/](fixloop/README.md) |
-| Head-to-head (stand-in) | against Pointorama's automatic room on a public bedroom: 3 of 4 dimensions beaten or tied (75%); one room, not a phone app | [bench/headtohead/pointorama/](bench/headtohead/pointorama/README.md) |
+| Head-to-head (stand-in) | against Pointorama's automatic room on two public bedrooms: 4 of 5 dimensions beaten or tied (80%; 60% with our depth correction off); not a phone app | [bench/headtohead/pointorama/](bench/headtohead/pointorama/README.md) |
 | Not done | own iPhone benchmark, and the head-to-head against a phone app on our own rooms (no iPhone) | [COMPLIANCE.md](COMPLIANCE.md) |
 
 ## Install (about 5 GB of downloads for all tiers)

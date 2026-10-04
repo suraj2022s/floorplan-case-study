@@ -8,7 +8,7 @@ Status values: **Done** (the artifact exists and regenerates from this repo), **
 says whether the requirement is covered, not whether its gate passes; gate results are
 given as they stand, failures included.
 
-Last updated: 2026-10-04 15:51 IST.
+Last updated: 2026-10-04 16:56 IST.
 
 **Two gaps affect many rows:** no iPhone 15 Pro has been available for capturing our own
 benchmark (rows 17-21, 31-32, 42), and the assessment supplied no Round 1 gate table or JSON
@@ -72,8 +72,8 @@ scanned three times by an iPad Pro's LiDAR, with laser ground truth
 
 | # | Requirement | File path | Artifact | Status |
 |---|---|---|---|---|
-| 31 | LiDAR tier vs a consumer app on 2 rooms; app and version named; export submitted | `bench/headtohead/pointorama/`, `bench/headtohead/export_cloud.py`, `bench/SESSION.md` step 6 | Pointorama DXF export and room panel | Partial (stand-in): no Pro iPhone, and consumer apps scan only live. One public bedroom's raw iPad cloud given to Pointorama (web, free trial, automatic floor and room tools, no edits); one room, not two; own rooms pending |
-| 32 | One table, our error and theirs; beat or tie on ≥ 70% | `bench/headtohead/pointorama.py`, `bench/headtohead.py` | Table | Partial (stand-in): beaten or tied on 3 of 4 shared dimensions (75%) against the laser, also with our depth correction switched off; the tool wins on width by 7 mm; one room only |
+| 31 | LiDAR tier vs a consumer app on 2 rooms; app and version named; export submitted | `bench/headtohead/pointorama/`, `bench/headtohead/export_cloud.py`, `bench/SESSION.md` step 6 | Pointorama DXF exports and room panels | Partial (stand-in): no Pro iPhone, and consumer apps scan only live. Two public bedrooms' raw iPad clouds given to Pointorama (web, free trial, automatic floor and room tools, no edits); a point-cloud tool, not a phone app; own rooms pending |
+| 32 | One table, our error and theirs; beat or tie on ≥ 70% | `bench/headtohead/pointorama.py`, `bench/headtohead.py` | Table | Partial (stand-in): beaten or tied on 4 of 5 shared dimensions with laser truth (80%) as shipped, 3 of 5 (60%) with our depth correction switched off; the tool wins on one width by 7 mm |
 
 ## Part 4 — Fix loop
 

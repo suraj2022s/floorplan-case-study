@@ -234,3 +234,7 @@ Short, dated notes on what was done and why. Times are IST.
   room, 24 walls, 9.92 m². Its DXF scored against the laser, the same measures on both outlines:
   beaten or tied on 3 of 4 dimensions (75%), also with our iPad depth factor switched off; it
   wins on width by 7 mm. A stand-in on one public room, written up as such.
+- **16:15-16:56** Second bedroom (423441) through Pointorama the same way: room height 2.33 m
+  against the laser's 2.334 m. Over both rooms, beaten or tied on 4 of 5 dimensions with laser
+  truth (80%) as shipped, 3 of 5 (60%) with the iPad depth correction off. The second room's
+  width, length and area are shown but not scored: its laser truth is the ceiling only.

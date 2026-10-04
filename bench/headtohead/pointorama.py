@@ -34,7 +34,7 @@ from floorplan.pipeline import config_for, run  # noqa: E402
 HERE = ROOT / "bench" / "headtohead" / "pointorama"
 ROOMS = [  # capture given to the tool, its DXF, its "Room height" as its room panel shows it
     {"name": "bedroom 467138", "capture": "47333462", "visit": "467138", "tool_ceiling": 2.59},
-    {"name": "bedroom 423441", "capture": "42897672", "visit": "423441", "tool_ceiling": None},
+    {"name": "bedroom 423441", "capture": "42897672", "visit": "423441", "tool_ceiling": 2.33},
 ]
 TIE = 0.005  # metres: errors this close are a tie (the resolution an app reports to)
 KEYS = ("width", "length", "floor area", "ceiling height")

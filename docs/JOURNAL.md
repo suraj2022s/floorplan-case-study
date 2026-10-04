@@ -244,3 +244,8 @@ Short, dated notes on what was done and why. Times are IST.
   recordings turn fast, for LiDAR; the benchmark's slowly walked clip had 83% placed. A plan
   now warns when less than half of a clip could be followed (it had said nothing). No
   measurement changed; 55 tests pass.
+- **17:21-17:35** Tried sampling the sample video at 8 frames a second instead of 4, without
+  changing the repo: single_room placed 63 of 286 frames (22%, against 17%), still in 7 pieces,
+  and the plan stayed one 2.32 m² room. Frame rate is not the cause; joining the pieces would
+  need bridging them with the depth model, too big to build and verify before the deadline.
+  Not shipped; the warning added at 17:19 stays.

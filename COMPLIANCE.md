@@ -8,7 +8,7 @@ Status values: **Done** (the artifact exists and regenerates from this repo), **
 says whether the requirement is covered, not whether its gate passes; gate results are
 given as they stand, failures included.
 
-Last updated: 2026-10-04 15:50 IST.
+Last updated: 2026-10-04 15:51 IST.
 
 **Two gaps affect many rows:** no iPhone 15 Pro has been available for capturing our own
 benchmark (rows 17-21, 31-32, 42), and the assessment supplied no Round 1 gate table or JSON
@@ -93,7 +93,7 @@ scanned three times by an iPad Pro's LiDAR, with laser ground truth
 | # | Requirement | File path | Artifact | Status |
 |---|---|---|---|---|
 | 36 | Compliance matrix | `COMPLIANCE.md` | This file | In progress |
-| 37 | README to running on a fresh capture in under 15 minutes on a clean machine | `README.md` | Install, run, try without a phone | Partial: written; the clean-machine timing is still to be done |
+| 37 | README to running on a fresh capture in under 15 minutes on a clean machine | `README.md` | Install, run, try without a phone | Partial: from a fresh clone (4 October), `uv sync` and a LiDAR run on an assessors' recording took 11 min, with the same plan as in development; the full install for the photo and video tiers (learned extra, 2.3 GB of weights) not yet timed fresh |
 | 38 | Reproduction bundle; caches replay, live path runs | `scripts/reproduce.py`, `scripts/fetch_*.py`, `bench/run_bench.py`, `configs/*.json` | One command: fetch, test, both benchmarks, calibration report | Done for the public and synthetic data (depth and COLMAP results replay from cache; deleting `.cache` runs live); own benchmark pending |
 | 39 | Benchmark report: gates at all three tiers, repeatability, head-to-head, timing | `reports/bench/` | `gates.md`, `gates.json` | Partial: LiDAR (four rooms, twelve scans) and video (one clip) tiers on public data, repeatability and timing included; photo tier, own benchmark and head-to-head pending |
 | 40 | Fix loop bundle | `fixloop/README.md` | Declarations, results, tags before/after, `round1.diff`, `round2.diff` | Done |

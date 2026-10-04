@@ -29,7 +29,7 @@ failures included.
 | Head-to-head (stand-in) | against Pointorama's automatic room on a public bedroom: 3 of 4 dimensions beaten or tied (75%); one room, not a phone app | [bench/headtohead/pointorama/](bench/headtohead/pointorama/README.md) |
 | Not done | own iPhone benchmark, and the head-to-head against a phone app on our own rooms (no iPhone) | [COMPLIANCE.md](COMPLIANCE.md) |
 
-## Install (about 5 GB of downloads; not yet timed on a clean machine)
+## Install (about 5 GB of downloads for all tiers)
 
 Needs [uv](https://docs.astral.sh/uv/) and Git. Developed and tested on Windows 11 (Python
 3.12, NVIDIA RTX 3050 Ti with 4 GB); the dependencies have builds for Linux and macOS, but
@@ -43,7 +43,11 @@ uv sync --extra learned                      # Python 3.12, PyTorch, MoGe-2, COL
 uv run python scripts/fetch_weights.py       # model weights, SHA-256 checked (2.3 GB)
 ```
 
-The LiDAR tier alone needs neither of the heavy steps: `uv sync` is enough for it.
+The LiDAR tier alone needs neither of the heavy steps: `uv sync` is enough for it. Checked on
+4 October from a fresh clone on the development laptop: clone, `uv sync` and a run on one of
+the assessors' recordings took 11 minutes, most of it downloading open3d; the same plan came
+out as in the development environment. The full install (learned extra and weights) has not
+been timed from a fresh clone.
 
 ## Run
 

@@ -192,12 +192,6 @@ Short, dated notes on what was done and why. Times are IST.
 
 ## 2026-10-04 (Sun)
 
-- **23:52 (Sat)-00:05** Surveyed 55 public repositories of other candidates for this brief (GitHub
-  API, read-only, nothing used) to compare. Three things came back that concern our own work:
-  their whole-flat runs of the sample scan 1a8384c3f6 report 48-51 m² where we report 41.3;
-  one write-up points at a real hairline crack in the sample single_room bathroom, which we
-  had missed and called undamaged; and several calibrated the iPad depth bias on more
-  ARKitScenes rooms, where we stopped at one room.
 - **00:55** A room walked into was dropped: space behind a seen wall was kept as a room only if
   20% of the whole walk was in it, a share set on one-bedroom scans. Now 1.5 m of walk inside
   it (a real room had 2.8 m, the bedroom's hall seen from its door 0.8 m). 1a8384c3f6: 41.3

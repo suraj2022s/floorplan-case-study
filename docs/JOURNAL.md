@@ -230,3 +230,7 @@ Short, dated notes on what was done and why. Times are IST.
   2.64 m); its automatic room step left a polygon to finish by hand, so it was stopped and no
   number is reported. README gains a results-at-a-glance table; the video wall errors quoted
   in five documents are corrected to the current run (+1.7% to +5.1%).
+- **15:42-15:50** The Pointorama room step did finish (a second Enter closed its outline): one
+  room, 24 walls, 9.92 m². Its DXF scored against the laser, the same measures on both outlines:
+  beaten or tied on 3 of 4 dimensions (75%), also with our iPad depth factor switched off; it
+  wins on width by 7 mm. A stand-in on one public room, written up as such.

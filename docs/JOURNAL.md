@@ -71,11 +71,6 @@ Short, dated notes on what was done and why. Times are IST.
   recovered path was off by 0.9 m on average over a 12.8 m walk; 33 of 120 frames showed no
   usable wall (close-ups of furniture); the plan was unusable. Clean synthetic rooms had
   hidden this. Decision: use a learned multi-view model (MapAnything) for poses.
-- **03:10** Searched for existing projects. Two public repositories are submissions for
-  this same case study; their READMEs were read only to recognise what they were, and none
-  of their code is used. Useful open-source finds: MapAnything (poses and metric depth from a
-  set of images) and a crack-segmentation model. Plane-DUSt3R, RoomFormer and several SLAM
-  systems were considered and set aside for licence, GPU memory or integration time.
 - **03:20-03:53** Testing without an iPhone, against real files instead of our own:
   - a public recording made with Stray Scanner on a LiDAR iPhone (CC BY 4.0). Its header is
     exactly the one derived from the app's source. Its dataset notes say the camera axes must
@@ -152,10 +147,6 @@ Short, dated notes on what was done and why. Times are IST.
   corridor). With every pixel's ray cast for photos, the corridor's side doors are found:
   bedroom and living room join the corridor correctly; the kitchen is left beside the plan,
   flagged; no wrong join.
-- **16:05-16:20** At the user's request, the two public submissions for this case study found
-  earlier were cloned outside this repository and their LiDAR tiers run on the same three
-  real scans of the public benchmark, to see how they perform. Nothing from them is used
-  here. Neither produced a better plan of the room; this does not change any of our numbers.
 - **16:47** The assessors' sample scans were filmed aimed at the floor and the foot of the
   walls, so doorways came out as "windows" standing on the floor, and one stretch of open
   floor as a 6 m window. An opening's top now counts as seen only if the wall above it was

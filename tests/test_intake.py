@@ -110,3 +110,15 @@ def test_an_empty_folder_is_an_error_a_person_can_act_on(tmp_path):
     with pytest.raises(CaptureNotFound, match="not a LiDAR recording"):
         _touch(tmp_path / "walk", "clip.mov")
         find_capture(tmp_path / "walk", tier="lidar")
+
+
+def test_a_clip_followed_only_in_part_says_so():
+    from floorplan.cli import partial_track_warning
+
+    # the assessors' floor_only recording: 82 of 350 frames placed, in 18 pieces
+    warning = partial_track_warning(
+        {"frames_sampled": 350, "frames_placed": 82, "reconstructions": [74] + [10] * 17}
+    )
+    assert warning is not None and "23%" in warning and "18 pieces" in warning
+    # the benchmark clip: 200 of 241 placed, no warning
+    assert partial_track_warning({"frames_sampled": 241, "frames_placed": 200}) is None

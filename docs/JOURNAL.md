@@ -238,3 +238,9 @@ Short, dated notes on what was done and why. Times are IST.
   against the laser's 2.334 m. Over both rooms, beaten or tied on 4 of 5 dimensions with laser
   truth (80%) as shipped, 3 of 5 (60%) with the iPad depth correction off. The second room's
   width, length and area are shown but not scored: its laser truth is the ceiling only.
+- **17:06-17:19** The video tier had never been run on the assessors' recordings (only the LiDAR
+  tier was). Run now on their three iPhone videos: the camera tracker places 6-23% of the
+  frames and each plan is one small room, against 15-49 m² from LiDAR on the same walks. The
+  recordings turn fast, for LiDAR; the benchmark's slowly walked clip had 83% placed. A plan
+  now warns when less than half of a clip could be followed (it had said nothing). No
+  measurement changed; 55 tests pass.

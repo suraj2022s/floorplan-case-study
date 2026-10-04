@@ -1,0 +1,700 @@
+{
+  "schema_version": "1.0",
+  "capture": {
+    "name": "1a8384c3f6",
+    "tier": "video"
+  },
+  "units": {
+    "length": "m",
+    "area": "m2"
+  },
+  "frame": "metric, gravity-aligned, z up; x and y are arbitrary but shared by all rooms",
+  "rooms": [
+    {
+      "id": "room_1",
+      "polygon": [
+        [
+          2.5414,
+          0.0312
+        ],
+        [
+          2.3884,
+          0.4267
+        ],
+        [
+          -0.1909,
+          -0.537
+        ],
+        [
+          -0.0306,
+          -0.9897
+        ]
+      ],
+      "floor_area": {
+        "value": 1.2479,
+        "lo": 0.0619,
+        "hi": 2.4338,
+        "coverage": 0.9,
+        "sigma": 0.721,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": 3.0007,
+        "lo": 2.4728,
+        "hi": 3.5286,
+        "coverage": 0.9,
+        "sigma": 0.32093,
+        "unit": "m",
+        "basis": "inferred"
+      },
+      "ceiling_height_range": [
+        2.9123,
+        3.0879
+      ],
+      "walls": [
+        {
+          "id": "room_1-W1",
+          "start": [
+            2.5414,
+            0.0312
+          ],
+          "end": [
+            2.3884,
+            0.4267
+          ],
+          "length": {
+            "value": 0.4241,
+            "lo": 0.0029,
+            "hi": 0.8453,
+            "coverage": 0.9,
+            "sigma": 0.25604,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.444
+        },
+        {
+          "id": "room_1-W2",
+          "start": [
+            2.3884,
+            0.4267
+          ],
+          "end": [
+            -0.1909,
+            -0.537
+          ],
+          "length": {
+            "value": 2.7534,
+            "lo": 2.4276,
+            "hi": 3.0793,
+            "coverage": 0.9,
+            "sigma": 0.19811,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.164
+        },
+        {
+          "id": "room_1-W3",
+          "start": [
+            -0.1909,
+            -0.537
+          ],
+          "end": [
+            -0.0306,
+            -0.9897
+          ],
+          "length": {
+            "value": 0.4803,
+            "lo": 0.0583,
+            "hi": 0.9022,
+            "coverage": 0.9,
+            "sigma": 0.25651,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.889
+        },
+        {
+          "id": "room_1-W4",
+          "start": [
+            -0.0306,
+            -0.9897
+          ],
+          "end": [
+            2.5414,
+            0.0312
+          ],
+          "length": {
+            "value": 2.7673,
+            "lo": 2.44,
+            "hi": 3.0946,
+            "coverage": 0.9,
+            "sigma": 0.19898,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.364
+        }
+      ],
+      "openings": [],
+      "entered": false,
+      "notes": [
+        "floor not seen in this room; the level of the whole capture is used",
+        "seen through an opening but not walked into"
+      ]
+    }
+  ],
+  "openings": [],
+  "adjacency": [],
+  "footprint_area": {
+    "value": 1.2479,
+    "lo": 0.0619,
+    "hi": 2.4338,
+    "coverage": 0.9,
+    "sigma": 0.721,
+    "unit": "m2",
+    "basis": "observed"
+  },
+  "damage_regions": [
+    {
+      "id": "room_1-DMG1",
+      "class": "mould",
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "surface_kind": "wall",
+      "extent": {
+        "width": {
+          "value": 0.6272,
+          "lo": -0.1218,
+          "hi": 1.3761,
+          "coverage": 0.9,
+          "sigma": 0.45533,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "height": {
+          "value": 0.1592,
+          "lo": 0.0816,
+          "hi": 0.2368,
+          "coverage": 0.9,
+          "sigma": 0.04716,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "bounding_area": {
+          "value": 0.0999,
+          "lo": -0.0289,
+          "hi": 0.2286,
+          "coverage": 0.9,
+          "sigma": 0.0783,
+          "unit": "m2",
+          "basis": "observed"
+        }
+      },
+      "position": {
+        "along_surface": 1.5,
+        "above_floor": 2.734,
+        "centre": [
+          1.655,
+          -0.321,
+          2.92
+        ]
+      },
+      "detector_score": 0.337,
+      "views": 5,
+      "frames": [
+        "rgb_00145",
+        "rgb_00264",
+        "rgb_00266",
+        "rgb_00270",
+        "rgb_00272"
+      ]
+    },
+    {
+      "id": "room_1-DMG2",
+      "class": "mould",
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "surface_kind": "wall",
+      "extent": {
+        "width": {
+          "value": 0.4473,
+          "lo": 0.3518,
+          "hi": 0.5428,
+          "coverage": 0.9,
+          "sigma": 0.05805,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "height": {
+          "value": 0.3964,
+          "lo": 0.3265,
+          "hi": 0.4663,
+          "coverage": 0.9,
+          "sigma": 0.0425,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "bounding_area": {
+          "value": 0.1773,
+          "lo": 0.1282,
+          "hi": 0.2264,
+          "coverage": 0.9,
+          "sigma": 0.02985,
+          "unit": "m2",
+          "basis": "observed"
+        }
+      },
+      "position": {
+        "along_surface": 1.299,
+        "above_floor": 2.19,
+        "centre": [
+          1.385,
+          -0.428,
+          2.494
+        ]
+      },
+      "detector_score": 0.29,
+      "views": 2,
+      "frames": [
+        "rgb_00264",
+        "rgb_00266"
+      ]
+    },
+    {
+      "id": "room_1-DMG3",
+      "class": "mould",
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "surface_kind": "wall",
+      "extent": {
+        "width": {
+          "value": 0.1642,
+          "lo": 0.0928,
+          "hi": 0.2356,
+          "coverage": 0.9,
+          "sigma": 0.04341,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "height": {
+          "value": 0.195,
+          "lo": 0.1407,
+          "hi": 0.2493,
+          "coverage": 0.9,
+          "sigma": 0.03302,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "bounding_area": {
+          "value": 0.032,
+          "lo": 0.0155,
+          "hi": 0.0485,
+          "coverage": 0.9,
+          "sigma": 0.01005,
+          "unit": "m2",
+          "basis": "observed"
+        }
+      },
+      "position": {
+        "along_surface": 1.3,
+        "above_floor": 2.202,
+        "centre": [
+          1.254,
+          -0.48,
+          2.405
+        ]
+      },
+      "detector_score": 0.273,
+      "views": 2,
+      "frames": [
+        "rgb_00264",
+        "rgb_00266"
+      ]
+    },
+    {
+      "id": "room_1-DMG4",
+      "class": "crack",
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "surface_kind": "wall",
+      "extent": {
+        "width": {
+          "value": 0.6712,
+          "lo": 0.5797,
+          "hi": 0.7626,
+          "coverage": 0.9,
+          "sigma": 0.0556,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "height": {
+          "value": 1.0352,
+          "lo": 0.8058,
+          "hi": 1.2647,
+          "coverage": 0.9,
+          "sigma": 0.13949,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "bounding_area": {
+          "value": 0.6948,
+          "lo": 0.514,
+          "hi": 0.8756,
+          "coverage": 0.9,
+          "sigma": 0.1099,
+          "unit": "m2",
+          "basis": "observed"
+        }
+      },
+      "position": {
+        "along_surface": 0.0,
+        "above_floor": 0.661,
+        "centre": [
+          0.282,
+          -0.866,
+          1.285
+        ]
+      },
+      "detector_score": 0.242,
+      "views": 2,
+      "frames": [
+        "rgb_00153",
+        "rgb_00155"
+      ]
+    },
+    {
+      "id": "room_1-DMG5",
+      "class": "mould",
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "surface_kind": "wall",
+      "extent": {
+        "width": {
+          "value": 1.1402,
+          "lo": 0.8115,
+          "hi": 1.4688,
+          "coverage": 0.9,
+          "sigma": 0.1998,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "height": {
+          "value": 1.3994,
+          "lo": 0.4932,
+          "hi": 2.3057,
+          "coverage": 0.9,
+          "sigma": 0.55094,
+          "unit": "m",
+          "basis": "observed"
+        },
+        "bounding_area": {
+          "value": 1.5956,
+          "lo": 0.4646,
+          "hi": 2.7266,
+          "coverage": 0.9,
+          "sigma": 0.68757,
+          "unit": "m2",
+          "basis": "observed"
+        }
+      },
+      "position": {
+        "along_surface": 0.218,
+        "above_floor": 0.841,
+        "centre": [
+          0.702,
+          -0.699,
+          1.647
+        ]
+      },
+      "detector_score": 0.221,
+      "views": 3,
+      "frames": [
+        "rgb_00147",
+        "rgb_00149",
+        "rgb_00157"
+      ]
+    }
+  ],
+  "concealed_damage_flags": [
+    {
+      "id": "FLAG1",
+      "rule_id": "WALL_TOP_MOISTURE",
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG1"
+      ],
+      "message": "Moisture damage at the top of a wall. Water is tracking down from above the ceiling line; the ceiling void or the wall head is likely to be wet.",
+      "evidence": {
+        "class": "mould",
+        "surface_kind": "wall",
+        "upper_edge_below_ceiling_m": 0.107
+      }
+    },
+    {
+      "id": "FLAG2",
+      "rule_id": "MOULD_EXTENT",
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG5"
+      ],
+      "message": "Mould over a large area. Growth this extensive usually continues on the hidden side of the lining and in the cavity behind it.",
+      "evidence": {
+        "class": "mould",
+        "surface_kind": "wall",
+        "bounding_area_m2": 1.596
+      }
+    }
+  ],
+  "scope_items": [
+    {
+      "id": "S1",
+      "code": "MOULD_TREAT",
+      "description": "Treat mould with fungicidal wash and allow to dry",
+      "unit": "m2",
+      "quantity": {
+        "value": 0.5,
+        "lo": 0.3068,
+        "hi": 0.6932,
+        "coverage": 0.9,
+        "sigma": 0.11744,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG1"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S2",
+      "code": "STAIN_BLOCK",
+      "description": "Seal the stain with stain-blocking primer",
+      "unit": "m2",
+      "quantity": {
+        "value": 0.5,
+        "lo": 0.3068,
+        "hi": 0.6932,
+        "coverage": 0.9,
+        "sigma": 0.11744,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG1"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S3",
+      "code": "REPAINT_WALL",
+      "description": "Repaint the wall, corner to corner, two coats",
+      "unit": "m2",
+      "quantity": {
+        "value": 8.3038,
+        "lo": 6.5435,
+        "hi": 10.0641,
+        "coverage": 0.9,
+        "sigma": 1.07015,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG1",
+        "room_1-DMG2",
+        "room_1-DMG3",
+        "room_1-DMG4",
+        "room_1-DMG5"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S4",
+      "code": "MOULD_TREAT",
+      "description": "Treat mould with fungicidal wash and allow to dry",
+      "unit": "m2",
+      "quantity": {
+        "value": 0.5,
+        "lo": 0.4264,
+        "hi": 0.5736,
+        "coverage": 0.9,
+        "sigma": 0.04477,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG2"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S5",
+      "code": "STAIN_BLOCK",
+      "description": "Seal the stain with stain-blocking primer",
+      "unit": "m2",
+      "quantity": {
+        "value": 0.5,
+        "lo": 0.4264,
+        "hi": 0.5736,
+        "coverage": 0.9,
+        "sigma": 0.04477,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG2"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S6",
+      "code": "MOULD_TREAT",
+      "description": "Treat mould with fungicidal wash and allow to dry",
+      "unit": "m2",
+      "quantity": {
+        "value": 0.5,
+        "lo": 0.4752,
+        "hi": 0.5248,
+        "coverage": 0.9,
+        "sigma": 0.01508,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG3"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S7",
+      "code": "STAIN_BLOCK",
+      "description": "Seal the stain with stain-blocking primer",
+      "unit": "m2",
+      "quantity": {
+        "value": 0.5,
+        "lo": 0.4752,
+        "hi": 0.5248,
+        "coverage": 0.9,
+        "sigma": 0.01508,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG3"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S8",
+      "code": "CRACK_FILL",
+      "description": "Rake out, fill and tape the crack",
+      "unit": "m",
+      "quantity": {
+        "value": 1.0352,
+        "lo": 0.8058,
+        "hi": 1.2647,
+        "coverage": 0.9,
+        "sigma": 0.13949,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG4"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S9",
+      "code": "MOULD_TREAT",
+      "description": "Treat mould with fungicidal wash and allow to dry",
+      "unit": "m2",
+      "quantity": {
+        "value": 2.3934,
+        "lo": 0.6969,
+        "hi": 4.0899,
+        "coverage": 0.9,
+        "sigma": 1.03136,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG5"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S10",
+      "code": "STAIN_BLOCK",
+      "description": "Seal the stain with stain-blocking primer",
+      "unit": "m2",
+      "quantity": {
+        "value": 2.3934,
+        "lo": 0.6969,
+        "hi": 4.0899,
+        "coverage": 0.9,
+        "sigma": 1.03136,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG5"
+      ],
+      "rule_id": null
+    },
+    {
+      "id": "S11",
+      "code": "MOISTURE_INSPECTION",
+      "description": "Moisture inspection of the flagged surface and what lies behind it",
+      "unit": "each",
+      "quantity": {
+        "value": 1.0,
+        "lo": 1.0,
+        "hi": 1.0,
+        "coverage": 0.9,
+        "sigma": 0.0,
+        "unit": "each",
+        "basis": "observed"
+      },
+      "room": "room_1",
+      "surface": "room_1-W4",
+      "damage_regions": [
+        "room_1-DMG1",
+        "room_1-DMG5"
+      ],
+      "rule_id": "WALL_TOP_MOISTURE"
+    }
+  ],
+  "intervals": {
+    "coverage": 0.9,
+    "calibrated": false,
+    "calibration_source": "none: factors default to 1.0"
+  },
+  "warnings": [
+    "the camera could be followed for only 23% of the clip (18 pieces that could not be joined), so the plan covers only that part of the walk; walk slowly and turn smoothly, as the capture protocol asks",
+    "intervals for the video tier are not yet calibrated against a benchmark"
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "capture": {
+    "name": "c7d28f72c6",
+    "tier": "video"
+  },
+  "units": {
+    "length": "m",
+    "area": "m2"
+  },
+  "frame": "metric, gravity-aligned, z up; x and y are arbitrary but shared by all rooms",
+  "rooms": [
+    {
+      "id": "room_1",
+      "polygon": [
+        [
+          2.2278,
+          0.0764
+        ],
+        [
+          3.3605,
+          0.7034
+        ],
+        [
+          2.5071,
+          2.3031
+        ],
+        [
+          1.4399,
+          1.6018
+        ]
+      ],
+      "floor_area": {
+        "value": 2.2638,
+        "lo": 1.4843,
+        "hi": 3.0432,
+        "coverage": 0.9,
+        "sigma": 0.47385,
+        "unit": "m2",
+        "basis": "observed"
+      },
+      "ceiling_height": {
+        "value": null,
+        "lo": null,
+        "hi": null,
+        "coverage": 0.9,
+        "sigma": null,
+        "unit": "m",
+        "basis": "not_measured"
+      },
+      "ceiling_height_range": null,
+      "walls": [
+        {
+          "id": "room_1-W1",
+          "start": [
+            2.2278,
+            0.0764
+          ],
+          "end": [
+            3.3605,
+            0.7034
+          ],
+          "length": {
+            "value": 1.2947,
+            "lo": 1.0449,
+            "hi": 1.5445,
+            "coverage": 0.9,
+            "sigma": 0.15188,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W2",
+          "start": [
+            3.3605,
+            0.7034
+          ],
+          "end": [
+            2.5071,
+            2.3031
+          ],
+          "length": {
+            "value": 1.813,
+            "lo": 1.4813,
+            "hi": 2.1448,
+            "coverage": 0.9,
+            "sigma": 0.20171,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.971
+        },
+        {
+          "id": "room_1-W3",
+          "start": [
+            2.5071,
+            2.3031
+          ],
+          "end": [
+            1.4399,
+            1.6018
+          ],
+          "length": {
+            "value": 1.277,
+            "lo": 1.0289,
+            "hi": 1.5251,
+            "coverage": 0.9,
+            "sigma": 0.15082,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W4",
+          "start": [
+            1.4399,
+            1.6018
+          ],
+          "end": [
+            2.2278,
+            0.0764
+          ],
+          "length": {
+            "value": 1.7169,
+            "lo": 1.3972,
+            "hi": 2.0366,
+            "coverage": 0.9,
+            "sigma": 0.19435,
+            "unit": "m",
+            "basis": "observed"
+          },
+          "observed_share": 0.829
+        }
+      ],
+      "openings": [],
+      "entered": false,
+      "notes": [
+        "no ceiling was captured anywhere; ceiling height is not reported",
+        "seen through an opening but not walked into"
+      ]
+    }
+  ],
+  "openings": [],
+  "adjacency": [],
+  "footprint_area": {
+    "value": 2.2638,
+    "lo": 1.4843,
+    "hi": 3.0432,
+    "coverage": 0.9,
+    "sigma": 0.47385,
+    "unit": "m2",
+    "basis": "observed"
+  },
+  "damage_regions": [],
+  "concealed_damage_flags": [],
+  "scope_items": [],
+  "intervals": {
+    "coverage": 0.9,
+    "calibrated": false,
+    "calibration_source": "none: factors default to 1.0"
+  },
+  "warnings": [
+    "the camera could be followed for only 6% of the clip (13 pieces that could not be joined), so the plan covers only that part of the walk; walk slowly and turn smoothly, as the capture protocol asks",
+    "drift correction could not run (capture too short); poses are used as recorded",
+    "no ceiling found: tilt the phone up so the ceiling is captured",
+    "intervals for the video tier are not yet calibrated against a benchmark"
+  ]
+}

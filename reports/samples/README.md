@@ -84,6 +84,28 @@ into is left out, and the plan says so.
 Footprint 49.0 ± 2.9 m². No damage regions. Two spaces seen through openings but not walked
 into are left out, and the plan says so.
 
+### The video tier on the same recordings
+
+Each recording also holds the iPhone's video (`rgb.mp4`), so the video tier was run on it too
+(`uv run floorplan run captures/supplied/<scan> --tier video`; plans in `<recording>/video/`).
+There is no tape truth, so each video plan is compared with the LiDAR plan of the same walk.
+
+| Recording | Frames placed by the camera tracker | Video plan | LiDAR plan |
+|---|---|---|---|
+| single_room | 25 of 143 (17%), in 6 pieces | 1 room, 2.30 m² | 2 rooms, 15.1 m² |
+| single_scan_floor_only | 82 of 350 (23%), in 18 pieces | 1 room, 1.25 m² | 7 rooms, 46.4 m² |
+| single_scan_with_ceiling | 22 of 348 (6%), in 13 pieces | 1 room, 2.26 m² | 4 rooms, 49.0 m² |
+
+**On these recordings the video tier fails.** They were made for LiDAR, turning fast; with
+video alone the camera tracker (COLMAP) loses the camera on the turns and splits the walk into
+pieces it cannot join, and only the largest piece is measured. The plans now say so in their
+first warning ("the camera could be followed for only 23% of the clip ... the plan covers
+only that part of the walk"); before that check was added (commit after `9fa65d4`), the
+floor-only plan reported a 1.25 m² room for a whole floor without saying why. On the
+benchmark's real clip, walked slowly, the tracker placed 200 of 241 frames (83%). Our capture
+protocol asks for a slow walk and smooth turns for this reason; whether that is enough on an
+iPhone is untested.
+
 ## Findings
 
 1. **A false ceiling, found.** room_2 of `c7d28f72c6` measures 2.28 m against 2.95-3.08 m in

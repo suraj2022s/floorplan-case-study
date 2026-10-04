@@ -16,6 +16,28 @@ import typer
 app = typer.Typer(add_completion=False, help="iPhone capture to a measured floor plan.")
 
 
+TRACKED_SHARE = 0.5  # below this share of the clip followed, the plan covers only part of the walk
+
+
+def partial_track_warning(video: dict) -> str | None:
+    """A warning when the camera could be followed over only part of a clip, else None.
+
+    Structure from motion loses the camera on fast turns and splits the clip into pieces; only
+    the frames it can join are measured. On the assessors' sample recordings (made for LiDAR,
+    turning fast) 6 to 23% of the frames were placed, and the plans were one small room each.
+    Such a plan must say that it covers only part of the walk.
+    """
+    sampled, placed = video.get("frames_sampled", 0), video.get("frames_placed", 0)
+    if not sampled or placed / sampled >= TRACKED_SHARE:
+        return None
+    pieces = len(video.get("reconstructions", []))
+    return (
+        f"the camera could be followed for only {placed / sampled:.0%} of the clip ({pieces} "
+        "pieces that could not be joined), so the plan covers only that part of the walk; "
+        "walk slowly and turn smoothly, as the capture protocol asks"
+    )
+
+
 def _build_plan(tier: str, source: Path, config):
     """Run the tier's front-end and the shared back-end. Returns the plan and the model the
     front-end loaded (None at the LiDAR tier), so the caller can free it."""
@@ -53,6 +75,9 @@ def _build_plan(tier: str, source: Path, config):
         plan = run_pipeline(loaded, config)
         plan.stats["depth_model"] = model.describe()
         plan.stats["video"] = loaded.notes
+        warning = partial_track_warning(loaded.notes)
+        if warning:
+            plan.warnings.insert(0, warning)
         plan.timings = {"poses_and_depth": round(front_end, 3), **plan.timings}
         return plan, model
     raise ValueError(f"unknown tier {tier!r}; use lidar, video or photo")

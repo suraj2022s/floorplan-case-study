@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0",
+  "capture": {
+    "name": "c00a170fe1",
+    "tier": "video"
+  },
+  "units": {
+    "length": "m",
+    "area": "m2"
+  },
+  "frame": "metric, gravity-aligned, z up; x and y are arbitrary but shared by all rooms",
+  "rooms": [
+    {
+      "id": "room_1",
+      "polygon": [
+        [
+          0.7661,
+          -1.1526
+        ],
+        [
+          2.121,
+          -0.3925
+        ],
+        [
+          1.4599,
+          0.9009
+        ],
+        [
+          0.0811,
+          0.2054
+        ]
+      ],
+      "floor_area": {
+        "value": 2.3019,
+        "lo": 1.3084,
+        "hi": 3.2954,
+        "coverage": 0.9,
+        "sigma": 0.60397,
+        "unit": "m2",
+        "basis": "inferred"
+      },
+      "ceiling_height": {
+        "value": 2.7782,
+        "lo": 2.5309,
+        "hi": 3.0254,
+        "coverage": 0.9,
+        "sigma": 0.15031,
+        "unit": "m",
+        "basis": "observed"
+      },
+      "ceiling_height_range": [
+        2.6171,
+        2.9415
+      ],
+      "walls": [
+        {
+          "id": "room_1-W1",
+          "start": [
+            0.7661,
+            -1.1526
+          ],
+          "end": [
+            2.121,
+            -0.3925
+          ],
+          "length": {
+            "value": 1.5536,
+            "lo": 1.1131,
+            "hi": 1.994,
+            "coverage": 0.9,
+            "sigma": 0.26777,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 1.0
+        },
+        {
+          "id": "room_1-W2",
+          "start": [
+            2.121,
+            -0.3925
+          ],
+          "end": [
+            1.4599,
+            0.9009
+          ],
+          "length": {
+            "value": 1.4526,
+            "lo": 1.0146,
+            "hi": 1.8905,
+            "coverage": 0.9,
+            "sigma": 0.26625,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.9
+        },
+        {
+          "id": "room_1-W3",
+          "start": [
+            1.4599,
+            0.9009
+          ],
+          "end": [
+            0.0811,
+            0.2054
+          ],
+          "length": {
+            "value": 1.5443,
+            "lo": 1.1045,
+            "hi": 1.9841,
+            "coverage": 0.9,
+            "sigma": 0.26738,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        },
+        {
+          "id": "room_1-W4",
+          "start": [
+            0.0811,
+            0.2054
+          ],
+          "end": [
+            0.7661,
+            -1.1526
+          ],
+          "length": {
+            "value": 1.521,
+            "lo": 1.0812,
+            "hi": 1.9607,
+            "coverage": 0.9,
+            "sigma": 0.26735,
+            "unit": "m",
+            "basis": "inferred"
+          },
+          "observed_share": 0.0
+        }
+      ],
+      "openings": [],
+      "entered": true,
+      "notes": [
+        "the walls captured do not close a room: 2 of 4 sides were not seen and are drawn where the observations stop"
+      ]
+    }
+  ],
+  "openings": [],
+  "adjacency": [],
+  "footprint_area": {
+    "value": 2.3019,
+    "lo": 1.3084,
+    "hi": 3.2954,
+    "coverage": 0.9,
+    "sigma": 0.60397,
+    "unit": "m2",
+    "basis": "observed"
+  },
+  "damage_regions": [],
+  "concealed_damage_flags": [],
+  "scope_items": [],
+  "intervals": {
+    "coverage": 0.9,
+    "calibrated": false,
+    "calibration_source": "none: factors default to 1.0"
+  },
+  "warnings": [
+    "the camera could be followed for only 17% of the clip (6 pieces that could not be joined), so the plan covers only that part of the walk; walk slowly and turn smoothly, as the capture protocol asks",
+    "drift correction could not run (capture too short); poses are used as recorded",
+    "the captured walls do not close a room; the plan is the rectangle around what was seen and its unseen sides are inferred. Capture every wall to measure it.",
+    "intervals for the video tier are not yet calibrated against a benchmark"
+  ]
+}

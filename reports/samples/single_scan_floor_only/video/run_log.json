@@ -1,0 +1,94 @@
+{
+  "floorplan_version": "0.1.0",
+  "arguments": {
+    "tier": "video",
+    "drift": true
+  },
+  "tier": "video",
+  "stats": {
+    "frames_in": 41,
+    "scale_sigma": 0.0668165105942911,
+    "keyframes": 41,
+    "drift": {
+      "applied": true,
+      "method": "plane-anchored: fragments turned and shifted onto shared wall planes, solved jointly with a smoothness prior; yaw and horizontal position only",
+      "fragments": 6,
+      "iterations": 4,
+      "walls_used": 3,
+      "wall_copies_merged": 0,
+      "wall_residual_rms_before_m": 0.10857,
+      "wall_residual_rms_after_m": 0.11254,
+      "mean_shift_m": 0.0547,
+      "max_shift_m": 0.0898,
+      "max_turn_deg": 0.5909
+    },
+    "cloud_points": 104631,
+    "wall_lines": 4,
+    "depth_model": {
+      "model": "MoGe-2",
+      "variant": "vitl",
+      "device": "cuda",
+      "infer_long_side": 1024
+    },
+    "video": {
+      "frames_sampled": 350,
+      "frames_placed": 82,
+      "reconstructions": [
+        74,
+        28,
+        28,
+        26,
+        19,
+        17,
+        16,
+        12,
+        11,
+        11,
+        10,
+        9,
+        8,
+        8,
+        8,
+        5,
+        5,
+        5
+      ],
+      "frames_with_depth": 41,
+      "clip_seconds": 114.4,
+      "metres_per_unit": 0.31622,
+      "frame_scale_spread": 0.2838,
+      "field_of_view_deg": 62.5
+    },
+    "semantics": {
+      "detector": {
+        "model": "OWLv2 base patch16 ensemble",
+        "device": null
+      },
+      "images_examined": 40,
+      "boxes_on_surfaces": 29,
+      "mirrors_or_screens_seen": 1
+    }
+  },
+  "timings_s": {
+    "poses_and_depth": 14.68,
+    "keyframes": 0.0,
+    "fragments": 1.282,
+    "drift": 0.271,
+    "cloud": 0.022,
+    "planes": 0.171,
+    "layout": 0.03,
+    "refine": 0.003,
+    "levels": 0.007,
+    "openings": 0.006,
+    "measure": 0.001,
+    "damage": 0.852
+  },
+  "total_s": 17.325,
+  "inputs_sha256": {
+    "odometry.csv": "2ee32c3f351c5806a1fab7e2eb6736fa7424c9b9d105366be4d99eadec44dc12",
+    "camera_matrix.csv": "ab0ee09a069fce6b3623edaeba6c96f118fdd033367243a17390627d1e99ca61"
+  },
+  "plan_sha256": "6efcbf2f7802dff7efc54975dabcec1072f335d53010156980be838b20f88f97",
+  "python": "3.12.13",
+  "platform": "Windows-11-10.0.26200-SP0"
+}

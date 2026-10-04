@@ -1,0 +1,80 @@
+{
+  "floorplan_version": "0.1.0",
+  "arguments": {
+    "tier": "video",
+    "drift": true
+  },
+  "tier": "video",
+  "stats": {
+    "frames_in": 11,
+    "scale_sigma": 0.09312901210056974,
+    "keyframes": 11,
+    "drift": {
+      "applied": false,
+      "reason": "capture too short"
+    },
+    "cloud_points": 68324,
+    "wall_lines": 5,
+    "depth_model": {
+      "model": "MoGe-2",
+      "variant": "vitl",
+      "device": "cuda",
+      "infer_long_side": 1024
+    },
+    "video": {
+      "frames_sampled": 348,
+      "frames_placed": 22,
+      "reconstructions": [
+        22,
+        20,
+        16,
+        15,
+        11,
+        10,
+        9,
+        8,
+        8,
+        5,
+        5,
+        5,
+        2
+      ],
+      "frames_with_depth": 11,
+      "clip_seconds": 214.3,
+      "metres_per_unit": 0.22287,
+      "frame_scale_spread": 0.2606,
+      "field_of_view_deg": 61.33
+    },
+    "semantics": {
+      "detector": {
+        "model": "OWLv2 base patch16 ensemble",
+        "device": null
+      },
+      "images_examined": 11,
+      "boxes_on_surfaces": 2,
+      "mirrors_or_screens_seen": 2
+    }
+  },
+  "timings_s": {
+    "poses_and_depth": 19.521,
+    "keyframes": 0.0,
+    "fragments": 0.326,
+    "drift": 0.0,
+    "cloud": 0.01,
+    "planes": 0.111,
+    "layout": 0.038,
+    "refine": 0.003,
+    "levels": 0.005,
+    "openings": 0.004,
+    "measure": 0.001,
+    "damage": 0.259
+  },
+  "total_s": 20.278,
+  "inputs_sha256": {
+    "odometry.csv": "27fff9796d5bb0a73c96c923588ff8e3ce0b3a33abe7e6a1164e3324021d0843",
+    "camera_matrix.csv": "ff897e412bb279920a98d6257554334a7df6b36abc4a053c782a0c403b06e108"
+  },
+  "plan_sha256": "3120663b10e42759ba7ca5515b0af6bcd63758c59cab6d0e4a05033c29745fcc",
+  "python": "3.12.13",
+  "platform": "Windows-11-10.0.26200-SP0"
+}

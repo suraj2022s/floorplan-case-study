@@ -20,7 +20,7 @@ from floorplan.uncertainty.budget import Measurement
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = json.loads((ROOT / "schema" / "plan.schema.json").read_text())
-SAMPLE_PLANS = sorted((ROOT / "reports" / "samples").glob("*/plan.json"))
+SAMPLE_PLANS = sorted((ROOT / "reports" / "samples").rglob("plan.json"))
 
 
 def _validate(plan_dict: dict) -> None:
@@ -59,7 +59,11 @@ def test_a_room_without_a_ceiling_is_still_strict_json(box_room_plan):
     _validate(written)
 
 
-@pytest.mark.parametrize("path", SAMPLE_PLANS, ids=[p.parent.name for p in SAMPLE_PLANS])
+@pytest.mark.parametrize(
+    "path",
+    SAMPLE_PLANS,
+    ids=[str(p.parent.relative_to(ROOT / "reports" / "samples")) for p in SAMPLE_PLANS],
+)
 def test_the_supplied_sample_plans_follow_the_schema(path):
     text = path.read_text()
     assert "NaN" not in text and "Infinity" not in text

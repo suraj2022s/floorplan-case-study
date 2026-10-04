@@ -225,3 +225,8 @@ Short, dated notes on what was done and why. Times are IST.
   12, the bias gone (mean -0.3 cm), one scan 1 mm outside; interval calibration FAIL to PASS.
   The wall prediction was wrong: the outlines changed, not because walls got thinner (checked,
   they did not) but because room finding sits near its thresholds on these scans.
+- **15:20-15:38** Head-to-head stand-in tried with Pointorama (web point-cloud tool, free trial)
+  on the bedroom 467138's raw iPad cloud: its automatic floor detection gave 2.59 m (laser
+  2.64 m); its automatic room step left a polygon to finish by hand, so it was stopped and no
+  number is reported. README gains a results-at-a-glance table; the video wall errors quoted
+  in five documents are corrected to the current run (+1.7% to +5.1%).

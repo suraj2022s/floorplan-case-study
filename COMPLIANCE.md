@@ -8,7 +8,7 @@ Status values: **Done** (the artifact exists and regenerates from this repo), **
 says whether the requirement is covered, not whether its gate passes; gate results are
 given as they stand, failures included.
 
-Last updated: 2026-10-04 02:15 IST.
+Last updated: 2026-10-04 15:38 IST.
 
 **Two gaps affect many rows:** no iPhone 15 Pro has been available for capturing our own
 benchmark (rows 17-21, 31-32, 42), and the assessment supplied no Round 1 gate table or JSON
@@ -72,7 +72,7 @@ scanned three times by an iPad Pro's LiDAR, with laser ground truth
 
 | # | Requirement | File path | Artifact | Status |
 |---|---|---|---|---|
-| 31 | LiDAR tier vs a consumer app on 2 rooms; app and version named; export submitted | `bench/SESSION.md` step 6, `bench/headtohead/TEMPLATE.yaml` | App exports | Blocked: no Pro iPhone yet (the table tool is ready) |
+| 31 | LiDAR tier vs a consumer app on 2 rooms; app and version named; export submitted | `bench/SESSION.md` step 6, `bench/headtohead/TEMPLATE.yaml`, `bench/headtohead/export_cloud.py` | App exports | Blocked: no Pro iPhone, and consumer apps scan only live. A stand-in was tried on 4 October: a public bedroom's raw iPad cloud (`export_cloud.py`) given to Pointorama (web, free trial); its automatic floor step worked (2.59 m against the laser's 2.64 m) but its room step could not be finished without drawing by hand, which would not be a fair comparison, so no number is reported |
 | 32 | One table, our error and theirs; beat or tie on ≥ 70% | `bench/headtohead.py` | Table | Blocked: same (tool written and checked) |
 
 ## Part 4 — Fix loop

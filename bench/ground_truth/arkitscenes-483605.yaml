@@ -1,0 +1,23 @@
+# NOT IN THE BENCHMARK. Kept for the record of fix-loop round 3 (fixloop/ROUND3_RESULT.md):
+# this bathroom's ceiling has two levels 10 cm apart in the laser scan, so it fails the
+# selection rule (one ceiling level over the scanner); the value below is the upper level.
+# Ground truth for a bathroom of Apple's ARKitScenes dataset (visit 483605), read off the Faro
+# laser scan Apple published for it (scan 192106) by bench/public/laser_truth.py --ceiling-only.
+# The scanner stands inside the room; the floor is the lowest level under it (the level 0.6 m
+# higher is the bath). Only the ceiling height is used: the four-wall read-off landed on the
+# cabinets and the shower screen in front of the walls. Not a tape measurement by us.
+site: arkitscenes-483605
+source: ARKitScenes raw, laser_scanner_point_clouds/483605/192106.ply
+instrument:
+  type: laser
+  model: Faro Focus S70 (scan published by Apple)
+  stated_accuracy_mm: 2
+read_off_by: bench/public/laser_truth.py
+rooms:
+- id: bathroom
+  walls: []
+  ceiling_height:
+    middle: 2.5648
+  openings: []
+  note: 'ceiling only: the wall read-off lands on cabinets and a shower screen'
+adjacency: []
